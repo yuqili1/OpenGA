@@ -1,7 +1,10 @@
 {
   "importRef": "origin/import/smooth-manifolds-lee",
   "textbookZipPath": "projects/smooth-manifolds-lee/sources/smooth-manifolds.zip",
-  "generatedReviewTasks": 335,
+  "textbookOverlayPath": "projects/smooth-manifolds-lee/sources/errata/ism-2e.json",
+  "generatedReviewTasks": 357,
+  "leanPairedReviewTasks": 335,
+  "textbookOnlyReviewTasks": 22,
   "matchedByChapter": {
     "chapter1": 75,
     "chapter2": 55,
@@ -48,15 +51,27 @@
     "section36": 12,
     "section37": 16
   },
-  "unmatchedTopLevelLean": [
-    {
-      "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Definition_5_35_extra_4.lean",
-      "label": "Definition 5.35-extra-4",
-      "section": 35,
-      "reason": "label not in section JSON",
-      "action": "manual textbook label or synthetic task required"
-    }
-  ],
+  "textbookOnlyByChapter": {
+    "chapter2": 3,
+    "chapter3": 2,
+    "chapter4": 2,
+    "chapter5": 15
+  },
+  "textbookOnlyBySection": {
+    "section08": 2,
+    "section12": 1,
+    "section14": 1,
+    "section20": 1,
+    "section22": 1,
+    "section24": 1,
+    "section29": 1,
+    "section31": 1,
+    "section33": 2,
+    "section34": 1,
+    "section36": 2,
+    "section37": 8
+  },
+  "unmatchedTopLevelLean": [],
   "nestedAuxLean": [
     "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/Common.lean",
     "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/Index.lean",
@@ -116,6 +131,11 @@
       "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/Index.lean",
       "owner": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean",
       "relation": "nested"
+    },
+    {
+      "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Definition_5_35_extra_4.lean",
+      "owner": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Example_5_45.lean",
+      "relation": "imported-top-level"
     }
   ],
   "unattachedNestedAuxLean": [],
@@ -203,6 +223,10 @@
     {
       "section": 37,
       "label": "Problem 5-22"
+    },
+    {
+      "section": 37,
+      "label": "Problem 5-24"
     }
   ],
   "jsonLabelsOutsideImportedSections": [
@@ -1181,7 +1205,10 @@
   ],
   "notes": [
     "Auxiliary Lean files are attached to their canonical owner task when a matching owner exists.",
-    "JSON entries without matching Lean files inside imported sections are reported but do not block review generation.",
-    "JSON entries outside imported sections are separated from the current Ch1-Ch5 review queue."
+    "Tracked official errata overlays are applied before textbook labels are matched or generated.",
+    "Top-level Lean files without a JSON label are attached to the earliest paired task in the same section that directly imports them; otherwise they remain unmatched.",
+    "JSON entries without matching Lean files inside imported chapters are generated as textbook-only review tasks without synthetic Lean paths.",
+    "New textbook-only tasks start with both checks pending; formal review remains visible after mathematical review is completed.",
+    "JSON entries outside imported chapters are separated from the current Ch1-Ch5 review queue."
   ]
 }

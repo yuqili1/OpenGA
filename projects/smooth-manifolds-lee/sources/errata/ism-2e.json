@@ -1,0 +1,44 @@
+{
+  "schema": "openga-review.textbook-overlay.v1",
+  "source": {
+    "title": "Corrections to Introduction to Smooth Manifolds (Second Edition)",
+    "url": "https://sites.math.washington.edu/~lee/Books/ISM/errata.pdf"
+  },
+  "operations": [
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section29.json",
+      "label": "Remark 5.29-extra-3",
+      "erratum_date": "2019-07-08",
+      "patch": {
+        "content": "We will see later that the smooth structure on $\\partial M$ is unique. The correct forward reference is Problem 5-24, not Theorem 5.31.\n\n**中文重述。** 后文将证明 $\\partial M$ 上的光滑结构是唯一的；正确的前向引用是 Problem 5-24，而不是 Theorem 5.31。\n\n_This is a faithful bilingual restatement of the official erratum dated 2019-07-08._",
+        "dependencies": [
+          "Problem 5-24"
+        ]
+      }
+    },
+    {
+      "operation": "append",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section37.json",
+      "label": "Problem 5-24",
+      "erratum_date": "2019-07-08",
+      "entry": {
+        "index": 24,
+        "label": "Problem 5-24",
+        "env": "problem",
+        "number_components": [
+          "5-24"
+        ],
+        "context": {
+          "chapter": "Submanifolds",
+          "section": "5.37. Problems",
+          "chapter_number": "5",
+          "section_number": "5.37"
+        },
+        "content": "**English restatement.** Let $M$ be a smooth manifold with boundary, let $N$ be a smooth manifold, and let $F : N \\to M$ be smooth with image contained in $\\partial M$. Prove that the corestricted map $N \\to \\partial M$ is smooth, and then deduce that $\\partial M$ has a unique smooth structure for which it is an embedded submanifold of $M$.\n\n**中文重述。** 设 $M$ 是带边界光滑流形，$N$ 是光滑流形，且光滑映射 $F : N \\to M$ 的像包含在 $\\partial M$ 中。证明把值域限制为 $\\partial M$ 后所得的映射 $N \\to \\partial M$ 仍然光滑，并由此推出：使 $\\partial M$ 成为 $M$ 的嵌入子流形的光滑结构是唯一的。\n\n_This is a faithful bilingual restatement of the official erratum dated 2019-07-08._",
+        "dependencies": [],
+        "proof": null
+      }
+    }
+  ]
+}

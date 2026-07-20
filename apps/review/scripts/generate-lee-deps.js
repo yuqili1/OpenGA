@@ -9,7 +9,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '../../..');
 const taskPath = path.join(projectRoot, 'projects/smooth-manifolds-lee/tasks/all.tasks.yaml');
 const outputDir = path.join(projectRoot, 'projects/smooth-manifolds-lee/lean-deps');
-const importRef = process.env.SMOOTH_MANIFOLDS_LEE_IMPORT_REF ?? 'origin/import/smooth-manifolds-lee';
+const defaultImportRef = 'origin/import/smooth-manifolds-lee';
+const configuredImportRef = process.env.SMOOTH_MANIFOLDS_LEE_IMPORT_REF?.trim() || undefined;
+const importRef = configuredImportRef ?? defaultImportRef;
 const lakeBin = process.env.LAKE ?? '/root/.elan/bin/lake';
 const elanBin = process.env.ELAN ?? '/root/.elan/bin/elan';
 const stagingPrefix = 'staging/SmoothManifoldsLee/';
@@ -23,6 +25,32 @@ function run(command, args, options = {}) {
     ...options
   });
 }
+
+function gitRefExists(ref) {
+  try {
+    run('git', ['rev-parse', '--verify', '--quiet', `${ref}^{commit}`], {
+      stdio: ['ignore', 'ignore', 'ignore']
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function resolveImportRef() {
+  if (configuredImportRef) {
+    if (gitRefExists(importRef)) return importRef;
+    throw new Error(`Configured SmoothManifoldsLee import ref not found: ${importRef}`);
+  }
+  if (gitRefExists(defaultImportRef)) return defaultImportRef;
+  const upstreamRef = 'upstream/import/smooth-manifolds-lee';
+  if (gitRefExists(upstreamRef)) return upstreamRef;
+  throw new Error(
+    `SmoothManifoldsLee import ref not found. Fetch ${defaultImportRef} or ${upstreamRef}.`
+  );
+}
+
+const resolvedImportRef = resolveImportRef();
 
 function ensureToolchain() {
   if (!fs.existsSync(elanBin)) return;
@@ -333,7 +361,7 @@ function mergeEdges(edges) {
 
 function prepareProject(tempProject) {
   fs.mkdirSync(tempProject, { recursive: true });
-  const archive = execFileSync('git', ['archive', importRef, 'staging/SmoothManifoldsLee'], {
+  const archive = execFileSync('git', ['archive', resolvedImportRef, 'staging/SmoothManifoldsLee'], {
     cwd: projectRoot,
     maxBuffer: 200 * 1024 * 1024
   });
@@ -376,6 +404,9 @@ function buildTaskRoots(tasks, nodesByFile, idsByName, tempProject) {
 }
 
 function main() {
+  if (resolvedImportRef !== importRef) {
+    console.log(`Read imported Lean files from ${resolvedImportRef}; manifest metadata uses ${importRef}.`);
+  }
   const tasks = readTasks();
   const leanFiles = [...new Set(tasks.flatMap(taskLeanFiles))].sort();
   const modules = [...new Set(leanFiles.map(leanPathToModule).filter(Boolean))].sort();

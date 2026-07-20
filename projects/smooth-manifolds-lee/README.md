@@ -16,6 +16,26 @@ set:
 export SMOOTH_MANIFOLDS_LEE_ZIP=/path/to/smooth-manifolds.zip
 ```
 
-Lean source files are read from the git ref recorded in the tasks, currently
-`origin/import/smooth-manifolds-lee`.
+The tracked archive is kept unchanged. Corrections from Lee's official errata
+are applied by the review app and task generator from:
 
+```text
+projects/smooth-manifolds-lee/sources/errata/ism-2e.json
+```
+
+The queue includes every labeled textbook entry in the imported chapters.
+Entries without a matching Lean file remain visible as textbook-only tasks:
+their mathematical review can be completed, while `formal_review` stays
+pending until a formalization is paired.
+
+Lean source files are read from the git ref recorded in the tasks, currently
+`origin/import/smooth-manifolds-lee`. In a contributor fork where that ref is
+available on the `upstream` remote instead, the review tooling automatically
+tries `upstream/import/smooth-manifolds-lee`. Fetch it with:
+
+```bash
+git fetch upstream import/smooth-manifolds-lee
+```
+
+An explicitly configured `SMOOTH_MANIFOLDS_LEE_IMPORT_REF` must name an existing
+ref and is not replaced by the automatic remote fallback.

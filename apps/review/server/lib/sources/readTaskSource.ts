@@ -59,7 +59,8 @@ function renderLeanSourceBundle(sources: { file: string; content: string }[]): s
 function renderAlignmentTarget(
   task: ReviewTask,
   textbookEntry: TextbookEntry | null,
-  formalCount: number
+  formalCount: number,
+  hasLeanSource: boolean
 ): string {
   const pieces = [
     `# ${task.title}`,
@@ -73,11 +74,15 @@ function renderAlignmentTarget(
     '## Formal Statements To Tag',
     formalCount > 0
       ? `${formalCount} Lean declarations are available in the Formal statements tab. Review them one by one against the informal statement.`
-      : 'No Lean declarations were detected in this source file.',
+      : hasLeanSource
+        ? 'No Lean declarations were detected in the configured Lean source file.'
+        : 'No Lean source is paired with this textbook entry. Keep `formal_review` pending until a formalization is added.',
     '',
     '## Review Decision',
     '- `informal_review`: the informal textbook statement is the intended source item.',
-    '- `formal_review`: the displayed Lean declarations are a reasonable formalization of the informal statement.'
+    hasLeanSource
+      ? '- `formal_review`: the displayed Lean declarations are a reasonable formalization of the informal statement.'
+      : '- `formal_review`: remains pending because this entry has no paired Lean source.'
   ];
   return pieces.filter((item): item is string => item !== null).join('\n').trim();
 }
@@ -141,7 +146,7 @@ export function readTaskSource(projectId: string, task: ReviewTask): TaskSource 
       title: 'Review target',
       kind: 'markdown',
       language: 'markdown',
-      content: renderAlignmentTarget(task, textbookEntry, formalItems.length),
+      content: renderAlignmentTarget(task, textbookEntry, formalItems.length, leanSources.length > 0),
       editable: false
     });
   }

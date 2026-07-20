@@ -6,11 +6,17 @@ export type ProjectConfig = ReviewProject & {
   yamlPath: string;
   jsonPath?: string;
   textbookZipPath?: string;
+  textbookOverlayPaths?: string[];
 };
 
 const smoothManifoldsLeeZipPath = path.join(
   projectRoot,
   'projects/smooth-manifolds-lee/sources/smooth-manifolds.zip'
+);
+
+const smoothManifoldsLeeOverlayPath = path.join(
+  projectRoot,
+  'projects/smooth-manifolds-lee/sources/errata/ism-2e.json'
 );
 
 const projectConfigs: ProjectConfig[] = [
@@ -30,7 +36,8 @@ const projectConfigs: ProjectConfig[] = [
     taskPath: 'projects/smooth-manifolds-lee/tasks/all.tasks.yaml',
     reviewKind: 'lean_textbook',
     yamlPath: path.join(projectRoot, 'projects/smooth-manifolds-lee/tasks/all.tasks.yaml'),
-    textbookZipPath: process.env.SMOOTH_MANIFOLDS_LEE_ZIP ?? smoothManifoldsLeeZipPath
+    textbookZipPath: process.env.SMOOTH_MANIFOLDS_LEE_ZIP ?? smoothManifoldsLeeZipPath,
+    textbookOverlayPaths: [smoothManifoldsLeeOverlayPath]
   }
 ];
 

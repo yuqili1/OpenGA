@@ -7,6 +7,7 @@ import { projectRoot } from '../taskStore/paths.js';
 import type { LeanDeclaration, LeanParsedCommand } from './types.js';
 
 const leanSourceCache = new Map<string, string>();
+const leeImportRef = 'import/smooth-manifolds-lee';
 
 type FormalStatementItem = {
   id: string;
@@ -17,6 +18,13 @@ type FormalStatementItem = {
   meta: string[];
   description?: string;
 };
+
+function compatibleImportRefs(ref: string): string[] {
+  const match = ref.match(/^(origin|upstream)\/(import\/smooth-manifolds-lee)$/);
+  if (!match) return [ref];
+  const alternateRemote = match[1] === 'origin' ? 'upstream' : 'origin';
+  return [ref, `${alternateRemote}/${leeImportRef}`];
+}
 
 export function readLeanFromGit(ref: string, leanFile: string): string {
   if (!/^[A-Za-z0-9_./-]+$/.test(ref)) {
@@ -29,13 +37,27 @@ export function readLeanFromGit(ref: string, leanFile: string): string {
   const cached = leanSourceCache.get(cacheKey);
   if (cached) return cached;
 
-  const source = execFileSync('git', ['show', `${ref}:${leanFile}`], {
-    cwd: projectRoot,
-    encoding: 'utf-8',
-    maxBuffer: 10 * 1024 * 1024
-  });
-  leanSourceCache.set(cacheKey, source);
-  return source;
+  const errors: string[] = [];
+  for (const candidateRef of compatibleImportRefs(ref)) {
+    try {
+      const source = execFileSync('git', ['show', `${candidateRef}:${leanFile}`], {
+        cwd: projectRoot,
+        encoding: 'utf-8',
+        maxBuffer: 10 * 1024 * 1024,
+        stdio: ['ignore', 'pipe', 'pipe']
+      });
+      leanSourceCache.set(cacheKey, source);
+      return source;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      errors.push(`${candidateRef}: ${message}`);
+    }
+  }
+  throw new Error(
+    `Unable to read ${leanFile} from ${compatibleImportRefs(ref).join(' or ')}. ` +
+      'Fetch the SmoothManifoldsLee import branch from the configured fork/upstream remote.\n' +
+      errors.join('\n')
+  );
 }
 
 function normalizeDocstringText(source: string): string | null {

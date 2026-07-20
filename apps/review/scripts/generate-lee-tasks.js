@@ -6,10 +6,15 @@ import { dump, load } from 'js-yaml';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '../../..');
-const importRef = process.env.SMOOTH_MANIFOLDS_LEE_IMPORT_REF ?? 'origin/import/smooth-manifolds-lee';
+const configuredImportRef = process.env.SMOOTH_MANIFOLDS_LEE_IMPORT_REF?.trim() || undefined;
+const importRef = configuredImportRef ?? 'origin/import/smooth-manifolds-lee';
 const textbookZipPath =
   process.env.SMOOTH_MANIFOLDS_LEE_ZIP ??
   path.join(projectRoot, 'projects/smooth-manifolds-lee/sources/smooth-manifolds.zip');
+const textbookOverlayPath = path.join(
+  projectRoot,
+  'projects/smooth-manifolds-lee/sources/errata/ism-2e.json'
+);
 const jsonPrefix =
   'sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee';
 const taskDir = path.join(projectRoot, 'projects/smooth-manifolds-lee/tasks');
@@ -25,6 +30,36 @@ function run(command, args, options = {}) {
     ...options
   });
 }
+
+function displayPath(filePath) {
+  const relative = path.relative(projectRoot, filePath);
+  return !path.isAbsolute(relative) && relative !== '..' && !relative.startsWith(`..${path.sep}`)
+    ? relative
+    : filePath;
+}
+
+function gitRefExists(ref) {
+  try {
+    run('git', ['rev-parse', '--verify', '--quiet', `${ref}^{commit}`]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function resolveImportReadRef() {
+  if (configuredImportRef !== undefined) {
+    if (gitRefExists(importRef)) return importRef;
+    throw new Error(`Configured SmoothManifoldsLee import ref not found: ${importRef}`);
+  }
+  if (gitRefExists(importRef)) return importRef;
+
+  const upstreamRef = importRef.replace(/^origin\//, 'upstream/');
+  if (upstreamRef !== importRef && gitRefExists(upstreamRef)) return upstreamRef;
+  throw new Error(`SmoothManifoldsLee import ref not found: ${importRef} or ${upstreamRef}`);
+}
+
+const importReadRef = resolveImportReadRef();
 
 function safeReadYaml(filePath) {
   if (!fs.existsSync(filePath)) return null;
@@ -49,25 +84,74 @@ function zipJsonEntries() {
     .sort();
 }
 
+function loadTextbookOverlay() {
+  const document = JSON.parse(fs.readFileSync(textbookOverlayPath, 'utf-8'));
+  if (
+    document.schema !== 'openga-review.textbook-overlay.v1' ||
+    !Array.isArray(document.operations)
+  ) {
+    throw new Error(`Invalid textbook overlay: ${textbookOverlayPath}`);
+  }
+  return document.operations;
+}
+
+function applyTextbookOverlay(entries, entryPath, operations, appliedOperations) {
+  const result = entries.map((entry) => ({ ...entry }));
+  operations.forEach((operation, operationIndex) => {
+    if (operation.textbook_json !== entryPath) return;
+    const matches = result
+      .map((entry, index) => (entry.label === operation.label ? index : -1))
+      .filter((index) => index !== -1);
+    if (operation.operation === 'merge' && matches.length === 1) {
+      result[matches[0]] = { ...result[matches[0]], ...operation.patch };
+    } else if (operation.operation === 'append' && matches.length === 0) {
+      if (operation.entry?.label !== operation.label) {
+        throw new Error(`Overlay entry label mismatch for ${entryPath}#${operation.label}`);
+      }
+      result.push({ ...operation.entry });
+    } else {
+      throw new Error(
+        `Overlay ${operation.operation} for ${entryPath}#${operation.label} matched ${matches.length} entries`
+      );
+    }
+    appliedOperations.add(operationIndex);
+  });
+  return result;
+}
+
 function loadTextbookSections() {
   const sections = new Map();
+  const overlayOperations = loadTextbookOverlay();
+  const appliedOperations = new Set();
   for (const entryPath of zipJsonEntries()) {
     const match = entryPath.match(/section(\d+)\.json$/);
     if (!match) continue;
     const sectionNumber = Number(match[1]);
     const raw = run('unzip', ['-p', textbookZipPath, entryPath]);
-    const entries = JSON.parse(raw);
+    const entries = applyTextbookOverlay(
+      JSON.parse(raw),
+      entryPath,
+      overlayOperations,
+      appliedOperations
+    );
     const labels = new Map();
     for (const [index, entry] of entries.entries()) {
       if (entry.label) labels.set(entry.label, { entry, index });
     }
     sections.set(sectionNumber, { entryPath, entries, labels });
   }
+  if (appliedOperations.size !== overlayOperations.length) {
+    const missing = overlayOperations
+      .map((operation, index) => ({ operation, index }))
+      .filter(({ index }) => !appliedOperations.has(index))
+      .map(({ operation }) => `${operation.textbook_json}#${operation.label}`);
+    throw new Error(`Textbook overlay targets were not applied: ${missing.join(', ')}`);
+  }
   return sections;
 }
 
 function leanPaths() {
-  return run('git', ['ls-tree', '-r', '--name-only', importRef])
+  return run('git', ['ls-tree', '-r', '--name-only', importReadRef])
     .split(/\r?\n/)
     .filter((item) =>
       /^staging\/SmoothManifoldsLee\/SmoothManifoldsLee\/Chap\d+\/.+\.lean$/.test(item)
@@ -84,6 +168,12 @@ function sectionNumberFromPath(leanPath) {
 function chapterNumberFromPath(leanPath) {
   const chapterPart = leanPath.split('/')[3];
   return Number(chapterPart.replace(/^Chap0*/, ''));
+}
+
+function chapterNumberFromTextbookEntry(entry, sectionInfo) {
+  const raw = entry.context?.chapter_number ?? sectionInfo.entries[0]?.context?.chapter_number;
+  const chapterNumber = Number(raw);
+  return Number.isInteger(chapterNumber) && chapterNumber > 0 ? chapterNumber : null;
 }
 
 function labelFromLeanFilename(fileName) {
@@ -127,6 +217,33 @@ function topLevelOwnerForAuxLean(leanPath, topLevelLeanSet) {
     }
   }
   return null;
+}
+
+function leanModuleName(leanPath) {
+  const prefix = 'staging/SmoothManifoldsLee/';
+  if (!leanPath.startsWith(prefix) || !leanPath.endsWith('.lean')) return null;
+  return leanPath.slice(prefix.length, -'.lean'.length).replaceAll('/', '.');
+}
+
+const directLeanImportsCache = new Map();
+
+function directLeanImports(leanPath) {
+  const cached = directLeanImportsCache.get(leanPath);
+  if (cached) return cached;
+
+  const imports = new Set();
+  const source = run('git', ['show', `${importReadRef}:${leanPath}`]);
+  for (const line of source.split(/\r?\n/)) {
+    const match = line
+      .replace(/--.*$/, '')
+      .match(/^\s*(?:public\s+)?import\s+(.+?)\s*$/);
+    if (!match) continue;
+    for (const moduleName of match[1].trim().split(/\s+/)) {
+      if (moduleName) imports.add(moduleName);
+    }
+  }
+  directLeanImportsCache.set(leanPath, imports);
+  return imports;
 }
 
 function slug(input) {
@@ -192,6 +309,7 @@ function mergeReviewState(task, previous) {
 function buildCandidates(sections) {
   const candidates = [];
   const unmatchedTopLevelLean = [];
+  const unmatchedLabeledTopLevelLean = [];
   const nestedAuxLean = [];
   const unattachedNestedAuxLean = [];
   const attachedAuxLean = [];
@@ -199,6 +317,7 @@ function buildCandidates(sections) {
   const paths = leanPaths();
   const topLevelLeanPaths = paths.filter((leanPath) => leanPath.split('/').length === 6);
   const topLevelLeanSet = new Set(topLevelLeanPaths);
+  const importedChapterNumbers = new Set(topLevelLeanPaths.map(chapterNumberFromPath));
 
   for (const leanPath of paths) {
     const parts = leanPath.split('/');
@@ -248,7 +367,7 @@ function buildCandidates(sections) {
     }
     const labelInfo = sectionInfo?.labels.get(label);
     if (!labelInfo) {
-      unmatchedTopLevelLean.push({
+      unmatchedLabeledTopLevelLean.push({
         path: leanPath,
         label,
         section: sectionNumber,
@@ -258,6 +377,7 @@ function buildCandidates(sections) {
       continue;
     }
 
+    if (!supportingLeanByOwner.has(leanPath)) supportingLeanByOwner.set(leanPath, []);
     candidates.push({
       chapterNumber,
       sectionNumber,
@@ -268,6 +388,59 @@ function buildCandidates(sections) {
       jsonIndex: labelInfo.index,
       context: labelInfo.entry.context ?? {}
     });
+  }
+
+  for (const unmatched of unmatchedLabeledTopLevelLean) {
+    const helperModule = leanModuleName(unmatched.path);
+    const owners = helperModule
+      ? candidates
+          .filter(
+            (candidate) =>
+              candidate.sectionNumber === unmatched.section &&
+              directLeanImports(candidate.leanPath).has(helperModule)
+          )
+          .sort(
+            (a, b) =>
+              a.jsonIndex - b.jsonIndex || a.leanPath.localeCompare(b.leanPath)
+          )
+      : [];
+    const owner = owners[0];
+    if (!owner) {
+      unmatchedTopLevelLean.push(unmatched);
+      continue;
+    }
+
+    attachedAuxLean.push(
+      addSupportingLeanFile(
+        supportingLeanByOwner,
+        owner.leanPath,
+        unmatched.path,
+        'imported-top-level'
+      )
+    );
+  }
+
+  const pairedLabels = new Set(
+    candidates.map((item) => `${item.sectionNumber}\t${item.label}`)
+  );
+  for (const [sectionNumber, sectionInfo] of sections) {
+    for (const [label, labelInfo] of sectionInfo.labels) {
+      if (pairedLabels.has(`${sectionNumber}\t${label}`)) continue;
+
+      const chapterNumber = chapterNumberFromTextbookEntry(labelInfo.entry, sectionInfo);
+      if (chapterNumber === null || !importedChapterNumbers.has(chapterNumber)) continue;
+
+      candidates.push({
+        chapterNumber,
+        sectionNumber,
+        label,
+        leanPath: null,
+        supportingLeanPaths: [],
+        jsonPath: sectionInfo.entryPath,
+        jsonIndex: labelInfo.index,
+        context: labelInfo.entry.context ?? {}
+      });
+    }
   }
 
   candidates.sort((a, b) =>
@@ -333,7 +506,7 @@ function buildDataset(candidates, sections, previous) {
       dcref: null,
       chapter: chapterNumber,
       title: `Chapter ${chapterNumber} — ${chapterTitle(chapterNumber, sectionInfos)}`,
-      description: `Chapter ${chapterNumber} entries paired with imported SmoothManifoldsLee Lean files.`,
+      description: `Chapter ${chapterNumber} textbook entries, with imported SmoothManifoldsLee Lean files attached where available.`,
       status: 'todo',
       checks: {},
       review_notes: [],
@@ -356,7 +529,7 @@ function buildDataset(candidates, sections, previous) {
         dcref: `lee-sm:${chapterNumber}.${sectionNumber}`,
         chapter: chapterNumber,
         title: `Section ${sectionNumber} — ${sectionTitle(sectionNumber, sectionInfo)}`,
-        description: `Textbook section ${sectionNumber} entries paired with imported Lean files.`,
+        description: `Textbook section ${sectionNumber} entries, with imported Lean files attached where available.`,
         status: 'todo',
         checks: {},
         review_notes: [],
@@ -368,15 +541,25 @@ function buildDataset(candidates, sections, previous) {
 
       for (const item of items) {
         const id = taskId(chapterNumber, sectionNumber, item.label);
-        const leanFiles = [item.leanPath, ...item.supportingLeanPaths];
+        const leanFiles = item.leanPath
+          ? [item.leanPath, ...item.supportingLeanPaths]
+          : [];
         const source = {
           textbook_json: item.jsonPath,
-          textbook_label: item.label,
-          import_ref: importRef,
-          lean_file: item.leanPath
+          textbook_label: item.label
         };
+        if (item.leanPath) {
+          source.import_ref = importRef;
+          source.lean_file = item.leanPath;
+        }
         if (leanFiles.length > 1) {
           source.lean_files = leanFiles;
+        }
+        const files = {
+          textbook_json: item.jsonPath
+        };
+        if (item.leanPath) {
+          files.lean_source = item.leanPath;
         }
         const task = {
           id,
@@ -387,17 +570,16 @@ function buildDataset(candidates, sections, previous) {
           dcref: dcref(item.label),
           chapter: chapterNumber,
           title: item.label,
-          description: `Textbook source and Lean file review for ${item.label}.`,
+          description: item.leanPath
+            ? `Textbook source and Lean file review for ${item.label}.`
+            : `Textbook source review for ${item.label}; no imported Lean file is currently paired.`,
           status: 'todo',
           checks: {
             informal_review: 'pending',
             formal_review: 'pending'
           },
           review_notes: [],
-          files: {
-            textbook_json: item.jsonPath,
-            lean_source: item.leanPath
-          },
+          files,
           editable: [],
           github: emptyGithub(),
           review_kind: 'lean_textbook',
@@ -426,17 +608,20 @@ function report(
   attachedAuxLean,
   unattachedNestedAuxLean
 ) {
-  const matchedLabels = new Set(candidates.map((item) => `${item.sectionNumber}\t${item.label}`));
-  const importedSections = new Set(candidates.map((item) => item.sectionNumber));
-  const jsonWithoutLean = [];
+  const pairedCandidates = candidates.filter((item) => item.leanPath !== null);
+  const textbookOnlyCandidates = candidates.filter((item) => item.leanPath === null);
+  const generatedLabels = new Set(
+    candidates.map((item) => `${item.sectionNumber}\t${item.label}`)
+  );
+  const jsonWithoutLean = textbookOnlyCandidates.map(({ sectionNumber, label }) => ({
+    section: sectionNumber,
+    label
+  }));
   const jsonOutsideImportedSections = [];
   for (const [sectionNumber, sectionInfo] of sections) {
     for (const label of sectionInfo.labels.keys()) {
-      if (!matchedLabels.has(`${sectionNumber}\t${label}`)) {
-        const target = importedSections.has(sectionNumber)
-          ? jsonWithoutLean
-          : jsonOutsideImportedSections;
-        target.push({ section: sectionNumber, label });
+      if (!generatedLabels.has(`${sectionNumber}\t${label}`)) {
+        jsonOutsideImportedSections.push({ section: sectionNumber, label });
       }
     }
   }
@@ -452,10 +637,15 @@ function report(
 
   return {
     importRef,
-    textbookZipPath,
+    textbookZipPath: displayPath(textbookZipPath),
+    textbookOverlayPath: displayPath(textbookOverlayPath),
     generatedReviewTasks: candidates.length,
-    matchedByChapter: countBy(candidates, (item) => `chapter${item.chapterNumber}`),
-    matchedBySection: countBy(candidates, (item) => `section${String(item.sectionNumber).padStart(2, '0')}`),
+    leanPairedReviewTasks: pairedCandidates.length,
+    textbookOnlyReviewTasks: textbookOnlyCandidates.length,
+    matchedByChapter: countBy(pairedCandidates, (item) => `chapter${item.chapterNumber}`),
+    matchedBySection: countBy(pairedCandidates, (item) => `section${String(item.sectionNumber).padStart(2, '0')}`),
+    textbookOnlyByChapter: countBy(textbookOnlyCandidates, (item) => `chapter${item.chapterNumber}`),
+    textbookOnlyBySection: countBy(textbookOnlyCandidates, (item) => `section${String(item.sectionNumber).padStart(2, '0')}`),
     unmatchedTopLevelLean,
     nestedAuxLean,
     attachedAuxLean,
@@ -464,8 +654,11 @@ function report(
     jsonLabelsOutsideImportedSections: jsonOutsideImportedSections,
     notes: [
       'Auxiliary Lean files are attached to their canonical owner task when a matching owner exists.',
-      'JSON entries without matching Lean files inside imported sections are reported but do not block review generation.',
-      'JSON entries outside imported sections are separated from the current Ch1-Ch5 review queue.'
+      'Tracked official errata overlays are applied before textbook labels are matched or generated.',
+      'Top-level Lean files without a JSON label are attached to the earliest paired task in the same section that directly imports them; otherwise they remain unmatched.',
+      'JSON entries without matching Lean files inside imported chapters are generated as textbook-only review tasks without synthetic Lean paths.',
+      'New textbook-only tasks start with both checks pending; formal review remains visible after mathematical review is completed.',
+      'JSON entries outside imported chapters are separated from the current Ch1-Ch5 review queue.'
     ]
   };
 }
@@ -490,6 +683,9 @@ const reportText = JSON.stringify(
 fs.writeFileSync(outputPath, yamlText, 'utf-8');
 fs.writeFileSync(reportPath, `${reportText}\n`, 'utf-8');
 
+if (importReadRef !== importRef) {
+  console.log(`Read imported Lean files from ${importReadRef}; task metadata uses ${importRef}.`);
+}
 console.log(`Generated ${candidates.length} SmoothManifoldsLee review tasks.`);
 console.log(`Wrote ${path.relative(projectRoot, outputPath)}`);
 console.log(`Wrote ${path.relative(projectRoot, reportPath)}`);
