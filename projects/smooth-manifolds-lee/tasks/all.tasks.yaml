@@ -6443,7 +6443,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Definition 4.21-extra-1 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 8 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：第 (6) 条把 mathlib 的局部标准形 `IsImmersion` 与 Lee 的“光滑且 `mfderiv` 处处单射”在任意 `ModelWithCorners` 上直接等同，原样为假；反例 `F: ℝ → ℝ × [0,∞)`, `F(t) = (t,t²)` 的导数处处单射，但像在 `t=0` 接触边界、邻点进入内点，保持边界分层的图无法将其拉直为标准包含。建议另定义 Lee 式 immersion，或至少对桥定理加入目标内点/无边界限制；Lean：文件仍有 8 处 `sorry`，且 mathlib 4.30 将 `IsImmersion` 与 `mfderiv` 的两个方向均列为 TODO，故此处首先需要修正 statement，而非直接补证明。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section21.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Definition_4_21_extra_1.lean
@@ -6952,7 +6952,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.14 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 3 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Theorem 4.14 的三条全局秩定理陈述正确，不需额外连通性假设；Lean：三处 `sorry` 均未获得无 `sorryAx` 的独立闭合。第三条可由前两条与局部微分同胚 API 组合编译，但公理检查会传递前两条及相关桥定理的 `sorryAx`，不能计为 verified；前两条的实质 blocker 是常秩局部标准形以及预紧覆盖/Baire 或局部非单射论证。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section23.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_14.lean
@@ -6985,7 +6985,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Lee 的带边流形局部浸入定理陈述正确；Lean：已验证补丁闭合当前文件两处 `sorry`，边界图平移与目标补空间正规化均通过编译及 axioms 检查。当前声明假设 mathlib 以局部正规形定义的 `Manifold.IsImmersion`；它与 Lee 的“微分处处单射”定义之间的桥仍在 `Definition_4_21_extra_1.lean` 含 `sorry`，因此现有声明 proof-complete，但教材原始假设的语义覆盖仍 pending。
+  - 数学：Lee 的带边源、无边界目标局部浸入定理陈述正确；Lean：已验证补丁闭合当前文件两处 `sorry`，边界图平移与目标补空间正规化均通过编译及 axioms 检查。当前声明假设 mathlib 以局部正规形定义的 `Manifold.IsImmersion`；`Definition_4_21_extra_1` 中面向任意带角目标的导数单射桥原样为假，需改成适用于本定理无边界目标的专门桥，故现有声明 proof-complete，但教材原始假设的语义覆盖仍 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section23.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean

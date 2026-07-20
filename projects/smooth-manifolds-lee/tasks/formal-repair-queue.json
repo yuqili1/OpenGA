@@ -9,7 +9,7 @@
     "directSorryTasks": 106,
     "directSorryTokens": 357,
     "reviewedRepairOwners": 26,
-    "semanticDesignBeforeProof": 4,
+    "semanticDesignBeforeProof": 5,
     "lowRiskCompleteCandidates": 8,
     "lowRiskPartialCandidates": 5,
     "verifiedLowRiskCandidates": 13,
@@ -284,7 +284,7 @@
         "proposal": "Project the structure's existing maps-to field directly, then center the boundary chart by a boundary-tangent translation and normalize the immersion complement to the standard Euclidean coordinate inclusion.",
         "semanticCoverage": {
           "status": "unresolved",
-          "finding": "The verified patch completes the current Lean statement under mathlib's local-normal-form definition of `Manifold.IsImmersion`. Lee defines immersion by injectivity of the differential; the finite-dimensional equivalence is still the separate sorry in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv`, so coverage from the textbook hypothesis remains externally blocked."
+          "finding": "The verified patch completes the current Lean statement under mathlib's local-normal-form definition of `Manifold.IsImmersion`. Lee instead assumes injectivity of the differential. The general bridge stated in `Definition_4_21_extra_1` is false for arbitrary manifolds with corners; this boundary-source, boundaryless-target theorem needs a correctly restricted specialized bridge before it covers Lee's original hypothesis."
         },
         "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch",
         "status": "verified_compiled_no_sorryAx",
@@ -709,10 +709,10 @@
         "formalPendingTransitiveUnlockTaskIds": []
       },
       "reviewFlags": {
-        "semanticCoverageFinding": false,
+        "semanticCoverageFinding": true,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "scope_proof_and_dependencies",
+      "firstAction": "resolve_statement_or_coverage_before_proof",
       "lowRiskCandidate": null,
       "rank": 11
     },

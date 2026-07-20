@@ -446,7 +446,7 @@
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
     "Five validated candidates are partial: their patched temporary files retain fifteen direct sorry tokens outside the candidate scope.",
     "The Theorem 4.12 immersion normal form is verified without using the remaining constant-rank or submersion owner holes; those two direct sorry tokens remain explicit.",
-    "The Theorem 4.15 current Lean statement is fully proved, but coverage from Lee's differential-injectivity definition remains blocked by the separate sorry in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv`.",
+    "The Theorem 4.15 current Lean statement is fully proved, but coverage from Lee's differential-injectivity definition still needs a boundaryless-target bridge; the more general bridge currently stated in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv` is false for arbitrary targets with corners.",
     "The downstream Problem 4-3 module compiles with the Theorem 4.15 candidate but retains its own direct sorry in `constant_rank_boundary_local_coordinate_normal_form`.",
     "The Proposition 5.2 candidate closes both current direct sorry tokens and adds a verified identity-diffeomorphism formulation of the textbook's uniqueness claim; the pinned source still has that semantic-coverage finding until the patch is applied.",
     "The downstream Problem 5.1 module compiles with the Proposition 5.2 candidate but retains pre-existing transitive sorryAx from its recorded Chapter 4 owners.",

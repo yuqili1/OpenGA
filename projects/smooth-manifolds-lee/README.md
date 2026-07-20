@@ -100,8 +100,10 @@ patch is applied.
 
 The Theorem 4.15 patch closes both direct holes in its current boundary-immersion
 statement. That statement uses mathlib's local-normal-form definition of
-`Manifold.IsImmersion`; the separate equivalence with Lee's differential-injectivity
-definition remains an unresolved bridge in `Definition_4_21_extra_1.lean`.
+`Manifold.IsImmersion`. The attempted general equivalence with Lee's
+differential-injectivity definition in `Definition_4_21_extra_1.lean` is false
+for arbitrary targets with corners: a correctly restricted bridge, such as for
+the boundaryless target used by Theorem 4.15, is still required.
 
 The larger verified repairs are also preserved as replayable patches at:
 

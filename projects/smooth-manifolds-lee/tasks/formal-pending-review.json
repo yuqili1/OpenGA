@@ -14,7 +14,7 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 39,
+    "semanticCoverageFindings": 40,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
     "lowRiskPatchCandidates": 14,
@@ -65,6 +65,7 @@
       {
         "chapter": 4,
         "taskIds": [
+          "sml.ch4.sec21.definition-4-21-extra-1",
           "sml.ch4.sec21.exercise-4-3",
           "sml.ch4.sec23.theorem-4-15",
           "sml.ch4.sec24.example-4-19",
@@ -460,7 +461,7 @@
       "proposal": "Project the structure's existing maps-to field directly, then center the boundary chart by a boundary-tangent translation and normalize the immersion complement to the standard Euclidean coordinate inclusion.",
       "semanticCoverage": {
         "status": "unresolved",
-        "finding": "The verified patch completes the current Lean statement under mathlib's local-normal-form definition of `Manifold.IsImmersion`. Lee defines immersion by injectivity of the differential; the finite-dimensional equivalence is still the separate sorry in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv`, so coverage from the textbook hypothesis remains externally blocked."
+        "finding": "The verified patch completes the current Lean statement under mathlib's local-normal-form definition of `Manifold.IsImmersion`. Lee instead assumes injectivity of the differential. The general bridge stated in `Definition_4_21_extra_1` is false for arbitrary manifolds with corners; this boundary-source, boundaryless-target theorem needs a correctly restricted specialized bridge before it covers Lee's original hypothesis."
       },
       "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch",
       "status": "verified_compiled_no_sorryAx",
