@@ -1,0 +1,624 @@
+--- a/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean
++++ b/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean
+@@ -2,0 +3 @@
++import SmoothManifoldsLee.Chap04.Sec04_22.Theorem_4_5
+@@ -49 +50,2 @@
+-    rank_normal_form m n r x i = x ⟨i.1, hmi⟩ := sorry
++    rank_normal_form m n r x i = x ⟨i.1, hmi⟩ := by
++  simp [rank_normal_form, hri, hmi]
+@@ -75 +77,2 @@
+-    MapsTo F h.domChart.source h.codChart.source := sorry
++    MapsTo F h.domChart.source h.codChart.source := by
++  exact h.mapsTo
+@@ -89,0 +93,246 @@
++/- The following helpers turn the inverse-function normal coordinates attached to a surjective
++derivative into the standard Euclidean ordering with target coordinates first. -/
++
++private noncomputable def submersionDerivative (F : M → N) (p : M) :
++    EuclideanSpace ℝ (Fin m) →L[ℝ] EuclideanSpace ℝ (Fin n) :=
++  mfderiv I_m I_n F p
++
++private theorem submersionTargetDim_le {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) : n ≤ m := by
++  simpa only [finrank_euclideanSpace_fin] using
++    (LinearMap.finrank_le_finrank_of_surjective
++      (f := (submersionDerivative (m := m) (n := n) F p).toLinearMap)
++      (by simpa [submersionDerivative] using hF.surjective_mfderiv p))
++
++private theorem submersionKernelFinrankEq {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    Module.finrank ℝ (submersionDerivative (m := m) (n := n) F p).ker = m - n := by
++  let L := submersionDerivative (m := m) (n := n) F p
++  have hsurj : Function.Surjective L := by
++    simpa [L, submersionDerivative] using hF.surjective_mfderiv p
++  have hrange : L.range = ⊤ := LinearMap.range_eq_top.mpr hsurj
++  have hrange_finrank : Module.finrank ℝ L.range = n := by
++    rw [hrange, finrank_top]
++    exact finrank_euclideanSpace_fin
++  have hsum : n + Module.finrank ℝ L.ker = m := by
++    have hraw := L.toLinearMap.finrank_range_add_finrank_ker
++    rw [hrange_finrank] at hraw
++    simpa only [finrank_euclideanSpace_fin] using hraw
++  apply Nat.eq_sub_of_add_eq
++  simpa only [Nat.add_comm] using hsum
++
++private noncomputable def submersionKernelEuclideanEquiv {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    (submersionDerivative (m := m) (n := n) F p).ker ≃L[ℝ]
++      EuclideanSpace ℝ (Fin (m - n)) := by
++  apply ContinuousLinearEquiv.ofFinrankEq
++  simpa only [finrank_euclideanSpace_fin] using submersionKernelFinrankEq p hF
++
++private noncomputable def submersionStandardSourceSplit {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    EuclideanSpace ℝ (Fin m) ≃L[ℝ]
++      EuclideanSpace ℝ (Fin n) × EuclideanSpace ℝ (Fin (m - n)) := by
++  have hsum : n + (m - n) = m := Nat.add_sub_of_le (submersionTargetDim_le p hF)
++  exact
++    (LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ (finCongr hsum.symm)).toContinuousLinearEquiv.trans
++      (EuclideanSpace.finAddEquivProd (𝕜 := ℝ) (n := n) (m := m - n))
++
++private noncomputable def submersionStandardSourceJoin {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    (EuclideanSpace ℝ (Fin n) × EuclideanSpace ℝ (Fin (m - n)))
++      ≃L[ℝ] EuclideanSpace ℝ (Fin m) :=
++  (submersionStandardSourceSplit p hF).symm
++
++private theorem submersionRankNormalForm_join {F : M → N} {p : M}
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F)
++    (u : EuclideanSpace ℝ (Fin n)) (v : EuclideanSpace ℝ (Fin (m - n))) :
++    rank_normal_form m n n (submersionStandardSourceJoin p hF (u, v)) = u := by
++  have hnm : n ≤ m := submersionTargetDim_le p hF
++  have hsum : n + (m - n) = m := Nat.add_sub_of_le hnm
++  ext i
++  rw [rank_normal_form_apply_of_lt i.2 (lt_of_lt_of_le i.2 hnm)]
++  simp [submersionStandardSourceJoin, submersionStandardSourceSplit,
++    LinearEquiv.prodCongr_symm, LinearEquiv.prodCongr_apply,
++    WithLp.linearEquiv_apply]
++  have hcast :
++      Fin.cast hsum.symm ⟨i.1, lt_of_lt_of_le i.2 hnm⟩ =
++        Fin.castAdd (m - n) i := by
++    ext
++    rfl
++  change Sum.rec u.ofLp v.ofLp
++      (finSumFinEquiv.symm
++        (Fin.cast hsum.symm ⟨i.1, lt_of_lt_of_le i.2 hnm⟩)) = u.ofLp i
++  rw [hcast, finSumFinEquiv_symm_apply_castAdd]
++
++private noncomputable def submersionKernelProjection {F : M → N} (p : M) :
++    EuclideanSpace ℝ (Fin m) →L[ℝ]
++      (submersionDerivative (m := m) (n := n) F p).ker :=
++  Classical.choose
++    (submersionDerivative (m := m) (n := n) F p).ker_closedComplemented_of_finiteDimensional_range
++
++private theorem submersionKernelProjection_spec {F : M → N} (p : M)
++    (x : (submersionDerivative (m := m) (n := n) F p).ker) :
++    submersionKernelProjection (m := m) (n := n) (F := F) p x = x := by
++  exact Classical.choose_spec
++    (submersionDerivative (m := m) (n := n) F p).ker_closedComplemented_of_finiteDimensional_range x
++
++private noncomputable def submersionCoordinateDerivativeEquiv {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    EuclideanSpace ℝ (Fin m) ≃L[ℝ] EuclideanSpace ℝ (Fin m) :=
++  ((submersionDerivative (m := m) (n := n) F p).equivProdOfSurjectiveOfIsCompl
++      (submersionKernelProjection (m := m) (n := n) (F := F) p)
++      (LinearMap.range_eq_top.mpr
++        (by simpa [submersionDerivative] using hF.surjective_mfderiv p))
++      (LinearMap.range_eq_of_proj
++        (submersionKernelProjection_spec (m := m) (n := n) (F := F) p))
++      (LinearMap.isCompl_of_proj
++        (submersionKernelProjection_spec (m := m) (n := n) (F := F) p))).trans
++    ((ContinuousLinearEquiv.refl ℝ (EuclideanSpace ℝ (Fin n))).prodCongr
++      (submersionKernelEuclideanEquiv p hF)) |>.trans
++    (submersionStandardSourceJoin p hF)
++
++private noncomputable def submersionCoordinateMap {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    EuclideanSpace ℝ (Fin m) → EuclideanSpace ℝ (Fin m) :=
++  fun x => submersionStandardSourceJoin p hF
++    (writtenInExtChartAt I_m I_n p F x -
++        writtenInExtChartAt I_m I_n p F (extChartAt I_m p p),
++      submersionKernelEuclideanEquiv p hF
++        (submersionKernelProjection (m := m) (n := n) (F := F) p
++          (x - extChartAt I_m p p)))
++
++private theorem submersionCoordinateMap_zero {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    submersionCoordinateMap p hF (extChartAt I_m p p) = 0 := by
++  simp [submersionCoordinateMap]
++
++private theorem submersionCoordinateMap_hasFDerivAt {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    HasFDerivAt (submersionCoordinateMap p hF)
++      ((submersionCoordinateDerivativeEquiv p hF :
++        EuclideanSpace ℝ (Fin m) →L[ℝ] EuclideanSpace ℝ (Fin m)))
++      (extChartAt I_m p p) := by
++  have hinterior :
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin m))).IsInteriorPoint p :=
++    BoundarylessManifold.isInteriorPoint
++  have hmd : MDifferentiableAt I_m I_n F p :=
++    hF.contMDiff.contMDiffAt.mdifferentiableAt (by simp)
++  have hleft0 : HasFDerivAt (writtenInExtChartAt I_m I_n p F)
++      (submersionDerivative (m := m) (n := n) F p) (extChartAt I_m p p) := by
++    simpa [submersionDerivative] using
++      writtenInExtChartAt_hasFDerivAt_of_isInteriorPoint hinterior hmd.hasMFDerivAt
++  have hleft := hleft0.sub_const
++    (writtenInExtChartAt I_m I_n p F (extChartAt I_m p p))
++  have hsub : HasFDerivAt
++      (fun x : EuclideanSpace ℝ (Fin m) => x - extChartAt I_m p p)
++      (ContinuousLinearMap.id ℝ (EuclideanSpace ℝ (Fin m))) (extChartAt I_m p p) :=
++    (hasFDerivAt_id _).sub_const _
++  have hproj : HasFDerivAt
++      (fun x : EuclideanSpace ℝ (Fin m) =>
++        submersionKernelProjection (m := m) (n := n) (F := F) p
++          (x - extChartAt I_m p p))
++      (submersionKernelProjection (m := m) (n := n) (F := F) p)
++      (extChartAt I_m p p) := by
++    simpa only [Function.comp_apply, ContinuousLinearMap.id_comp] using
++      (submersionKernelProjection (m := m) (n := n) (F := F) p).hasFDerivAt.comp
++        (extChartAt I_m p p) hsub
++  have hright : HasFDerivAt
++      (fun x : EuclideanSpace ℝ (Fin m) =>
++        submersionKernelEuclideanEquiv p hF
++          (submersionKernelProjection (m := m) (n := n) (F := F) p
++            (x - extChartAt I_m p p)))
++      ((submersionKernelEuclideanEquiv p hF :
++          (submersionDerivative (m := m) (n := n) F p).ker →L[ℝ]
++            EuclideanSpace ℝ (Fin (m - n))).comp
++        (submersionKernelProjection (m := m) (n := n) (F := F) p))
++      (extChartAt I_m p p) := by
++    simpa only [Function.comp_apply] using
++      (submersionKernelEuclideanEquiv p hF).hasFDerivAt.comp (extChartAt I_m p p) hproj
++  have hprod := hleft.prodMk hright
++  have hjoin := (submersionStandardSourceJoin p hF).hasFDerivAt.comp
++    (extChartAt I_m p p) hprod
++  simpa only [submersionCoordinateMap, submersionCoordinateDerivativeEquiv,
++    ContinuousLinearEquiv.trans_apply, ContinuousLinearEquiv.prodCongr_apply,
++    ContinuousLinearEquiv.refl_apply, Function.comp_apply] using hjoin
++
++private def submersionChartDomain (F : M → N) (p : M) :
++    Set (EuclideanSpace ℝ (Fin m)) :=
++  (extChartAt I_m p).target ∩
++    (F ∘ (extChartAt I_m p).symm) ⁻¹' (extChartAt I_n (F p)).source
++
++private theorem submersionChartDomain_mem_nhds {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    submersionChartDomain (m := m) (n := n) F p ∈ nhds (extChartAt I_m p p) := by
++  have hinterior :
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin m))).IsInteriorPoint p :=
++    BoundarylessManifold.isInteriorPoint
++  have htarget : (extChartAt I_m p).target ∈ nhds (extChartAt I_m p p) := by
++    rw [← nhdsWithin_eq_nhds.2 (range_mem_nhds_isInteriorPoint hinterior)]
++    exact extChartAt_target_mem_nhdsWithin (I := I_m) p
++  have hsource :
++      (F ∘ (extChartAt I_m p).symm) ⁻¹' (extChartAt I_n (F p)).source ∈
++        nhds (extChartAt I_m p p) := by
++    simpa [Function.comp] using
++      (extChartAt_preimage_mem_nhds (I := I_m) (x := p)
++        ((hF.contMDiff.contMDiffAt.continuousAt).preimage_mem_nhds
++          (extChartAt_source_mem_nhds (I := I_n) (F p))))
++  exact Filter.inter_mem htarget hsource
++
++private theorem submersionCoordinateMap_contDiffOn {F : M → N} (p : M)
++    (hF : Manifold.IsSmoothSubmersion I_m I_n F) :
++    ContDiffOn ℝ ∞ (submersionCoordinateMap p hF)
++      (submersionChartDomain (m := m) (n := n) F p) := by
++  have hleft0 : ContDiffOn ℝ ∞ (writtenInExtChartAt I_m I_n p F)
++      (submersionChartDomain (m := m) (n := n) F p) := by
++    simpa only [submersionChartDomain] using
++      writtenInExtChartAt_contDiffOn_of_contMDiff
++        (I := I_m) (J := I_n) (n := ∞) (f := F) (p := p) hF.contMDiff
++  have hleft : ContDiffOn ℝ ∞
++      (fun x => writtenInExtChartAt I_m I_n p F x -
++        writtenInExtChartAt I_m I_n p F (extChartAt I_m p p))
++      (submersionChartDomain (m := m) (n := n) F p) :=
++    hleft0.sub contDiffOn_const
++  have hsub : ContDiff ℝ ∞
++      (fun x : EuclideanSpace ℝ (Fin m) => x - extChartAt I_m p p) :=
++    contDiff_id.sub contDiff_const
++  have hproj : ContDiff ℝ ∞
++      (fun x : EuclideanSpace ℝ (Fin m) =>
++        submersionKernelProjection (m := m) (n := n) (F := F) p
++          (x - extChartAt I_m p p)) := by
++    simpa only [Function.comp_apply] using
++      (submersionKernelProjection (m := m) (n := n) (F := F) p).contDiff.comp hsub
++  have hright : ContDiff ℝ ∞
++      (fun x : EuclideanSpace ℝ (Fin m) =>
++        submersionKernelEuclideanEquiv p hF
++          (submersionKernelProjection (m := m) (n := n) (F := F) p
++            (x - extChartAt I_m p p))) := by
++    simpa only [Function.comp_apply] using
++      (submersionKernelEuclideanEquiv p hF).contDiff.comp hproj
++  have hprod := hleft.prodMk hright.contDiffOn
++  have hjoin := (submersionStandardSourceJoin p hF).contDiff.comp_contDiffOn hprod
++  simpa only [submersionCoordinateMap, Function.comp_apply] using hjoin
++
++private theorem submersionPartialDiffeomorph_mem_contDiffGroupoid
++    (Ψ : PartialDiffeomorph I_m I_m
++      (EuclideanSpace ℝ (Fin m)) (EuclideanSpace ℝ (Fin m)) ∞) :
++    Ψ.toOpenPartialHomeomorph ∈ contDiffGroupoid ∞ I_m := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · simpa [PartialDiffeomorph.toOpenPartialHomeomorph,
++      modelWithCornersSelf_coe, modelWithCornersSelf_coe_symm] using
++      Ψ.contMDiffOn_toFun.contDiffOn
++  · simpa [PartialDiffeomorph.toOpenPartialHomeomorph,
++      PartialDiffeomorph.symm, modelWithCornersSelf_coe,
++      modelWithCornersSelf_coe_symm] using Ψ.contMDiffOn_invFun.contDiffOn
++
++private theorem submersionTranslation_mem_contDiffGroupoid
++    {k : ℕ} (v : EuclideanSpace ℝ (Fin k)) :
++    (Homeomorph.addRight v).toOpenPartialHomeomorph ∈ contDiffGroupoid ∞
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin k))) := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · simpa [modelWithCornersSelf_coe, Homeomorph.addRight] using
++      (contDiff_id.add contDiff_const).contDiffOn
++  · simpa [modelWithCornersSelf_coe, Homeomorph.addRight] using
++      (contDiff_id.add contDiff_const).contDiffOn
++
+@@ -92,3 +341,4 @@
+--- Proof sketch: specialize the rank theorem to the full target rank `r = n`; a smooth
+--- submersion has surjective manifold derivative at every point, so the rank normal form becomes
+--- the projection form of equation `(4.2)`.
++-- Proof sketch: in preferred charts, combine the centered target-chart expression of `F` with a
++-- linear projection onto the kernel of its surjective derivative. This product has invertible
++-- derivative, so the inverse function theorem supplies a smooth source chart. Identifying the
++-- kernel with `ℝ^(m - n)` and ordering the target coordinates first gives equation `(4.2)`.
+@@ -98 +348,103 @@
+-    ∃ h : LocalCoordinateNormalFormAt F p (rank_normal_form m n n), True := sorry
++    ∃ h : LocalCoordinateNormalFormAt F p (rank_normal_form m n n), True := by
++  let a : EuclideanSpace ℝ (Fin m) := extChartAt I_m p p
++  have hΩ : submersionChartDomain (m := m) (n := n) F p ∈ nhds a := by
++    simpa only [a] using
++      submersionChartDomain_mem_nhds (m := m) (n := n) p hF
++  have hcoordOn :
++      ContDiffOn ℝ ∞ (submersionCoordinateMap p hF)
++        (submersionChartDomain (m := m) (n := n) F p) :=
++    submersionCoordinateMap_contDiffOn (m := m) (n := n) p hF
++  have hcoordAt : ContDiffAt ℝ ∞ (submersionCoordinateMap p hF) a :=
++    hcoordOn.contDiffAt hΩ
++  have hderiv : HasFDerivAt (submersionCoordinateMap p hF)
++      ((submersionCoordinateDerivativeEquiv p hF :
++        EuclideanSpace ℝ (Fin m) →L[ℝ] EuclideanSpace ℝ (Fin m))) a := by
++    simpa only [a] using submersionCoordinateMap_hasFDerivAt p hF
++  have hinv : (fderiv ℝ (submersionCoordinateMap p hF) a).IsInvertible := by
++    rw [hderiv.fderiv]
++    exact ContinuousLinearMap.isInvertible_equiv
++  obtain ⟨Ψ, haΨ, hΨsource, _hΨtarget, hΨeq⟩ :=
++    model_partialDiffeomorph_of_inverse_function_theorem
++      (𝕜 := ℝ) (E := EuclideanSpace ℝ (Fin m))
++      (F := EuclideanSpace ℝ (Fin m))
++      (g := submersionCoordinateMap p hF) (a := a)
++      (Ω := submersionChartDomain (m := m) (n := n) F p) (T := Set.univ)
++      (f' := submersionCoordinateDerivativeEquiv p hF)
++      hΩ hcoordOn (Set.mapsTo_univ _ _) hcoordAt hderiv (by simp) hinv
++  let domChart : OpenPartialHomeomorph M (EuclideanSpace ℝ (Fin m)) :=
++    (chartAt (EuclideanSpace ℝ (Fin m)) p).trans Ψ.toOpenPartialHomeomorph
++  let codChart : OpenPartialHomeomorph N (EuclideanSpace ℝ (Fin n)) :=
++    (chartAt (EuclideanSpace ℝ (Fin n)) (F p)).transHomeomorph
++      (Homeomorph.addRight (-(chartAt (EuclideanSpace ℝ (Fin n)) (F p) (F p))))
++  have hdom_mem : domChart ∈ IsManifold.maximalAtlas I_m ∞ M := by
++    exact Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++      (IsManifold.chart_mem_maximalAtlas p)
++      (submersionPartialDiffeomorph_mem_contDiffGroupoid Ψ)
++  have hcod_mem : codChart ∈ IsManifold.maximalAtlas I_n ∞ N := by
++    simpa [codChart, OpenPartialHomeomorph.transHomeomorph_eq_trans] using
++      (Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++        (IsManifold.chart_mem_maximalAtlas (F p))
++        (submersionTranslation_mem_contDiffGroupoid
++          (-(chartAt (EuclideanSpace ℝ (Fin n)) (F p) (F p)))))
++  refine ⟨{
++    domChart := domChart
++    codChart := codChart
++    domChart_mem_maximalAtlas := hdom_mem
++    codChart_mem_maximalAtlas := hcod_mem
++    domChart_centered := ?_
++    codChart_centered := ?_
++    mapsTo := ?_
++    eqOn := ?_ }, trivial⟩
++  · constructor
++    · change p ∈ ((chartAt (EuclideanSpace ℝ (Fin m)) p).trans
++          Ψ.toOpenPartialHomeomorph).source
++      rw [OpenPartialHomeomorph.trans_source]
++      exact ⟨mem_chart_source _ p, by simpa [a, extChartAt, modelWithCornersSelf_coe] using haΨ⟩
++    · simp only [domChart, OpenPartialHomeomorph.trans_apply]
++      have haΨ' : chartAt (EuclideanSpace ℝ (Fin m)) p p ∈ Ψ.source := by
++        simpa [a, extChartAt, modelWithCornersSelf_coe] using haΨ
++      calc
++        Ψ.toOpenPartialHomeomorph (chartAt (EuclideanSpace ℝ (Fin m)) p p) =
++            Ψ.toPartialEquiv (chartAt (EuclideanSpace ℝ (Fin m)) p p) := rfl
++        _ = submersionCoordinateMap p hF
++            (chartAt (EuclideanSpace ℝ (Fin m)) p p) := (hΨeq haΨ').symm
++        _ = 0 := by
++          simpa [a, extChartAt, modelWithCornersSelf_coe] using
++            submersionCoordinateMap_zero p hF
++  · constructor
++    · simpa [codChart, OpenPartialHomeomorph.transHomeomorph_source] using
++        (mem_chart_source (EuclideanSpace ℝ (Fin n)) (F p))
++    · simp [codChart, OpenPartialHomeomorph.transHomeomorph_apply]
++  · intro y hy
++    change y ∈ ((chartAt (EuclideanSpace ℝ (Fin m)) p).trans
++      Ψ.toOpenPartialHomeomorph).source at hy
++    rw [OpenPartialHomeomorph.trans_source] at hy
++    have hyΩ := hΨsource hy.2
++    have hFy : F y ∈ (chartAt (EuclideanSpace ℝ (Fin n)) (F p)).source := by
++      have hpre := hyΩ.2
++      simpa [submersionChartDomain, extChartAt, modelWithCornersSelf_coe,
++        modelWithCornersSelf_coe_symm, Function.comp, (chartAt _ p).left_inv hy.1] using hpre
++    simpa [codChart, OpenPartialHomeomorph.transHomeomorph_source] using hFy
++  · intro z hz
++    let y : M := domChart.symm z
++    have hy_dom : y ∈ domChart.source := domChart.map_target hz
++    have hy : y ∈ (chartAt (EuclideanSpace ℝ (Fin m)) p).source ∧
++        chartAt (EuclideanSpace ℝ (Fin m)) p y ∈ Ψ.source := by
++      simpa [domChart, OpenPartialHomeomorph.trans_source] using hy_dom
++    have hcoord : submersionCoordinateMap p hF
++        (chartAt (EuclideanSpace ℝ (Fin m)) p y) = z := by
++      rw [hΨeq hy.2]
++      have hright := domChart.right_inv hz
++      simpa [y, domChart, OpenPartialHomeomorph.trans_apply] using hright
++    have hnormal :
++        rank_normal_form m n n
++            (submersionCoordinateMap p hF (chartAt (EuclideanSpace ℝ (Fin m)) p y)) =
++          chartAt (EuclideanSpace ℝ (Fin n)) (F p) (F y) -
++            chartAt (EuclideanSpace ℝ (Fin n)) (F p) (F p) := by
++      rw [submersionCoordinateMap, submersionRankNormalForm_join]
++      simp [writtenInExtChartAt, extChartAt, Function.comp, (chartAt _ p).left_inv hy.1]
++    change codChart (F y) = rank_normal_form m n n z
++    simp only [codChart, OpenPartialHomeomorph.transHomeomorph_apply,
++      Function.comp_apply, Homeomorph.coe_addRight]
++    rw [← hcoord, hnormal]
++    rfl
+@@ -99,0 +452,156 @@
++/- The following private helpers convert mathlib's native local normal form for an immersion,
++whose complement and linear target coordinates are abstract, into the standard Euclidean
++first-coordinate inclusion used in the statement below. -/
++
++private theorem immersionComplement_finiteDimensional {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    FiniteDimensional ℝ h.complement := by
++  let inclusion : h.complement →ₗ[ℝ] EuclideanSpace ℝ (Fin n) :=
++    h.equiv.toLinearEquiv.toLinearMap.comp
++      (LinearMap.inr ℝ (EuclideanSpace ℝ (Fin m)) h.complement)
++  refine FiniteDimensional.of_injective inclusion ?_
++  intro x y hxy
++  have hpair : ((0 : EuclideanSpace ℝ (Fin m)), x) = (0, y) := by
++    apply h.equiv.injective
++    simpa [inclusion] using hxy
++  exact congrArg Prod.snd hpair
++
++private theorem immersionSourceDim_le {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) : m ≤ n := by
++  letI : FiniteDimensional ℝ h.complement := immersionComplement_finiteDimensional h
++  have hsum : m + Module.finrank ℝ h.complement = n := by
++    simpa only [Module.finrank_prod, finrank_euclideanSpace_fin] using
++      h.equiv.toLinearEquiv.finrank_eq
++  omega
++
++private theorem immersionComplement_finrank_eq {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    letI : FiniteDimensional ℝ h.complement := immersionComplement_finiteDimensional h
++    Module.finrank ℝ h.complement = n - m := by
++  letI : FiniteDimensional ℝ h.complement := immersionComplement_finiteDimensional h
++  have hsum : m + Module.finrank ℝ h.complement = n := by
++    simpa only [Module.finrank_prod, finrank_euclideanSpace_fin] using
++      h.equiv.toLinearEquiv.finrank_eq
++  omega
++
++private noncomputable def immersionComplementEuclideanEquiv {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    h.complement ≃L[ℝ] EuclideanSpace ℝ (Fin (n - m)) := by
++  letI : FiniteDimensional ℝ h.complement := immersionComplement_finiteDimensional h
++  apply ContinuousLinearEquiv.ofFinrankEq
++  simpa only [finrank_euclideanSpace_fin] using immersionComplement_finrank_eq h
++
++private noncomputable def immersionStandardTargetSplit {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    EuclideanSpace ℝ (Fin n) ≃L[ℝ]
++      EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin (n - m)) := by
++  have hsum : m + (n - m) = n := Nat.add_sub_of_le (immersionSourceDim_le h)
++  exact
++    (LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ (finCongr hsum.symm)).toContinuousLinearEquiv.trans
++      (EuclideanSpace.finAddEquivProd (𝕜 := ℝ) (n := m) (m := n - m))
++
++private noncomputable def immersionTargetLinearNormalizingEquiv {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    EuclideanSpace ℝ (Fin n) ≃L[ℝ] EuclideanSpace ℝ (Fin n) :=
++  h.equiv.symm |>.trans
++    ((ContinuousLinearEquiv.refl ℝ (EuclideanSpace ℝ (Fin m))).prodCongr
++      (immersionComplementEuclideanEquiv h)) |>.trans
++    (immersionStandardTargetSplit h).symm
++
++private theorem immersionStandardTargetSplit_symm_apply_zero {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p)
++    (u : EuclideanSpace ℝ (Fin m)) :
++    (immersionStandardTargetSplit h).symm
++        (u, (0 : EuclideanSpace ℝ (Fin (n - m)))) =
++      rank_normal_form m n m u := by
++  have hsum : m + (n - m) = n := Nat.add_sub_of_le (immersionSourceDim_le h)
++  ext i
++  simp [immersionStandardTargetSplit, rank_normal_form,
++    LinearEquiv.prodCongr_symm, LinearEquiv.prodCongr_apply,
++    WithLp.linearEquiv_apply]
++  by_cases hi : i.1 < m
++  · have hcast :
++        Fin.cast hsum.symm i = Fin.castAdd (n - m) ⟨i.1, hi⟩ := by
++      ext
++      rfl
++    rw [hcast, finSumFinEquiv_symm_apply_castAdd]
++    simp [hi]
++  · have hmi : m ≤ i.1 := Nat.le_of_not_gt hi
++    let j : Fin (n - m) := ⟨i.1 - m, by omega⟩
++    have hcast : Fin.cast hsum.symm i = Fin.natAdd m j := by
++      ext
++      simp [j]
++      omega
++    rw [hcast, finSumFinEquiv_symm_apply_natAdd]
++    simp [hi]
++
++private theorem immersionTargetLinearNormalizingEquiv_apply_writtenInCharts
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt I_m I_n ∞ F p)
++    (u : EuclideanSpace ℝ (Fin m)) :
++    immersionTargetLinearNormalizingEquiv h
++        (h.equiv (u, (0 : h.complement))) =
++      rank_normal_form m n m u := by
++  rw [immersionTargetLinearNormalizingEquiv]
++  simp only [ContinuousLinearEquiv.trans_apply,
++    ContinuousLinearEquiv.symm_apply_apply,
++    ContinuousLinearEquiv.prodCongr_apply,
++    ContinuousLinearEquiv.refl_apply,
++    map_zero]
++  exact immersionStandardTargetSplit_symm_apply_zero h u
++
++private theorem immersionTranslation_mem_contDiffGroupoid
++    {k : ℕ} (v : EuclideanSpace ℝ (Fin k)) :
++    (Homeomorph.addRight v).toOpenPartialHomeomorph ∈ contDiffGroupoid ∞
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin k))) := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · simpa [modelWithCornersSelf_coe, Homeomorph.addRight] using
++      (contDiff_id.add contDiff_const).contDiffOn
++  · simpa [modelWithCornersSelf_coe, Homeomorph.addRight] using
++      (contDiff_id.add contDiff_const).contDiffOn
++
++private theorem immersionLinearEquiv_mem_contDiffGroupoid
++    {k : ℕ} (L : EuclideanSpace ℝ (Fin k) ≃L[ℝ] EuclideanSpace ℝ (Fin k)) :
++    L.toHomeomorph.toOpenPartialHomeomorph ∈ contDiffGroupoid ∞
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin k))) := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · simpa [modelWithCornersSelf_coe] using L.contDiff.contDiffOn
++  · simpa [modelWithCornersSelf_coe] using L.symm.contDiff.contDiffOn
++
++private noncomputable def immersionCenteredDomainChart {F : M → N} {p : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    OpenPartialHomeomorph M (EuclideanSpace ℝ (Fin m)) :=
++  h.domChart.transHomeomorph (Homeomorph.addRight (-h.domChart p))
++
++private noncomputable def immersionCenteredNormalizingCodomainChart
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt I_m I_n ∞ F p) :
++    OpenPartialHomeomorph N (EuclideanSpace ℝ (Fin n)) :=
++  (h.codChart.transHomeomorph
++      (immersionTargetLinearNormalizingEquiv h).toHomeomorph).transHomeomorph
++    (Homeomorph.addRight (-(rank_normal_form m n m (h.domChart p))))
++
++private theorem immersionWrittenOnChartSource {F : M → N} {p y : M}
++    (h : Manifold.IsImmersionAt I_m I_n ∞ F p)
++    (hy : y ∈ h.domChart.source) :
++    h.codChart (F y) = h.equiv (h.domChart y, (0 : h.complement)) := by
++  let u : EuclideanSpace ℝ (Fin m) := (h.domChart.extend I_m) y
++  have hu : u ∈ (h.domChart.extend I_m).target :=
++    (h.domChart.extend I_m).map_source
++      (by simpa [OpenPartialHomeomorph.extend_source] using hy)
++  have hw := h.writtenInCharts hu
++  have hleft : h.domChart.symm (h.domChart y) = y := h.domChart.left_inv hy
++  simpa [u, Function.comp, OpenPartialHomeomorph.extend_coe,
++    OpenPartialHomeomorph.extend_coe_symm, modelWithCornersSelf_coe,
++    modelWithCornersSelf_coe_symm, hleft] using hw
++
++private theorem rank_normal_form_full_add
++    (x y : EuclideanSpace ℝ (Fin m)) :
++    rank_normal_form m n m (x + y) =
++      rank_normal_form m n m x + rank_normal_form m n m y := by
++  ext i
++  simp only [rank_normal_form, PiLp.add_apply]
++  by_cases hi : i.1 < m
++  · simp [hi]
++  · simp [hi]
++
+@@ -102,2 +610,3 @@ coordinate inclusion into the first `m` target coordinates. -/
+--- Proof sketch: specialize the rank theorem to the full source rank `r = m`; in that case the
+--- rank normal form is the inclusion form of equation `(4.3)`.
++-- Proof sketch: start from mathlib's native local immersion normal form, identify its
++-- finite-dimensional complement with Euclidean space, normalize the target linear coordinates,
++-- and center both charts. The resulting rank normal form is the inclusion in equation `(4.3)`.
+@@ -107 +616,87 @@
+-    ∃ h : LocalCoordinateNormalFormAt F p (rank_normal_form m n m), True := sorry
++    ∃ h : LocalCoordinateNormalFormAt F p (rank_normal_form m n m), True := by
++  let hp := hF.isImmersionAt p
++  let domChart := immersionCenteredDomainChart hp
++  let codChart := immersionCenteredNormalizingCodomainChart hp
++  have hdom_mem : domChart ∈ IsManifold.maximalAtlas I_m ∞ M := by
++    simpa [domChart, immersionCenteredDomainChart,
++      OpenPartialHomeomorph.transHomeomorph_eq_trans] using
++        (Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++          hp.domChart_mem_maximalAtlas
++          (immersionTranslation_mem_contDiffGroupoid (-hp.domChart p)))
++  have hcod_linear_mem :
++      hp.codChart.transHomeomorph (immersionTargetLinearNormalizingEquiv hp).toHomeomorph ∈
++        IsManifold.maximalAtlas I_n ∞ N := by
++    rw [OpenPartialHomeomorph.transHomeomorph_eq_trans]
++    exact Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++      hp.codChart_mem_maximalAtlas
++      (immersionLinearEquiv_mem_contDiffGroupoid
++        (immersionTargetLinearNormalizingEquiv hp))
++  have hcod_mem : codChart ∈ IsManifold.maximalAtlas I_n ∞ N := by
++    simpa [codChart, immersionCenteredNormalizingCodomainChart,
++      OpenPartialHomeomorph.transHomeomorph_eq_trans] using
++        (Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++          hcod_linear_mem
++          (immersionTranslation_mem_contDiffGroupoid
++            (-(rank_normal_form m n m (hp.domChart p)))))
++  refine ⟨{
++    domChart := domChart
++    codChart := codChart
++    domChart_mem_maximalAtlas := hdom_mem
++    codChart_mem_maximalAtlas := hcod_mem
++    domChart_centered := ?_
++    codChart_centered := ?_
++    mapsTo := ?_
++    eqOn := ?_ }, trivial⟩
++  · constructor
++    · simpa [domChart, immersionCenteredDomainChart,
++        OpenPartialHomeomorph.transHomeomorph_source] using hp.mem_domChart_source
++    · simp [domChart, immersionCenteredDomainChart,
++        OpenPartialHomeomorph.transHomeomorph_apply]
++  · constructor
++    · simpa [codChart, immersionCenteredNormalizingCodomainChart,
++        OpenPartialHomeomorph.transHomeomorph_source] using hp.mem_codChart_source
++    · have hwritten := immersionWrittenOnChartSource hp hp.mem_domChart_source
++      have hnormal :=
++        immersionTargetLinearNormalizingEquiv_apply_writtenInCharts hp (hp.domChart p)
++      simp only [codChart, immersionCenteredNormalizingCodomainChart,
++        OpenPartialHomeomorph.transHomeomorph_apply, Function.comp_apply,
++        Homeomorph.coe_addRight]
++      rw [hwritten]
++      change (immersionTargetLinearNormalizingEquiv hp)
++          (hp.equiv (hp.domChart p, (0 : hp.complement))) +
++          -rank_normal_form m n m (hp.domChart p) = 0
++      rw [hnormal]
++      simp
++  · intro y hy
++    have hy' : y ∈ hp.domChart.source := by
++      simpa [domChart, immersionCenteredDomainChart,
++        OpenPartialHomeomorph.transHomeomorph_source] using hy
++    have hFy : F y ∈ hp.codChart.source := hp.source_subset_preimage_source hy'
++    simpa [codChart, immersionCenteredNormalizingCodomainChart,
++      OpenPartialHomeomorph.transHomeomorph_source] using hFy
++  · intro z hz
++    let y : M := domChart.symm z
++    have hy_dom : y ∈ domChart.source := domChart.map_target hz
++    have hy_native : y ∈ hp.domChart.source := by
++      simpa [domChart, immersionCenteredDomainChart,
++        OpenPartialHomeomorph.transHomeomorph_source] using hy_dom
++    have hdom_centered : hp.domChart y - hp.domChart p = z := by
++      have hright := domChart.right_inv hz
++      simpa [y, domChart, immersionCenteredDomainChart,
++        OpenPartialHomeomorph.transHomeomorph_apply, sub_eq_add_neg] using hright
++    have hdom : hp.domChart y = z + hp.domChart p := by
++      rw [sub_eq_iff_eq_add] at hdom_centered
++      simpa [add_comm] using hdom_centered
++    have hwritten := immersionWrittenOnChartSource hp hy_native
++    have hnormal :=
++      immersionTargetLinearNormalizingEquiv_apply_writtenInCharts hp (hp.domChart y)
++    change codChart (F y) = rank_normal_form m n m z
++    simp only [codChart, immersionCenteredNormalizingCodomainChart,
++      OpenPartialHomeomorph.transHomeomorph_apply, Function.comp_apply,
++      Homeomorph.coe_addRight]
++    rw [hwritten]
++    change (immersionTargetLinearNormalizingEquiv hp)
++          (hp.equiv (hp.domChart y, (0 : hp.complement))) +
++          -rank_normal_form m n m (hp.domChart p) = rank_normal_form m n m z
++    rw [hnormal, hdom, rank_normal_form_full_add]
++    simp

@@ -580,11 +580,12 @@
         "declarations": [
           "rank_normal_form_apply_of_lt",
           "LocalCoordinateNormalFormAt.mapsTo_source",
+          "smooth_submersion_local_projection_form",
           "smooth_immersion_local_inclusion_form"
         ],
-        "scope": "three of five direct sorry tokens in the task",
-        "proposal": "Close the two elementary helpers directly, then convert mathlib's native immersion normal form to the standard Euclidean coordinate inclusion by splitting its finite-dimensional complement, normalizing the target linear coordinates, and centering both charts.",
-        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch",
+        "scope": "four of five direct sorry tokens in the task",
+        "proposal": "Close the two elementary helpers directly; for submersions, pair the centered target-chart expression with a projection onto the derivative kernel and apply the inverse function theorem; for immersions, split mathlib's finite-dimensional complement, normalize the target linear coordinates, and center both charts.",
+        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-local-normal-forms.patch",
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },

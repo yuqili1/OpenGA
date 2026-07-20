@@ -6891,7 +6891,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.12 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 5 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Theorem 4.12 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：固定导入源仍有 5 处 `sorry`，但隔离验证的可重放补丁已无 `sorryAx` 地闭合两个辅助结论、次浸入局部投影标准形和浸入局部包含标准形（4/5），且两条主标准形均不依赖尚未证明的常秩局部标准形；仅该常秩结论仍未闭合，故保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section23.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean

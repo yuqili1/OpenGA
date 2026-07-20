@@ -82,7 +82,7 @@ Human findings are non-exclusive: a task with a direct `sorry` may also have
 a statement or coverage problem. All fourteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
 checks. Eight cover every direct `sorry` in their task, five intentionally cover
-only selected declarations and retain fifteen explicit residual `sorry` tokens, and
+only selected declarations and retain fourteen explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
@@ -98,6 +98,13 @@ image structures is a diffeomorphism. The pinned source still lacks that theorem
 so the semantic finding remains tracked with `verified_patch` status until the
 patch is applied.
 
+The Theorem 4.12 patch closes four of five direct holes. Its submersion proof
+constructs source coordinates from the centered target-chart expression and a
+projection onto the derivative kernel, then applies the inverse function theorem;
+its immersion proof normalizes mathlib's native complement coordinates. Both main
+normal forms pass exact axioms checks independently of the remaining constant-rank
+hole.
+
 The Theorem 4.15 patch closes both direct holes in its current boundary-immersion
 statement. That statement uses mathlib's local-normal-form definition of
 `Manifold.IsImmersion`. The attempted general equivalence with Lee's
@@ -109,7 +116,7 @@ The larger verified repairs are also preserved as replayable patches at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch
-projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch
+projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-local-normal-forms.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
 ```
