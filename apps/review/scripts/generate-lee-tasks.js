@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dump, load } from 'js-yaml';
@@ -306,6 +307,429 @@ function dcref(label) {
   return `lee-sm:${kind.toLowerCase()}:${rest.join(' ').toLowerCase()}`;
 }
 
+function normalizeTextbookLabel(label) {
+  return String(label).normalize('NFKC').trim().replace(/\s+/g, ' ');
+}
+
+function referencedChapter(label) {
+  const match = normalizeTextbookLabel(label).match(/^[A-Za-z]+\s+([A-Z]|\d+)(?:[.-]|$)/);
+  if (!match) return null;
+  if (/^\d+$/.test(match[1])) return Number(match[1]);
+  return match[1];
+}
+
+function stripReferenceSubpart(label) {
+  const match = normalizeTextbookLabel(label).match(
+    /^(.*?)(\((?:[a-z]|\d+|[ivxlcdm]+)\))$/i
+  );
+  if (!match) return null;
+  return { baseLabel: match[1].trim(), subpart: match[2] };
+}
+
+function normalizedCitation(text) {
+  return normalizeTextbookLabel(text ?? '')
+    .replace(/[.。]+$/, '')
+    .trim()
+    .toLowerCase();
+}
+
+const statementEnvironments = new Set([
+  'thm',
+  'theorem',
+  'prop',
+  'proposition',
+  'lemma',
+  'cor',
+  'corollary'
+]);
+const exerciseEnvironments = new Set(['problem', 'exercise']);
+
+function isProofLocationBacklink(sourceEntry, targetEntry, dependencyLabel) {
+  if (!statementEnvironments.has(String(sourceEntry.env ?? '').toLowerCase())) return false;
+  if (!exerciseEnvironments.has(String(targetEntry.env ?? '').toLowerCase())) return false;
+
+  const proof = normalizedCitation(sourceEntry.proof);
+  const dependency = normalizedCitation(dependencyLabel);
+  return proof === dependency || proof === `see ${dependency}`;
+}
+
+function terseProofLocationLabel(proof) {
+  const text = normalizeTextbookLabel(proof ?? '').replace(/[.。]+$/, '').trim();
+  const match = text.match(/^(?:see\s+)?((?:Problem|Exercise)\s+.+)$/i);
+  return match?.[1] ?? null;
+}
+
+function textbookEntryForCandidate(candidate, sections) {
+  const labelInfo = sections.get(candidate.sectionNumber)?.labels.get(candidate.label);
+  if (!labelInfo) {
+    throw new Error(
+      `Textbook entry missing for generated candidate: section ${candidate.sectionNumber}#${candidate.label}`
+    );
+  }
+  return labelInfo.entry;
+}
+
+function edgeHash(edges) {
+  const canonical = edges
+    .map(([source, target]) => `${source}\t${target}\n`)
+    .sort()
+    .join('');
+  return createHash('sha256').update(canonical).digest('hex');
+}
+
+function stronglyConnectedComponents(nodeIds, edges, orderById) {
+  const adjacency = new Map(nodeIds.map((id) => [id, []]));
+  for (const [source, target] of edges) adjacency.get(source)?.push(target);
+
+  let nextIndex = 0;
+  const index = new Map();
+  const lowlink = new Map();
+  const stack = [];
+  const onStack = new Set();
+  const components = [];
+
+  function visit(node) {
+    index.set(node, nextIndex);
+    lowlink.set(node, nextIndex);
+    nextIndex += 1;
+    stack.push(node);
+    onStack.add(node);
+
+    for (const target of adjacency.get(node) ?? []) {
+      if (!index.has(target)) {
+        visit(target);
+        lowlink.set(node, Math.min(lowlink.get(node), lowlink.get(target)));
+      } else if (onStack.has(target)) {
+        lowlink.set(node, Math.min(lowlink.get(node), index.get(target)));
+      }
+    }
+
+    if (lowlink.get(node) !== index.get(node)) return;
+    const component = [];
+    while (stack.length > 0) {
+      const member = stack.pop();
+      onStack.delete(member);
+      component.push(member);
+      if (member === node) break;
+    }
+    const hasSelfLoop = component.length === 1 &&
+      (adjacency.get(component[0]) ?? []).includes(component[0]);
+    if (component.length > 1 || hasSelfLoop) {
+      component.sort((a, b) => orderById.get(a) - orderById.get(b));
+      components.push(component);
+    }
+  }
+
+  for (const node of nodeIds) {
+    if (!index.has(node)) visit(node);
+  }
+  components.sort((a, b) => orderById.get(a[0]) - orderById.get(b[0]));
+  return components;
+}
+
+function dependencyDagReport(nodeIds, edges, orderById) {
+  const outgoing = new Map(nodeIds.map((id) => [id, []]));
+  const indegree = new Map(nodeIds.map((id) => [id, 0]));
+  for (const [dependent, prerequisite] of edges) {
+    outgoing.get(prerequisite).push(dependent);
+    indegree.set(dependent, indegree.get(dependent) + 1);
+  }
+
+  const ready = nodeIds
+    .filter((id) => indegree.get(id) === 0)
+    .sort((a, b) => orderById.get(a) - orderById.get(b));
+  let visited = 0;
+  while (ready.length > 0) {
+    const node = ready.shift();
+    visited += 1;
+    for (const dependent of outgoing.get(node) ?? []) {
+      indegree.set(dependent, indegree.get(dependent) - 1);
+      if (indegree.get(dependent) === 0) {
+        ready.push(dependent);
+        ready.sort((a, b) => orderById.get(a) - orderById.get(b));
+      }
+    }
+  }
+
+  const cyclicTaskIds = nodeIds
+    .filter((id) => indegree.get(id) > 0)
+    .sort((a, b) => orderById.get(a) - orderById.get(b));
+  return {
+    nodeCount: nodeIds.length,
+    edgeCount: edges.length,
+    visitedNodeCount: visited,
+    acyclic: cyclicTaskIds.length === 0,
+    cyclicTaskIds
+  };
+}
+
+function buildTextbookDependencyGraph(candidates, sections) {
+  const importedChapterNumbers = new Set(candidates.map((candidate) => candidate.chapterNumber));
+  const orderById = new Map();
+  const candidateById = new Map();
+  const candidatesByLabel = new Map();
+  for (const [index, candidate] of candidates.entries()) {
+    const id = taskId(candidate.chapterNumber, candidate.sectionNumber, candidate.label);
+    if (candidateById.has(id)) throw new Error(`Duplicate generated task id: ${id}`);
+    orderById.set(id, index);
+    candidateById.set(id, candidate);
+    const label = normalizeTextbookLabel(candidate.label);
+    if (!candidatesByLabel.has(label)) candidatesByLabel.set(label, []);
+    candidatesByLabel.get(label).push(candidate);
+  }
+
+  function candidateId(candidate) {
+    return taskId(candidate.chapterNumber, candidate.sectionNumber, candidate.label);
+  }
+
+  function disambiguate(matches, dependencyLabel) {
+    if (matches.length <= 1) return matches;
+    const chapter = referencedChapter(dependencyLabel);
+    if (!Number.isInteger(chapter)) return matches;
+    const sameChapter = matches.filter((candidate) => candidate.chapterNumber === chapter);
+    return sameChapter.length > 0 ? sameChapter : matches;
+  }
+
+  function resolveDependency(dependencyLabel) {
+    const normalized = normalizeTextbookLabel(dependencyLabel);
+    let matches = disambiguate(candidatesByLabel.get(normalized) ?? [], normalized);
+    let mode = 'exact';
+    let subpart = null;
+    let lookupLabel = normalized;
+    if (matches.length === 0) {
+      const stripped = stripReferenceSubpart(normalized);
+      if (stripped) {
+        lookupLabel = normalizeTextbookLabel(stripped.baseLabel);
+        matches = disambiguate(candidatesByLabel.get(lookupLabel) ?? [], lookupLabel);
+        if (matches.length > 0) {
+          mode = 'subpart';
+          subpart = stripped.subpart;
+        }
+      }
+    }
+    if (matches.length === 1) {
+      return { status: 'resolved', candidate: matches[0], mode, subpart, lookupLabel };
+    }
+    if (matches.length > 1) {
+      return {
+        status: 'ambiguous',
+        lookupLabel,
+        candidateIds: matches.map(candidateId)
+      };
+    }
+
+    const chapter = referencedChapter(lookupLabel);
+    if (
+      typeof chapter === 'string' ||
+      (Number.isInteger(chapter) && !importedChapterNumbers.has(chapter))
+    ) {
+      return { status: 'external', lookupLabel, referencedChapter: chapter };
+    }
+    return { status: 'unresolved-internal', lookupLabel, referencedChapter: chapter };
+  }
+
+  const dependsOnByTaskId = new Map(candidates.map((candidate) => [candidateId(candidate), []]));
+  const rawInternalEdges = [];
+  const retainedEdges = [];
+  const externalDependencies = [];
+  const resolvedSubpartDependencies = [];
+  const suppressedProofLocationBacklinks = [];
+  const unlistedProofLocationBacklinks = [];
+  const unresolvedInternalDependencies = [];
+  const ambiguousDependencies = [];
+  const duplicateDependencies = [];
+  const selfDependencies = [];
+  let textbookDependencyReferenceCount = 0;
+  let exactResolvedReferenceCount = 0;
+  let subpartResolvedReferenceCount = 0;
+
+  for (const candidate of candidates) {
+    const id = candidateId(candidate);
+    const entry = textbookEntryForCandidate(candidate, sections);
+    const seenTargets = new Set();
+    const explicitDependencies = entry.dependencies ?? [];
+    for (const dependencyLabel of explicitDependencies) {
+      textbookDependencyReferenceCount += 1;
+      const resolution = resolveDependency(dependencyLabel);
+      const diagnosticBase = {
+        task_id: id,
+        source_label: candidate.label,
+        dependency_label: dependencyLabel
+      };
+      if (resolution.status === 'external') {
+        externalDependencies.push({
+          ...diagnosticBase,
+          referenced_chapter: resolution.referencedChapter,
+          reason: 'outside imported chapters'
+        });
+        continue;
+      }
+      if (resolution.status === 'unresolved-internal') {
+        unresolvedInternalDependencies.push({
+          ...diagnosticBase,
+          lookup_label: resolution.lookupLabel,
+          referenced_chapter: resolution.referencedChapter
+        });
+        continue;
+      }
+      if (resolution.status === 'ambiguous') {
+        ambiguousDependencies.push({
+          ...diagnosticBase,
+          lookup_label: resolution.lookupLabel,
+          candidate_task_ids: resolution.candidateIds
+        });
+        continue;
+      }
+
+      const target = resolution.candidate;
+      const targetId = candidateId(target);
+      rawInternalEdges.push([id, targetId]);
+      if (resolution.mode === 'subpart') {
+        subpartResolvedReferenceCount += 1;
+        resolvedSubpartDependencies.push({
+          ...diagnosticBase,
+          resolved_task_id: targetId,
+          subpart: resolution.subpart
+        });
+      } else {
+        exactResolvedReferenceCount += 1;
+      }
+      if (id === targetId) {
+        selfDependencies.push({ ...diagnosticBase, resolved_task_id: targetId });
+        continue;
+      }
+      if (seenTargets.has(targetId)) {
+        duplicateDependencies.push({ ...diagnosticBase, resolved_task_id: targetId });
+        continue;
+      }
+      seenTargets.add(targetId);
+
+      const targetEntry = textbookEntryForCandidate(target, sections);
+      if (isProofLocationBacklink(entry, targetEntry, dependencyLabel)) {
+        suppressedProofLocationBacklinks.push({
+          ...diagnosticBase,
+          resolved_task_id: targetId,
+          proof: entry.proof
+        });
+        continue;
+      }
+
+      dependsOnByTaskId.get(id).push(targetId);
+      retainedEdges.push([id, targetId]);
+    }
+
+    const terseReference = terseProofLocationLabel(entry.proof);
+    if (terseReference) {
+      const listed = explicitDependencies.some(
+        (dependencyLabel) => normalizedCitation(dependencyLabel) === normalizedCitation(terseReference)
+      );
+      if (!listed) {
+        const resolution = resolveDependency(terseReference);
+        if (resolution.status === 'resolved') {
+          unlistedProofLocationBacklinks.push({
+            task_id: id,
+            source_label: candidate.label,
+            dependency_label: terseReference,
+            resolved_task_id: candidateId(resolution.candidate),
+            proof: entry.proof
+          });
+        }
+      }
+    }
+  }
+
+  const unlocksByTaskId = new Map(candidates.map((candidate) => [candidateId(candidate), []]));
+  for (const [dependent, prerequisite] of retainedEdges) {
+    unlocksByTaskId.get(prerequisite).push(dependent);
+  }
+  for (const unlocks of unlocksByTaskId.values()) {
+    unlocks.sort((a, b) => orderById.get(a) - orderById.get(b));
+  }
+
+  const nodeIds = candidates.map(candidateId);
+  const rawDependencyCycles = stronglyConnectedComponents(
+    nodeIds,
+    rawInternalEdges,
+    orderById
+  );
+  const dag = dependencyDagReport(nodeIds, retainedEdges, orderById);
+  const relationCounts = {
+    same_section: 0,
+    same_chapter_cross_section: 0,
+    cross_chapter: 0
+  };
+  for (const [dependent, prerequisite] of retainedEdges) {
+    const source = candidateById.get(dependent);
+    const target = candidateById.get(prerequisite);
+    if (
+      source.chapterNumber === target.chapterNumber &&
+      source.sectionNumber === target.sectionNumber
+    ) {
+      relationCounts.same_section += 1;
+    } else if (source.chapterNumber === target.chapterNumber) {
+      relationCounts.same_chapter_cross_section += 1;
+    } else {
+      relationCounts.cross_chapter += 1;
+    }
+  }
+
+  const chapterCount = new Set(candidates.map((candidate) => candidate.chapterNumber)).size;
+  const sectionCount = new Set(
+    candidates.map((candidate) => `${candidate.chapterNumber}:${candidate.sectionNumber}`)
+  ).size;
+  const structuralUnlockEdgeCount = chapterCount + sectionCount + candidates.length;
+  const reverseEdges = retainedEdges.map(([dependent, prerequisite]) => [prerequisite, dependent]);
+  const diagnostics = {
+    textbookDependencyReferenceCount,
+    exactResolvedReferenceCount,
+    subpartResolvedReferenceCount,
+    externalReferenceCount: externalDependencies.length,
+    rawInternalEdgeCount: rawInternalEdges.length,
+    retainedEdgeCount: retainedEdges.length,
+    suppressedProofLocationBacklinkCount: suppressedProofLocationBacklinks.length,
+    nonemptyDependsOnTaskCount: [...dependsOnByTaskId.values()].filter((items) => items.length > 0).length,
+    nonemptyDependencyUnlockTaskCount: [...unlocksByTaskId.values()].filter((items) => items.length > 0).length,
+    structuralUnlockEdgeCount,
+    totalUnlockEdgeCount: structuralUnlockEdgeCount + retainedEdges.length,
+    relationCounts,
+    dependsOnSha256: edgeHash(retainedEdges),
+    unlocksSha256: edgeHash(reverseEdges),
+    resolvedSubpartDependencies,
+    externalDependencies,
+    suppressedProofLocationBacklinks,
+    unlistedProofLocationBacklinks,
+    unresolvedInternalDependencies,
+    ambiguousDependencies,
+    duplicateDependencies,
+    selfDependencies,
+    rawDependencyCycles,
+    dag
+  };
+
+  const failures = [];
+  if (unresolvedInternalDependencies.length > 0) {
+    failures.push(`${unresolvedInternalDependencies.length} unresolved internal dependencies`);
+  }
+  if (ambiguousDependencies.length > 0) {
+    failures.push(`${ambiguousDependencies.length} ambiguous dependencies`);
+  }
+  if (duplicateDependencies.length > 0) {
+    failures.push(`${duplicateDependencies.length} duplicate dependencies`);
+  }
+  if (selfDependencies.length > 0) {
+    failures.push(`${selfDependencies.length} self dependencies`);
+  }
+  if (!dag.acyclic) failures.push(`retained graph is cyclic: ${dag.cyclicTaskIds.join(', ')}`);
+  if (failures.length > 0) {
+    throw new Error(
+      `Invalid SmoothManifoldsLee textbook dependency graph: ${failures.join('; ')}\n` +
+      JSON.stringify(diagnostics, null, 2)
+    );
+  }
+
+  return { dependsOnByTaskId, unlocksByTaskId, diagnostics };
+}
+
 function sectionTitle(sectionNumber, sectionInfo) {
   const context = sectionInfo.entries[0]?.context;
   const raw = context?.section ?? `Section ${sectionNumber}`;
@@ -495,7 +919,7 @@ function buildCandidates(sections) {
   };
 }
 
-function buildDataset(candidates, sections, previous) {
+function buildDataset(candidates, sections, previous, dependencyGraph) {
   const tasks = [];
   const chapterNumbers = [...new Set(candidates.map((item) => item.chapterNumber))];
   const sectionNumbersByChapter = new Map();
@@ -601,8 +1025,8 @@ function buildDataset(candidates, sections, previous) {
           id,
           kind: 'leaf',
           parent: section.id,
-          depends_on: [],
-          unlocks: [],
+          depends_on: dependencyGraph.dependsOnByTaskId.get(id) ?? [],
+          unlocks: dependencyGraph.unlocksByTaskId.get(id) ?? [],
           dcref: dcref(item.label),
           chapter: chapterNumber,
           title: item.label,
@@ -642,7 +1066,8 @@ function report(
   unmatchedTopLevelLean,
   nestedAuxLean,
   attachedAuxLean,
-  unattachedNestedAuxLean
+  unattachedNestedAuxLean,
+  textbookDependencyGraph
 ) {
   const pairedCandidates = candidates.filter((item) => item.leanPath !== null);
   const textbookOnlyCandidates = candidates.filter((item) => item.leanPath === null);
@@ -688,12 +1113,16 @@ function report(
     unattachedNestedAuxLean,
     jsonLabelsWithoutLean: jsonWithoutLean,
     jsonLabelsOutsideImportedSections: jsonOutsideImportedSections,
+    textbookDependencyGraph,
     notes: [
       'Auxiliary Lean files are attached to their canonical owner task when a matching owner exists.',
       'Tracked official errata overlays are applied before textbook labels are matched or generated.',
       'Top-level Lean files without a JSON label are attached to the earliest paired task in the same section that directly imports them; otherwise they remain unmatched.',
       'JSON entries without matching Lean files inside imported chapters are generated as textbook-only review tasks without synthetic Lean paths.',
       'New textbook-only tasks start with both checks pending; formal review remains visible after mathematical review is completed.',
+      'Textbook dependencies resolve globally across imported chapters; trailing part references such as Example 2.13(f) fall back to the owner entry only when no exact label exists.',
+      'Terse statement-to-problem proof-location backlinks are reported but excluded from depends_on so that statement/problem pairs do not form cycles.',
+      'External appendix or unimported-chapter references are reported but are not emitted as dangling task dependencies.',
       'JSON entries outside imported chapters are separated from the current Ch1-Ch5 review queue.'
     ]
   };
@@ -709,10 +1138,19 @@ const {
   attachedAuxLean,
   unattachedNestedAuxLean
 } = buildCandidates(sections);
-const dataset = buildDataset(candidates, sections, previous);
+const textbookDependencyGraph = buildTextbookDependencyGraph(candidates, sections);
+const dataset = buildDataset(candidates, sections, previous, textbookDependencyGraph);
 const yamlText = dump(dataset, { indent: 2, lineWidth: -1, seqNoIndent: true, sortKeys: false });
 const reportText = JSON.stringify(
-  report(candidates, sections, unmatchedTopLevelLean, nestedAuxLean, attachedAuxLean, unattachedNestedAuxLean),
+  report(
+    candidates,
+    sections,
+    unmatchedTopLevelLean,
+    nestedAuxLean,
+    attachedAuxLean,
+    unattachedNestedAuxLean,
+    textbookDependencyGraph.diagnostics
+  ),
   null,
   2
 );

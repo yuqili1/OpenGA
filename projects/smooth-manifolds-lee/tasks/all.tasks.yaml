@@ -211,7 +211,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-30
   dcref: lee-sm:example:1.3
   chapter: 1
   title: Example 1.3
@@ -240,7 +241,9 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-31
+  - sml.ch5.sec29.example-5-9
   dcref: lee-sm:example:1.4
   chapter: 1
   title: Example 1.4
@@ -269,7 +272,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-33
   dcref: lee-sm:example:1.5
   chapter: 1
   title: Example 1.5
@@ -356,7 +360,9 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-34
+  - sml.ch2.sec8.example-2-13
   dcref: lee-sm:example:1.8
   chapter: 1
   title: Example 1.8
@@ -414,7 +420,10 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec1.proposition-1-12
+  - sml.ch1.sec1.proposition-1-16
+  - sml.ch1.sec3.proposition-1-19
   dcref: lee-sm:lemma:1.10
   chapter: 1
   title: Lemma 1.10
@@ -500,7 +509,8 @@ tasks:
 - id: sml.ch1.sec1.proposition-1-12
   kind: leaf
   parent: sml.ch1.sec1
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec1.lemma-1-10
   unlocks: []
   dcref: lee-sm:proposition:1.12
   chapter: 1
@@ -559,7 +569,10 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec1.exercise-1-14
+  - sml.ch2.sec10.theorem-2-23
+  - sml.ch2.sec11.lemma-2-26
   dcref: lee-sm:lemma:1.13
   chapter: 1
   title: Lemma 1.13
@@ -587,7 +600,8 @@ tasks:
 - id: sml.ch1.sec1.exercise-1-14
   kind: leaf
   parent: sml.ch1.sec1
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec1.lemma-1-13
   unlocks: []
   dcref: lee-sm:exercise:1.14
   chapter: 1
@@ -617,7 +631,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec1
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec10.theorem-2-23
   dcref: lee-sm:theorem:1.15
   chapter: 1
   title: Theorem 1.15
@@ -645,8 +660,10 @@ tasks:
 - id: sml.ch1.sec1.proposition-1-16
   kind: leaf
   parent: sml.ch1.sec1
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec1.lemma-1-10
+  unlocks:
+  - sml.ch4.sec26.proposition-4-40
   dcref: lee-sm:proposition:1.16
   chapter: 1
   title: Proposition 1.16
@@ -847,7 +864,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec2
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec2.exercise-1-18
   dcref: lee-sm:proposition:1.17
   chapter: 1
   title: Proposition 1.17
@@ -875,7 +893,8 @@ tasks:
 - id: sml.ch1.sec2.exercise-1-18
   kind: leaf
   parent: sml.ch1.sec2
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec2.proposition-1-17
   unlocks: []
   dcref: lee-sm:exercise:1.18
   chapter: 1
@@ -985,8 +1004,10 @@ tasks:
 - id: sml.ch1.sec3.proposition-1-19
   kind: leaf
   parent: sml.ch1.sec3
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec1.lemma-1-10
+  unlocks:
+  - sml.ch2.sec10.theorem-2-23
   dcref: lee-sm:proposition:1.19
   chapter: 1
   title: Proposition 1.19
@@ -1167,7 +1188,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec4
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec12.problem-2-5
   dcref: lee-sm:example:1.23
   chapter: 1
   title: Example 1.23
@@ -1196,7 +1218,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec4
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-29
   dcref: lee-sm:example:1.24
   chapter: 1
   title: Example 1.24
@@ -1283,7 +1306,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec4
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec28.proposition-5-1
   dcref: lee-sm:example:1.26
   chapter: 1
   title: Example 1.26
@@ -1341,7 +1365,9 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec4
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-36
+  - sml.ch4.sec21.proposition-4-1
   dcref: lee-sm:example:1.28
   chapter: 1
   title: Example 1.28
@@ -1369,7 +1395,8 @@ tasks:
 - id: sml.ch1.sec4.example-1-29
   kind: leaf
   parent: sml.ch1.sec4
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec4.example-1-24
   unlocks: []
   dcref: lee-sm:example:1.29
   chapter: 1
@@ -1398,7 +1425,8 @@ tasks:
 - id: sml.ch1.sec4.example-1-30
   kind: leaf
   parent: sml.ch1.sec4
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec1.example-1-3
   unlocks: []
   dcref: lee-sm:example:1.30
   chapter: 1
@@ -1427,8 +1455,12 @@ tasks:
 - id: sml.ch1.sec4.example-1-31
   kind: leaf
   parent: sml.ch1.sec4
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec1.example-1-4
+  unlocks:
+  - sml.ch1.sec7.problem-1-7
+  - sml.ch2.sec8.example-2-13
+  - sml.ch5.sec29.example-5-9
   dcref: lee-sm:example:1.31
   chapter: 1
   title: Example 1.31
@@ -1457,7 +1489,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec4
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec30.definition-5-30-extra-1
   dcref: lee-sm:example:1.32
   chapter: 1
   title: Example 1.32
@@ -1485,8 +1518,10 @@ tasks:
 - id: sml.ch1.sec4.example-1-33
   kind: leaf
   parent: sml.ch1.sec4
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec1.example-1-5
+  unlocks:
+  - sml.ch2.sec8.example-2-13
   dcref: lee-sm:example:1.33
   chapter: 1
   title: Example 1.33
@@ -1514,7 +1549,8 @@ tasks:
 - id: sml.ch1.sec4.example-1-34
   kind: leaf
   parent: sml.ch1.sec4
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec1.example-1-8
   unlocks: []
   dcref: lee-sm:example:1.34
   chapter: 1
@@ -1544,7 +1580,10 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec4
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec4.example-1-36
+  - sml.ch1.sec6.exercise-1-43
+  - sml.ch3.sec16.proposition-3-18
   dcref: lee-sm:lemma:1.35
   chapter: 1
   title: Lemma 1.35
@@ -1572,8 +1611,11 @@ tasks:
 - id: sml.ch1.sec4.example-1-36
   kind: leaf
   parent: sml.ch1.sec4
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec4.lemma-1-35
+  - sml.ch1.sec4.example-1-28
+  unlocks:
+  - sml.ch1.sec7.problem-1-10
   dcref: lee-sm:example:1.36
   chapter: 1
   title: Example 1.36
@@ -1656,7 +1698,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec5
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec5.exercise-1-39
   dcref: lee-sm:theorem:1.37
   chapter: 1
   title: Theorem 1.37
@@ -1685,7 +1728,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec5
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec5.exercise-1-39
   dcref: lee-sm:proposition:1.38
   chapter: 1
   title: Proposition 1.38
@@ -1713,7 +1757,9 @@ tasks:
 - id: sml.ch1.sec5.exercise-1-39
   kind: leaf
   parent: sml.ch1.sec5
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec5.proposition-1-38
+  - sml.ch1.sec5.theorem-1-37
   unlocks: []
   dcref: lee-sm:exercise:1.39
   chapter: 1
@@ -1743,7 +1789,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec5
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec5.exercise-1-41
   dcref: lee-sm:proposition:1.40
   chapter: 1
   title: Proposition 1.40
@@ -1771,7 +1818,8 @@ tasks:
 - id: sml.ch1.sec5.exercise-1-41
   kind: leaf
   parent: sml.ch1.sec5
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec5.proposition-1-40
   unlocks: []
   dcref: lee-sm:exercise:1.41
   chapter: 1
@@ -1943,7 +1991,8 @@ tasks:
 - id: sml.ch1.sec6.exercise-1-43
   kind: leaf
   parent: sml.ch1.sec6
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec4.lemma-1-35
   unlocks: []
   dcref: lee-sm:exercise:1.43
   chapter: 1
@@ -1973,7 +2022,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec6
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec8.exercise-2-2
   dcref: lee-sm:exercise:1.44
   chapter: 1
   title: Exercise 1.44
@@ -2002,7 +2052,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec6
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch1.sec7.problem-1-12
   dcref: lee-sm:proposition:1.45
   chapter: 1
   title: Proposition 1.45
@@ -2031,7 +2082,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec6
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec9.exercise-2-19
   dcref: lee-sm:theorem:1.46
   chapter: 1
   title: Theorem 1.46
@@ -2264,8 +2316,10 @@ tasks:
 - id: sml.ch1.sec7.problem-1-7
   kind: leaf
   parent: sml.ch1.sec7
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec4.example-1-31
+  unlocks:
+  - sml.ch1.sec7.problem-1-11
   dcref: lee-sm:problem:1-7
   chapter: 1
   title: Problem 1-7
@@ -2294,7 +2348,8 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec7
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec8.example-2-13
   dcref: lee-sm:problem:1-8
   chapter: 1
   title: Problem 1-8
@@ -2323,7 +2378,9 @@ tasks:
   kind: leaf
   parent: sml.ch1.sec7
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec12.problem-2-8
+  - sml.ch4.sec27.problem-4-5
   dcref: lee-sm:problem:1-9
   chapter: 1
   title: Problem 1-9
@@ -2351,7 +2408,8 @@ tasks:
 - id: sml.ch1.sec7.problem-1-10
   kind: leaf
   parent: sml.ch1.sec7
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec4.example-1-36
   unlocks: []
   dcref: lee-sm:problem:1-10
   chapter: 1
@@ -2380,7 +2438,8 @@ tasks:
 - id: sml.ch1.sec7.problem-1-11
   kind: leaf
   parent: sml.ch1.sec7
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec7.problem-1-7
   unlocks: []
   dcref: lee-sm:problem:1-11
   chapter: 1
@@ -2409,7 +2468,8 @@ tasks:
 - id: sml.ch1.sec7.problem-1-12
   kind: leaf
   parent: sml.ch1.sec7
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec6.proposition-1-45
   unlocks: []
   dcref: lee-sm:problem:1-12
   chapter: 1
@@ -2616,7 +2676,8 @@ tasks:
 - id: sml.ch2.sec8.exercise-2-2
   kind: leaf
   parent: sml.ch2.sec8
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec6.exercise-1-44
   unlocks: []
   dcref: lee-sm:exercise:2.2
   chapter: 2
@@ -2791,7 +2852,8 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec8
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec8.corollary-2-8
   dcref: lee-sm:proposition:2.6
   chapter: 2
   title: Proposition 2.6
@@ -2848,7 +2910,8 @@ tasks:
 - id: sml.ch2.sec8.corollary-2-8
   kind: leaf
   parent: sml.ch2.sec8
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec8.proposition-2-6
   unlocks: []
   dcref: lee-sm:corollary:2.8
   chapter: 2
@@ -2907,7 +2970,8 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec8
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec8.proposition-2-10
   dcref: lee-sm:exercise:2.9
   chapter: 2
   title: Exercise 2.9
@@ -2935,7 +2999,8 @@ tasks:
 - id: sml.ch2.sec8.proposition-2-10
   kind: leaf
   parent: sml.ch2.sec8
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec8.exercise-2-9
   unlocks: []
   dcref: lee-sm:proposition:2.10
   chapter: 2
@@ -2994,7 +3059,9 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec8
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec8.example-2-13
+  - sml.ch2.sec12.problem-2-2
   dcref: lee-sm:proposition:2.12
   chapter: 2
   title: Proposition 2.12
@@ -3048,8 +3115,17 @@ tasks:
 - id: sml.ch2.sec8.example-2-13
   kind: leaf
   parent: sml.ch2.sec8
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec7.problem-1-8
+  - sml.ch2.sec8.proposition-2-12
+  - sml.ch1.sec4.example-1-31
+  - sml.ch1.sec4.example-1-33
+  - sml.ch1.sec1.example-1-8
+  unlocks:
+  - sml.ch4.sec22.example-4-11
+  - sml.ch4.sec24.example-4-23
+  - sml.ch4.sec27.problem-4-10
+  - sml.ch4.sec27.problem-4-13
   dcref: lee-sm:example:2.13
   chapter: 2
   title: Example 2.13
@@ -3159,7 +3235,8 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec9
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec9.exercise-2-16
   dcref: lee-sm:proposition:2.15
   chapter: 2
   title: Proposition 2.15
@@ -3187,7 +3264,8 @@ tasks:
 - id: sml.ch2.sec9.exercise-2-16
   kind: leaf
   parent: sml.ch2.sec9
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec9.proposition-2-15
   unlocks: []
   dcref: lee-sm:exercise:2.16
   chapter: 2
@@ -3246,7 +3324,8 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec9
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec9.exercise-2-19
   dcref: lee-sm:theorem:2.18
   chapter: 2
   title: Theorem 2.18
@@ -3274,7 +3353,9 @@ tasks:
 - id: sml.ch2.sec9.exercise-2-19
   kind: leaf
   parent: sml.ch2.sec9
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec6.theorem-1-46
+  - sml.ch2.sec9.theorem-2-18
   unlocks: []
   dcref: lee-sm:exercise:2.19
   chapter: 2
@@ -3332,7 +3413,8 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec10
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec10.lemma-2-21
   dcref: lee-sm:lemma:2.20
   chapter: 2
   title: Lemma 2.20
@@ -3360,8 +3442,11 @@ tasks:
 - id: sml.ch2.sec10.lemma-2-21
   kind: leaf
   parent: sml.ch2.sec10
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch2.sec10.lemma-2-20
+  unlocks:
+  - sml.ch2.sec10.definition-2-10-extra-1
+  - sml.ch2.sec10.lemma-2-22
   dcref: lee-sm:lemma:2.21
   chapter: 2
   title: Lemma 2.21
@@ -3389,7 +3474,8 @@ tasks:
 - id: sml.ch2.sec10.definition-2-10-extra-1
   kind: leaf
   parent: sml.ch2.sec10
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec10.lemma-2-21
   unlocks: []
   dcref: lee-sm:definition:2.10-extra-1
   chapter: 2
@@ -3418,8 +3504,11 @@ tasks:
 - id: sml.ch2.sec10.lemma-2-22
   kind: leaf
   parent: sml.ch2.sec10
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch2.sec10.lemma-2-21
+  unlocks:
+  - sml.ch2.sec10.definition-2-10-extra-2
+  - sml.ch2.sec10.theorem-2-23
   dcref: lee-sm:lemma:2.22
   chapter: 2
   title: Lemma 2.22
@@ -3447,7 +3536,8 @@ tasks:
 - id: sml.ch2.sec10.definition-2-10-extra-2
   kind: leaf
   parent: sml.ch2.sec10
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec10.lemma-2-22
   unlocks: []
   dcref: lee-sm:definition:2.10-extra-2
   chapter: 2
@@ -3534,7 +3624,11 @@ tasks:
 - id: sml.ch2.sec10.theorem-2-23
   kind: leaf
   parent: sml.ch2.sec10
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec3.proposition-1-19
+  - sml.ch1.sec1.theorem-1-15
+  - sml.ch1.sec1.lemma-1-13
+  - sml.ch2.sec10.lemma-2-22
   unlocks: []
   dcref: lee-sm:theorem:2.23
   chapter: 2
@@ -3706,8 +3800,10 @@ tasks:
 - id: sml.ch2.sec11.lemma-2-26
   kind: leaf
   parent: sml.ch2.sec11
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec1.lemma-1-13
+  unlocks:
+  - sml.ch3.sec14.lemma-3-11
   dcref: lee-sm:lemma:2.26
   chapter: 2
   title: Lemma 2.26
@@ -3913,7 +4009,8 @@ tasks:
 - id: sml.ch2.sec12.problem-2-2
   kind: leaf
   parent: sml.ch2.sec12
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec8.proposition-2-12
   unlocks: []
   dcref: lee-sm:problem:2-2
   chapter: 2
@@ -3997,7 +4094,8 @@ tasks:
 - id: sml.ch2.sec12.problem-2-5
   kind: leaf
   parent: sml.ch2.sec12
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec4.example-1-23
   unlocks: []
   dcref: lee-sm:problem:2-5
   chapter: 2
@@ -4084,8 +4182,10 @@ tasks:
 - id: sml.ch2.sec12.problem-2-8
   kind: leaf
   parent: sml.ch2.sec12
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec7.problem-1-9
+  unlocks:
+  - sml.ch2.sec12.problem-2-9
   dcref: lee-sm:problem:2-8
   chapter: 2
   title: Problem 2-8
@@ -4113,7 +4213,8 @@ tasks:
 - id: sml.ch2.sec12.problem-2-9
   kind: leaf
   parent: sml.ch2.sec12
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec12.problem-2-8
   unlocks: []
   dcref: lee-sm:problem:2-9
   chapter: 2
@@ -4177,7 +4278,8 @@ tasks:
   kind: leaf
   parent: sml.ch2.sec12
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch2.sec12.problem-2-12
   dcref: lee-sm:problem:2-11
   chapter: 2
   title: Problem 2-11
@@ -4205,7 +4307,8 @@ tasks:
 - id: sml.ch2.sec12.problem-2-12
   kind: leaf
   parent: sml.ch2.sec12
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec12.problem-2-11
   unlocks: []
   dcref: lee-sm:problem:2-12
   chapter: 2
@@ -4404,7 +4507,8 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec13
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch3.sec13.proposition-3-2
   dcref: lee-sm:lemma:3.1
   chapter: 3
   title: Lemma 3.1
@@ -4432,8 +4536,11 @@ tasks:
 - id: sml.ch3.sec13.proposition-3-2
   kind: leaf
   parent: sml.ch3.sec13
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch3.sec13.lemma-3-1
+  unlocks:
+  - sml.ch3.sec13.corollary-3-3
+  - sml.ch3.sec14.proposition-3-13
   dcref: lee-sm:proposition:3.2
   chapter: 3
   title: Proposition 3.2
@@ -4461,8 +4568,10 @@ tasks:
 - id: sml.ch3.sec13.corollary-3-3
   kind: leaf
   parent: sml.ch3.sec13
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch3.sec13.proposition-3-2
+  unlocks:
+  - sml.ch3.sec15.definition-3-15-extra-1
   dcref: lee-sm:corollary:3.3
   chapter: 3
   title: Corollary 3.3
@@ -4520,7 +4629,9 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec13
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch3.sec13.exercise-3-5
+  - sml.ch3.sec14.proposition-3-8
   dcref: lee-sm:lemma:3.4
   chapter: 3
   title: Lemma 3.4
@@ -4548,7 +4659,8 @@ tasks:
 - id: sml.ch3.sec13.exercise-3-5
   kind: leaf
   parent: sml.ch3.sec13
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec13.lemma-3-4
   unlocks: []
   dcref: lee-sm:exercise:3.5
   chapter: 3
@@ -4637,7 +4749,13 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec14
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch3.sec14.exercise-3-7
+  - sml.ch3.sec14.proposition-3-10
+  - sml.ch3.sec14.proposition-3-12
+  - sml.ch3.sec15.definition-3-15-extra-1
+  - sml.ch3.sec16.corollary-3-22
+  - sml.ch4.sec22.proposition-4-8
   dcref: lee-sm:proposition:3.6
   chapter: 3
   title: Proposition 3.6
@@ -4665,7 +4783,8 @@ tasks:
 - id: sml.ch3.sec14.exercise-3-7
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-6
   unlocks: []
   dcref: lee-sm:exercise:3.7
   chapter: 3
@@ -4694,8 +4813,11 @@ tasks:
 - id: sml.ch3.sec14.proposition-3-8
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch3.sec13.lemma-3-4
+  unlocks:
+  - sml.ch3.sec14.proposition-3-9
+  - sml.ch3.sec18.definition-3-18-extra-2
   dcref: lee-sm:proposition:3.8
   chapter: 3
   title: Proposition 3.8
@@ -4723,8 +4845,12 @@ tasks:
 - id: sml.ch3.sec14.proposition-3-9
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-8
+  unlocks:
+  - sml.ch3.sec14.proposition-3-10
+  - sml.ch3.sec14.proposition-3-12
+  - sml.ch3.sec15.definition-3-15-extra-1
   dcref: lee-sm:proposition:3.9
   chapter: 3
   title: Proposition 3.9
@@ -4752,7 +4878,9 @@ tasks:
 - id: sml.ch3.sec14.proposition-3-10
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-6
+  - sml.ch3.sec14.proposition-3-9
   unlocks: []
   dcref: lee-sm:proposition:3.10
   chapter: 3
@@ -4781,8 +4909,10 @@ tasks:
 - id: sml.ch3.sec14.lemma-3-11
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch2.sec11.lemma-2-26
+  unlocks:
+  - sml.ch3.sec14.proposition-3-12
   dcref: lee-sm:lemma:3.11
   chapter: 3
   title: Lemma 3.11
@@ -4810,7 +4940,10 @@ tasks:
 - id: sml.ch3.sec14.proposition-3-12
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-9
+  - sml.ch3.sec14.proposition-3-6
+  - sml.ch3.sec14.lemma-3-11
   unlocks: []
   dcref: lee-sm:proposition:3.12
   chapter: 3
@@ -4868,7 +5001,8 @@ tasks:
 - id: sml.ch3.sec14.proposition-3-13
   kind: leaf
   parent: sml.ch3.sec14
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec13.proposition-3-2
   unlocks: []
   dcref: lee-sm:proposition:3.13
   chapter: 3
@@ -4898,7 +5032,8 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec14
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch3.sec20.problem-3-2
   dcref: lee-sm:proposition:3.14
   chapter: 3
   title: Proposition 3.14
@@ -4950,7 +5085,10 @@ tasks:
 - id: sml.ch3.sec15.definition-3-15-extra-1
   kind: leaf
   parent: sml.ch3.sec15
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-9
+  - sml.ch3.sec14.proposition-3-6
+  - sml.ch3.sec13.corollary-3-3
   unlocks: []
   dcref: lee-sm:definition:3.15-extra-1
   chapter: 3
@@ -5239,8 +5377,10 @@ tasks:
 - id: sml.ch3.sec16.proposition-3-18
   kind: leaf
   parent: sml.ch3.sec16
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec4.lemma-1-35
+  unlocks:
+  - sml.ch4.sec21.example-4-2
   dcref: lee-sm:proposition:3.18
   chapter: 3
   title: Proposition 3.18
@@ -5413,7 +5553,8 @@ tasks:
 - id: sml.ch3.sec16.corollary-3-22
   kind: leaf
   parent: sml.ch3.sec16
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-6
   unlocks: []
   dcref: lee-sm:corollary:3.22
   chapter: 3
@@ -5524,7 +5665,8 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec17
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch3.sec17.corollary-3-25
   dcref: lee-sm:proposition:3.23
   chapter: 3
   title: Proposition 3.23
@@ -5553,7 +5695,8 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec17
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch3.sec17.corollary-3-25
   dcref: lee-sm:proposition:3.24
   chapter: 3
   title: Proposition 3.24
@@ -5581,7 +5724,9 @@ tasks:
 - id: sml.ch3.sec17.corollary-3-25
   kind: leaf
   parent: sml.ch3.sec17
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec17.proposition-3-24
+  - sml.ch3.sec17.proposition-3-23
   unlocks: []
   dcref: lee-sm:corollary:3.25
   chapter: 3
@@ -5662,7 +5807,8 @@ tasks:
 - id: sml.ch3.sec18.definition-3-18-extra-2
   kind: leaf
   parent: sml.ch3.sec18
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-8
   unlocks: []
   dcref: lee-sm:definition:3.18-extra-2
   chapter: 3
@@ -6034,7 +6180,8 @@ tasks:
 - id: sml.ch3.sec20.problem-3-2
   kind: leaf
   parent: sml.ch3.sec20
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-14
   unlocks: []
   dcref: lee-sm:problem:3-2
   chapter: 3
@@ -6119,7 +6266,8 @@ tasks:
   kind: leaf
   parent: sml.ch3.sec20
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-9
   dcref: lee-sm:problem:3-5
   chapter: 3
   title: Problem 3-5
@@ -6312,8 +6460,11 @@ tasks:
 - id: sml.ch4.sec21.proposition-4-1
   kind: leaf
   parent: sml.ch4.sec21
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec4.example-1-28
+  unlocks:
+  - sml.ch5.sec30.definition-5-30-extra-2
+  - sml.ch5.sec30.corollary-5-14
   dcref: lee-sm:proposition:4.1
   chapter: 4
   title: Proposition 4.1
@@ -6341,8 +6492,12 @@ tasks:
 - id: sml.ch4.sec21.example-4-2
   kind: leaf
   parent: sml.ch4.sec21
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch3.sec16.proposition-3-18
+  unlocks:
+  - sml.ch4.sec24.example-4-17
+  - sml.ch4.sec27.problem-4-12
+  - sml.ch5.sec30.example-5-17
   dcref: lee-sm:example:4.2
   chapter: 4
   title: Example 4.2
@@ -6485,7 +6640,9 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec22
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec22.proposition-4-8
+  - sml.ch4.sec27.problem-4-1
   dcref: lee-sm:theorem:4.5
   chapter: 4
   title: Theorem 4.5
@@ -6514,7 +6671,9 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec22
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec22.exercise-4-7
+  - sml.ch5.sec28.proposition-5-1
   dcref: lee-sm:proposition:4.6
   chapter: 4
   title: Proposition 4.6
@@ -6542,7 +6701,8 @@ tasks:
 - id: sml.ch4.sec22.exercise-4-7
   kind: leaf
   parent: sml.ch4.sec22
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec22.proposition-4-6
   unlocks: []
   dcref: lee-sm:exercise:4.7
   chapter: 4
@@ -6571,8 +6731,14 @@ tasks:
 - id: sml.ch4.sec22.proposition-4-8
   kind: leaf
   parent: sml.ch4.sec22
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch3.sec14.proposition-3-6
+  - sml.ch4.sec22.theorem-4-5
+  unlocks:
+  - sml.ch4.sec22.exercise-4-9
+  - sml.ch4.sec23.theorem-4-14
+  - sml.ch4.sec24.proposition-4-22
+  - sml.ch5.sec28.proposition-5-1
   dcref: lee-sm:proposition:4.8
   chapter: 4
   title: Proposition 4.8
@@ -6600,7 +6766,8 @@ tasks:
 - id: sml.ch4.sec22.exercise-4-9
   kind: leaf
   parent: sml.ch4.sec22
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec22.proposition-4-8
   unlocks: []
   dcref: lee-sm:exercise:4.9
   chapter: 4
@@ -6658,7 +6825,8 @@ tasks:
 - id: sml.ch4.sec22.example-4-11
   kind: leaf
   parent: sml.ch4.sec22
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec8.example-2-13
   unlocks: []
   dcref: lee-sm:example:4.11
   chapter: 4
@@ -6708,7 +6876,11 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec23
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec23.corollary-4-13
+  - sml.ch4.sec23.theorem-4-14
+  - sml.ch4.sec23.theorem-4-15
+  - sml.ch4.sec27.problem-4-3
   dcref: lee-sm:theorem:4.12
   chapter: 4
   title: Theorem 4.12
@@ -6736,7 +6908,8 @@ tasks:
 - id: sml.ch4.sec23.corollary-4-13
   kind: leaf
   parent: sml.ch4.sec23
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec23.theorem-4-12
   unlocks: []
   dcref: lee-sm:corollary:4.13
   chapter: 4
@@ -6765,7 +6938,9 @@ tasks:
 - id: sml.ch4.sec23.theorem-4-14
   kind: leaf
   parent: sml.ch4.sec23
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec23.theorem-4-12
+  - sml.ch4.sec22.proposition-4-8
   unlocks: []
   dcref: lee-sm:theorem:4.14
   chapter: 4
@@ -6794,8 +6969,12 @@ tasks:
 - id: sml.ch4.sec23.theorem-4-15
   kind: leaf
   parent: sml.ch4.sec23
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec23.theorem-4-12
+  unlocks:
+  - sml.ch4.sec24.theorem-4-25
+  - sml.ch4.sec27.problem-4-3
+  - sml.ch5.sec36.proposition-5-46
   dcref: lee-sm:theorem:4.15
   chapter: 4
   title: Theorem 4.15
@@ -6912,7 +7091,9 @@ tasks:
 - id: sml.ch4.sec24.example-4-17
   kind: leaf
   parent: sml.ch4.sec24
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec27.problem-4-12
+  - sml.ch4.sec21.example-4-2
   unlocks: []
   dcref: lee-sm:example:4.17
   chapter: 4
@@ -6971,7 +7152,9 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec24
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec32.example-5-28
+  - sml.ch5.sec37.problem-5-4
   dcref: lee-sm:example:4.19
   chapter: 4
   title: Example 4.19
@@ -6999,8 +7182,12 @@ tasks:
 - id: sml.ch4.sec24.example-4-20
   kind: leaf
   parent: sml.ch4.sec24
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec24.lemma-4-21
+  unlocks:
+  - sml.ch4.sec27.problem-4-4
+  - sml.ch5.sec37.problem-5-5
+  - sml.ch5.sec37.problem-5-13
   dcref: lee-sm:example:4.20
   chapter: 4
   title: Example 4.20
@@ -7029,7 +7216,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec24
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec24.example-4-20
   dcref: lee-sm:lemma:4.21
   chapter: 4
   title: Lemma 4.21
@@ -7057,8 +7245,11 @@ tasks:
 - id: sml.ch4.sec24.proposition-4-22
   kind: leaf
   parent: sml.ch4.sec24
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec27.problem-4-2
+  - sml.ch4.sec22.proposition-4-8
+  unlocks:
+  - sml.ch4.sec24.example-4-23
   dcref: lee-sm:proposition:4.22
   chapter: 4
   title: Proposition 4.22
@@ -7086,7 +7277,9 @@ tasks:
 - id: sml.ch4.sec24.example-4-23
   kind: leaf
   parent: sml.ch4.sec24
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec8.example-2-13
+  - sml.ch4.sec24.proposition-4-22
   unlocks: []
   dcref: lee-sm:example:4.23
   chapter: 4
@@ -7141,8 +7334,10 @@ tasks:
 - id: sml.ch4.sec24.theorem-4-25
   kind: leaf
   parent: sml.ch4.sec24
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec23.theorem-4-15
+  unlocks:
+  - sml.ch5.sec31.proposition-5-22
   dcref: lee-sm:theorem:4.25
   chapter: 4
   title: Theorem 4.25
@@ -7257,7 +7452,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec25
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec25.theorem-4-29
   dcref: lee-sm:theorem:4.26
   chapter: 4
   title: Theorem 4.26
@@ -7372,8 +7568,12 @@ tasks:
 - id: sml.ch4.sec25.theorem-4-29
   kind: leaf
   parent: sml.ch4.sec25
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec25.theorem-4-26
+  unlocks:
+  - sml.ch4.sec25.theorem-4-30
+  - sml.ch4.sec27.problem-4-7
+  - sml.ch4.sec27.problem-4-8
   dcref: lee-sm:theorem:4.29
   chapter: 4
   title: Theorem 4.29
@@ -7401,7 +7601,8 @@ tasks:
 - id: sml.ch4.sec25.theorem-4-30
   kind: leaf
   parent: sml.ch4.sec25
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec25.theorem-4-29
   unlocks: []
   dcref: lee-sm:theorem:4.30
   chapter: 4
@@ -7431,7 +7632,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec25
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec25.exercise-4-32
   dcref: lee-sm:theorem:4.31
   chapter: 4
   title: Theorem 4.31
@@ -7459,7 +7661,8 @@ tasks:
 - id: sml.ch4.sec25.exercise-4-32
   kind: leaf
   parent: sml.ch4.sec25
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec25.theorem-4-31
   unlocks: []
   dcref: lee-sm:exercise:4.32
   chapter: 4
@@ -7552,7 +7755,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec26
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec26.exercise-4-34
   dcref: lee-sm:proposition:4.33
   chapter: 4
   title: Proposition 4.33
@@ -7580,7 +7784,8 @@ tasks:
 - id: sml.ch4.sec26.exercise-4-34
   kind: leaf
   parent: sml.ch4.sec26
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec26.proposition-4-33
   unlocks: []
   dcref: lee-sm:exercise:4.34
   chapter: 4
@@ -7610,7 +7815,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec26
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec27.problem-4-12
   dcref: lee-sm:example:4.35
   chapter: 4
   title: Example 4.35
@@ -7754,8 +7960,10 @@ tasks:
 - id: sml.ch4.sec26.proposition-4-40
   kind: leaf
   parent: sml.ch4.sec26
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec1.proposition-1-16
+  unlocks:
+  - sml.ch4.sec27.problem-4-9
   dcref: lee-sm:proposition:4.40
   chapter: 4
   title: Proposition 4.40
@@ -7784,7 +7992,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec26
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec26.exercise-4-42
   dcref: lee-sm:proposition:4.41
   chapter: 4
   title: Proposition 4.41
@@ -7812,7 +8021,8 @@ tasks:
 - id: sml.ch4.sec26.exercise-4-42
   kind: leaf
   parent: sml.ch4.sec26
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec26.proposition-4-41
   unlocks: []
   dcref: lee-sm:exercise:4.42
   chapter: 4
@@ -7842,7 +8052,9 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec26
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec26.exercise-4-44
+  - sml.ch4.sec26.exercise-4-45
   dcref: lee-sm:corollary:4.43
   chapter: 4
   title: Corollary 4.43
@@ -7870,7 +8082,8 @@ tasks:
 - id: sml.ch4.sec26.exercise-4-44
   kind: leaf
   parent: sml.ch4.sec26
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec26.corollary-4-43
   unlocks: []
   dcref: lee-sm:exercise:4.44
   chapter: 4
@@ -7899,7 +8112,8 @@ tasks:
 - id: sml.ch4.sec26.exercise-4-45
   kind: leaf
   parent: sml.ch4.sec26
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec26.corollary-4-43
   unlocks: []
   dcref: lee-sm:exercise:4.45
   chapter: 4
@@ -7929,7 +8143,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec26
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec27.problem-4-11
   dcref: lee-sm:proposition:4.46
   chapter: 4
   title: Proposition 4.46
@@ -7989,7 +8204,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-1
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec22.theorem-4-5
   unlocks: []
   dcref: lee-sm:problem:4-1
   chapter: 4
@@ -8019,7 +8235,8 @@ tasks:
   kind: leaf
   parent: sml.ch4.sec27
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch4.sec24.proposition-4-22
   dcref: lee-sm:problem:4-2
   chapter: 4
   title: Problem 4-2
@@ -8047,7 +8264,9 @@ tasks:
 - id: sml.ch4.sec27.problem-4-3
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec23.theorem-4-12
+  - sml.ch4.sec23.theorem-4-15
   unlocks: []
   dcref: lee-sm:problem:4-3
   chapter: 4
@@ -8076,7 +8295,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-4
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec24.example-4-20
   unlocks: []
   dcref: lee-sm:problem:4-4
   chapter: 4
@@ -8105,7 +8325,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-5
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec7.problem-1-9
   unlocks: []
   dcref: lee-sm:problem:4-5
   chapter: 4
@@ -8163,7 +8384,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-7
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec25.theorem-4-29
   unlocks: []
   dcref: lee-sm:problem:4-7
   chapter: 4
@@ -8192,7 +8414,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-8
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec25.theorem-4-29
   unlocks: []
   dcref: lee-sm:problem:4-8
   chapter: 4
@@ -8221,7 +8444,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-9
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec26.proposition-4-40
   unlocks: []
   dcref: lee-sm:problem:4-9
   chapter: 4
@@ -8250,8 +8474,10 @@ tasks:
 - id: sml.ch4.sec27.problem-4-10
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch2.sec8.example-2-13
+  unlocks:
+  - sml.ch4.sec27.problem-4-13
   dcref: lee-sm:problem:4-10
   chapter: 4
   title: Problem 4-10
@@ -8279,7 +8505,8 @@ tasks:
 - id: sml.ch4.sec27.problem-4-11
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec26.proposition-4-46
   unlocks: []
   dcref: lee-sm:problem:4-11
   chapter: 4
@@ -8308,8 +8535,11 @@ tasks:
 - id: sml.ch4.sec27.problem-4-12
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec26.example-4-35
+  - sml.ch4.sec21.example-4-2
+  unlocks:
+  - sml.ch4.sec24.example-4-17
   dcref: lee-sm:problem:4-12
   chapter: 4
   title: Problem 4-12
@@ -8337,7 +8567,9 @@ tasks:
 - id: sml.ch4.sec27.problem-4-13
   kind: leaf
   parent: sml.ch4.sec27
-  depends_on: []
+  depends_on:
+  - sml.ch2.sec8.example-2-13
+  - sml.ch4.sec27.problem-4-10
   unlocks: []
   dcref: lee-sm:problem:4-13
   chapter: 4
@@ -8451,8 +8683,12 @@ tasks:
 - id: sml.ch5.sec28.proposition-5-1
   kind: leaf
   parent: sml.ch5.sec28
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch1.sec4.example-1-26
+  - sml.ch4.sec22.proposition-4-8
+  - sml.ch4.sec22.proposition-4-6
+  unlocks:
+  - sml.ch5.sec36.proposition-5-46
   dcref: lee-sm:proposition:5.1
   chapter: 5
   title: Proposition 5.1
@@ -8481,7 +8717,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec28
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec31.proposition-5-18
   dcref: lee-sm:proposition:5.2
   chapter: 5
   title: Proposition 5.2
@@ -8539,7 +8776,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec28
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec28.proposition-5-7
   dcref: lee-sm:proposition:5.4
   chapter: 5
   title: Proposition 5.4
@@ -8597,7 +8835,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec28
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec30.theorem-5-12
   dcref: lee-sm:proposition:5.5
   chapter: 5
   title: Proposition 5.5
@@ -8654,7 +8893,8 @@ tasks:
 - id: sml.ch5.sec28.proposition-5-7
   kind: leaf
   parent: sml.ch5.sec28
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec28.proposition-5-4
   unlocks: []
   dcref: lee-sm:proposition:5.7
   chapter: 5
@@ -8739,7 +8979,9 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec29
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec33.theorem-5-31
+  - sml.ch5.sec36.theorem-5-53
   dcref: lee-sm:theorem:5.8
   chapter: 5
   title: Theorem 5.8
@@ -8774,7 +9016,8 @@ tasks:
 - id: sml.ch5.sec29.remark-5-29-extra-2
   kind: leaf
   parent: sml.ch5.sec29
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec33.theorem-5-31
   unlocks: []
   dcref: lee-sm:remark:5.29-extra-2
   chapter: 5
@@ -8803,7 +9046,9 @@ tasks:
 - id: sml.ch5.sec29.example-5-9
   kind: leaf
   parent: sml.ch5.sec29
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec1.example-1-4
+  - sml.ch1.sec4.example-1-31
   unlocks: []
   dcref: lee-sm:example:5.9
   chapter: 5
@@ -8862,7 +9107,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec29
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-2
   dcref: lee-sm:theorem:5.11
   chapter: 5
   title: Theorem 5.11
@@ -8887,7 +9133,8 @@ tasks:
 - id: sml.ch5.sec29.remark-5-29-extra-3
   kind: leaf
   parent: sml.ch5.sec29
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec37.problem-5-24
   unlocks: []
   dcref: lee-sm:remark:5.29-extra-3
   chapter: 5
@@ -8944,7 +9191,8 @@ tasks:
 - id: sml.ch5.sec30.definition-5-30-extra-1
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec4.example-1-32
   unlocks: []
   dcref: lee-sm:definition:5.30-extra-1
   chapter: 5
@@ -8973,7 +9221,8 @@ tasks:
 - id: sml.ch5.sec30.theorem-5-12
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec28.proposition-5-5
   unlocks: []
   dcref: lee-sm:theorem:5.12
   chapter: 5
@@ -9003,7 +9252,9 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec30
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec30.corollary-5-14
+  - sml.ch5.sec30.proposition-5-16
   dcref: lee-sm:corollary:5.13
   chapter: 5
   title: Corollary 5.13
@@ -9031,7 +9282,8 @@ tasks:
 - id: sml.ch5.sec30.definition-5-30-extra-2
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec21.proposition-4-1
   unlocks: []
   dcref: lee-sm:definition:5.30-extra-2
   chapter: 5
@@ -9060,7 +9312,9 @@ tasks:
 - id: sml.ch5.sec30.corollary-5-14
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec21.proposition-4-1
+  - sml.ch5.sec30.corollary-5-13
   unlocks: []
   dcref: lee-sm:corollary:5.14
   chapter: 5
@@ -9090,7 +9344,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec30
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec30.definition-5-30-extra-3
   dcref: lee-sm:example:5.15
   chapter: 5
   title: Example 5.15
@@ -9118,8 +9373,10 @@ tasks:
 - id: sml.ch5.sec30.proposition-5-16
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch5.sec30.corollary-5-13
+  unlocks:
+  - sml.ch5.sec30.definition-5-30-extra-3
   dcref: lee-sm:proposition:5.16
   chapter: 5
   title: Proposition 5.16
@@ -9147,7 +9404,9 @@ tasks:
 - id: sml.ch5.sec30.definition-5-30-extra-3
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec30.example-5-15
+  - sml.ch5.sec30.proposition-5-16
   unlocks: []
   dcref: lee-sm:definition:5.30-extra-3
   chapter: 5
@@ -9176,7 +9435,8 @@ tasks:
 - id: sml.ch5.sec30.example-5-17
   kind: leaf
   parent: sml.ch5.sec30
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec21.example-4-2
   unlocks: []
   dcref: lee-sm:example:5.17
   chapter: 5
@@ -9264,7 +9524,8 @@ tasks:
 - id: sml.ch5.sec31.proposition-5-18
   kind: leaf
   parent: sml.ch5.sec31
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec28.proposition-5-2
   unlocks: []
   dcref: lee-sm:proposition:5.18
   chapter: 5
@@ -9352,7 +9613,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec31
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-3
   dcref: lee-sm:proposition:5.21
   chapter: 5
   title: Proposition 5.21
@@ -9377,8 +9639,10 @@ tasks:
 - id: sml.ch5.sec31.proposition-5-22
   kind: leaf
   parent: sml.ch5.sec31
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec24.theorem-4-25
+  unlocks:
+  - sml.ch5.sec32.theorem-5-29
   dcref: lee-sm:proposition:5.22
   chapter: 5
   title: Proposition 5.22
@@ -9605,7 +9869,8 @@ tasks:
 - id: sml.ch5.sec32.example-5-28
   kind: leaf
   parent: sml.ch5.sec32
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec24.example-4-19
   unlocks: []
   dcref: lee-sm:example:5.28
   chapter: 5
@@ -9634,8 +9899,10 @@ tasks:
 - id: sml.ch5.sec32.theorem-5-29
   kind: leaf
   parent: sml.ch5.sec32
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch5.sec31.proposition-5-22
+  unlocks:
+  - sml.ch5.sec36.remark-5-36-extra-5
   dcref: lee-sm:theorem:5.29
   chapter: 5
   title: Theorem 5.29
@@ -9693,7 +9960,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec32
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec33.theorem-5-31
   dcref: lee-sm:corollary:5.30
   chapter: 5
   title: Corollary 5.30
@@ -9772,8 +10040,11 @@ tasks:
 - id: sml.ch5.sec33.theorem-5-31
   kind: leaf
   parent: sml.ch5.sec33
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch5.sec29.theorem-5-8
+  - sml.ch5.sec32.corollary-5-30
+  unlocks:
+  - sml.ch5.sec29.remark-5-29-extra-2
   dcref: lee-sm:theorem:5.31
   chapter: 5
   title: Theorem 5.31
@@ -9802,7 +10073,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec33
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-14
   dcref: lee-sm:theorem:5.32
   chapter: 5
   title: Theorem 5.32
@@ -9828,7 +10100,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec33
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-16
   dcref: lee-sm:theorem:5.33
   chapter: 5
   title: Theorem 5.33
@@ -9904,7 +10177,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec34
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-17
   dcref: lee-sm:lemma:5.34
   chapter: 5
   title: Lemma 5.34
@@ -9992,7 +10266,9 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec35
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec35.exercise-5-36
+  - sml.ch5.sec35.example-5-45
   dcref: lee-sm:proposition:5.35
   chapter: 5
   title: Proposition 5.35
@@ -10020,7 +10296,8 @@ tasks:
 - id: sml.ch5.sec35.exercise-5-36
   kind: leaf
   parent: sml.ch5.sec35
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec35.proposition-5-35
   unlocks: []
   dcref: lee-sm:exercise:5.36
   chapter: 5
@@ -10050,7 +10327,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec35
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-20
   dcref: lee-sm:proposition:5.37
   chapter: 5
   title: Proposition 5.37
@@ -10195,7 +10473,9 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec35
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec35.exercise-5-42
+  - sml.ch5.sec35.proposition-5-43
   dcref: lee-sm:proposition:5.41
   chapter: 5
   title: Proposition 5.41
@@ -10223,7 +10503,8 @@ tasks:
 - id: sml.ch5.sec35.exercise-5-42
   kind: leaf
   parent: sml.ch5.sec35
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec35.proposition-5-41
   unlocks: []
   dcref: lee-sm:exercise:5.42
   chapter: 5
@@ -10281,7 +10562,8 @@ tasks:
 - id: sml.ch5.sec35.proposition-5-43
   kind: leaf
   parent: sml.ch5.sec35
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec35.proposition-5-41
   unlocks: []
   dcref: lee-sm:proposition:5.43
   chapter: 5
@@ -10339,7 +10621,8 @@ tasks:
 - id: sml.ch5.sec35.example-5-45
   kind: leaf
   parent: sml.ch5.sec35
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec35.proposition-5-35
   unlocks: []
   dcref: lee-sm:example:5.45
   chapter: 5
@@ -10462,7 +10745,9 @@ tasks:
 - id: sml.ch5.sec36.proposition-5-46
   kind: leaf
   parent: sml.ch5.sec36
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec23.theorem-4-15
+  - sml.ch5.sec28.proposition-5-1
   unlocks: []
   dcref: lee-sm:proposition:5.46
   chapter: 5
@@ -10492,7 +10777,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec36
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-21
   dcref: lee-sm:proposition:5.47
   chapter: 5
   title: Proposition 5.47
@@ -10547,7 +10833,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec36
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec37.problem-5-22
   dcref: lee-sm:theorem:5.48
   chapter: 5
   title: Theorem 5.48
@@ -10573,7 +10860,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec36
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec36.exercise-5-50
   dcref: lee-sm:proposition:5.49
   chapter: 5
   title: Proposition 5.49
@@ -10601,7 +10889,8 @@ tasks:
 - id: sml.ch5.sec36.exercise-5-50
   kind: leaf
   parent: sml.ch5.sec36
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec36.proposition-5-49
   unlocks: []
   dcref: lee-sm:exercise:5.50
   chapter: 5
@@ -10660,7 +10949,9 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec36
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec36.exercise-5-52
+  - sml.ch5.sec36.theorem-5-53
   dcref: lee-sm:theorem:5.51
   chapter: 5
   title: Theorem 5.51
@@ -10692,7 +10983,8 @@ tasks:
 - id: sml.ch5.sec36.exercise-5-52
   kind: leaf
   parent: sml.ch5.sec36
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec36.theorem-5-51
   unlocks: []
   dcref: lee-sm:exercise:5.52
   chapter: 5
@@ -10721,8 +11013,11 @@ tasks:
 - id: sml.ch5.sec36.theorem-5-53
   kind: leaf
   parent: sml.ch5.sec36
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch5.sec36.theorem-5-51
+  - sml.ch5.sec29.theorem-5-8
+  unlocks:
+  - sml.ch5.sec36.exercise-5-54
   dcref: lee-sm:theorem:5.53
   chapter: 5
   title: Theorem 5.53
@@ -10750,7 +11045,8 @@ tasks:
 - id: sml.ch5.sec36.remark-5-36-extra-5
   kind: leaf
   parent: sml.ch5.sec36
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec32.theorem-5-29
   unlocks: []
   dcref: lee-sm:remark:5.36-extra-5
   chapter: 5
@@ -10779,7 +11075,8 @@ tasks:
 - id: sml.ch5.sec36.exercise-5-54
   kind: leaf
   parent: sml.ch5.sec36
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec36.theorem-5-53
   unlocks: []
   dcref: lee-sm:exercise:5.54
   chapter: 5
@@ -10880,7 +11177,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-2
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec29.theorem-5-11
   unlocks: []
   dcref: lee-sm:problem:5-2
   chapter: 5
@@ -10906,7 +11204,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-3
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec31.proposition-5-21
   unlocks: []
   dcref: lee-sm:problem:5-3
   chapter: 5
@@ -10932,8 +11231,10 @@ tasks:
 - id: sml.ch5.sec37.problem-5-4
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
-  unlocks: []
+  depends_on:
+  - sml.ch4.sec24.example-4-19
+  unlocks:
+  - sml.ch5.sec37.problem-5-5
   dcref: lee-sm:problem:5-4
   chapter: 5
   title: Problem 5-4
@@ -10961,7 +11262,9 @@ tasks:
 - id: sml.ch5.sec37.problem-5-5
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec24.example-4-20
+  - sml.ch5.sec37.problem-5-4
   unlocks: []
   dcref: lee-sm:problem:5-5
   chapter: 5
@@ -11077,7 +11380,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-9
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch3.sec20.problem-3-5
   unlocks: []
   dcref: lee-sm:problem:5-9
   chapter: 5
@@ -11193,7 +11497,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-13
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch4.sec24.example-4-20
   unlocks: []
   dcref: lee-sm:problem:5-13
   chapter: 5
@@ -11222,7 +11527,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-14
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec33.theorem-5-32
   unlocks: []
   dcref: lee-sm:problem:5-14
   chapter: 5
@@ -11277,7 +11583,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-16
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec33.theorem-5-33
   unlocks: []
   dcref: lee-sm:problem:5-16
   chapter: 5
@@ -11303,7 +11610,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-17
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec34.lemma-5-34
   unlocks: []
   dcref: lee-sm:problem:5-17
   chapter: 5
@@ -11387,7 +11695,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-20
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec35.proposition-5-37
   unlocks: []
   dcref: lee-sm:problem:5-20
   chapter: 5
@@ -11416,7 +11725,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-21
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec36.proposition-5-47
   unlocks: []
   dcref: lee-sm:problem:5-21
   chapter: 5
@@ -11442,7 +11752,8 @@ tasks:
 - id: sml.ch5.sec37.problem-5-22
   kind: leaf
   parent: sml.ch5.sec37
-  depends_on: []
+  depends_on:
+  - sml.ch5.sec36.theorem-5-48
   unlocks: []
   dcref: lee-sm:problem:5-22
   chapter: 5
@@ -11498,7 +11809,8 @@ tasks:
   kind: leaf
   parent: sml.ch5.sec37
   depends_on: []
-  unlocks: []
+  unlocks:
+  - sml.ch5.sec29.remark-5-29-extra-3
   dcref: lee-sm:problem:5-24
   chapter: 5
   title: Problem 5-24

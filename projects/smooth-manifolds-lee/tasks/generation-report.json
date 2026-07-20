@@ -1203,12 +1203,351 @@
       "label": "Problem 8-31"
     }
   ],
+  "textbookDependencyGraph": {
+    "textbookDependencyReferenceCount": 189,
+    "exactResolvedReferenceCount": 162,
+    "subpartResolvedReferenceCount": 3,
+    "externalReferenceCount": 24,
+    "rawInternalEdgeCount": 165,
+    "retainedEdgeCount": 156,
+    "suppressedProofLocationBacklinkCount": 9,
+    "nonemptyDependsOnTaskCount": 123,
+    "nonemptyDependencyUnlockTaskCount": 104,
+    "structuralUnlockEdgeCount": 399,
+    "totalUnlockEdgeCount": 555,
+    "relationCounts": {
+      "same_section": 65,
+      "same_chapter_cross_section": 52,
+      "cross_chapter": 39
+    },
+    "dependsOnSha256": "f347ecabe7c300726cafa5a3c9533964ae08989cc7514d478e6599eab4a7e653",
+    "unlocksSha256": "db7adfe16ba74008cfa96d2c430ddc808d1d9ec2dfe57f2388fab3bdb2f77534",
+    "resolvedSubpartDependencies": [
+      {
+        "task_id": "sml.ch4.sec27.problem-4-10",
+        "source_label": "Problem 4-10",
+        "dependency_label": "Example 2.13(f)",
+        "resolved_task_id": "sml.ch2.sec8.example-2-13",
+        "subpart": "(f)"
+      },
+      {
+        "task_id": "sml.ch4.sec27.problem-4-12",
+        "source_label": "Problem 4-12",
+        "dependency_label": "Example 4.2(d)",
+        "resolved_task_id": "sml.ch4.sec21.example-4-2",
+        "subpart": "(d)"
+      },
+      {
+        "task_id": "sml.ch4.sec27.problem-4-13",
+        "source_label": "Problem 4-13",
+        "dependency_label": "Example 2.13(f)",
+        "resolved_task_id": "sml.ch2.sec8.example-2-13",
+        "subpart": "(f)"
+      }
+    ],
+    "externalDependencies": [
+      {
+        "task_id": "sml.ch1.sec4.example-1-24",
+        "source_label": "Example 1.24",
+        "dependency_label": "Exercise B.49",
+        "referenced_chapter": "B",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch1.sec4.example-1-32",
+        "source_label": "Example 1.32",
+        "dependency_label": "Theorem C.40",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch1.sec4.example-1-36",
+        "source_label": "Example 1.36",
+        "dependency_label": "Exercise B.22(d)",
+        "referenced_chapter": "B",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch1.sec4.example-1-36",
+        "source_label": "Example 1.36",
+        "dependency_label": "Exercise B.9",
+        "referenced_chapter": "B",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch1.sec6.theorem-1-46",
+        "source_label": "Theorem 1.46",
+        "dependency_label": "Corollary C.36",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch2.sec9.theorem-2-17",
+        "source_label": "Theorem 2.17",
+        "dependency_label": "Proposition C.4",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch2.sec11.theorem-2-29",
+        "source_label": "Theorem 2.29",
+        "dependency_label": "Proposition A.16",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch2.sec11.theorem-2-29",
+        "source_label": "Theorem 2.29",
+        "dependency_label": "Theorem C.31",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch3.sec13.proposition-3-2",
+        "source_label": "Proposition 3.2",
+        "dependency_label": "Theorem C.15",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec21.definition-4-21-extra-1",
+        "source_label": "Definition 4.21-extra-1",
+        "dependency_label": "Theorem B.20",
+        "referenced_chapter": "B",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec21.definition-4-21-extra-1",
+        "source_label": "Definition 4.21-extra-1",
+        "dependency_label": "Exercise B.22",
+        "referenced_chapter": "B",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec22.theorem-4-5",
+        "source_label": "Theorem 4.5",
+        "dependency_label": "Theorem C.34",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec23.theorem-4-14",
+        "source_label": "Theorem 4.14",
+        "dependency_label": "Theorem A.58",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec24.proposition-4-22",
+        "source_label": "Proposition 4.22",
+        "dependency_label": "Theorem A.38",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec24.proposition-4-22",
+        "source_label": "Proposition 4.22",
+        "dependency_label": "Theorem A.57",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec26.proposition-4-40",
+        "source_label": "Proposition 4.40",
+        "dependency_label": "Proposition A.77",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec26.proposition-4-40",
+        "source_label": "Proposition 4.40",
+        "dependency_label": "Exercise A.22",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch4.sec26.proposition-4-46",
+        "source_label": "Proposition 4.46",
+        "dependency_label": "Theorem A.57",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch5.sec28.proposition-5-5",
+        "source_label": "Proposition 5.5",
+        "dependency_label": "Theorem A.57",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch5.sec28.proposition-5-5",
+        "source_label": "Proposition 5.5",
+        "dependency_label": "Proposition A.53",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch5.sec28.proposition-5-7",
+        "source_label": "Proposition 5.7",
+        "dependency_label": "Proposition A.53",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch5.sec29.exercise-5-10",
+        "source_label": "Exercise 5.10",
+        "dependency_label": "Example C.38",
+        "referenced_chapter": "C",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch5.sec32.corollary-5-30",
+        "source_label": "Corollary 5.30",
+        "dependency_label": "Proposition A.17",
+        "referenced_chapter": "A",
+        "reason": "outside imported chapters"
+      },
+      {
+        "task_id": "sml.ch5.sec36.remark-5-36-extra-5",
+        "source_label": "Remark 5.36-extra-5",
+        "dependency_label": "Problem 9-13",
+        "referenced_chapter": 9,
+        "reason": "outside imported chapters"
+      }
+    ],
+    "suppressedProofLocationBacklinks": [
+      {
+        "task_id": "sml.ch2.sec8.proposition-2-12",
+        "source_label": "Proposition 2.12",
+        "dependency_label": "Problem 2-2",
+        "resolved_task_id": "sml.ch2.sec12.problem-2-2",
+        "proof": "Problem 2-2."
+      },
+      {
+        "task_id": "sml.ch3.sec14.proposition-3-14",
+        "source_label": "Proposition 3.14",
+        "dependency_label": "Problem 3-2",
+        "resolved_task_id": "sml.ch3.sec20.problem-3-2",
+        "proof": "See Problem 3-2."
+      },
+      {
+        "task_id": "sml.ch5.sec29.theorem-5-11",
+        "source_label": "Theorem 5.11",
+        "dependency_label": "Problem 5-2",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-2",
+        "proof": "See Problem 5-2."
+      },
+      {
+        "task_id": "sml.ch5.sec31.proposition-5-21",
+        "source_label": "Proposition 5.21",
+        "dependency_label": "Problem 5-3",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-3",
+        "proof": "Problem 5-3."
+      },
+      {
+        "task_id": "sml.ch5.sec33.theorem-5-32",
+        "source_label": "Theorem 5.32",
+        "dependency_label": "Problem 5-14",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-14",
+        "proof": "See Problem 5-14."
+      },
+      {
+        "task_id": "sml.ch5.sec33.theorem-5-33",
+        "source_label": "Theorem 5.33",
+        "dependency_label": "Problem 5-16",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-16",
+        "proof": "See Problem 5-16."
+      },
+      {
+        "task_id": "sml.ch5.sec34.lemma-5-34",
+        "source_label": "Lemma 5.34",
+        "dependency_label": "Problem 5-17",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-17",
+        "proof": "Problem 5-17."
+      },
+      {
+        "task_id": "sml.ch5.sec36.proposition-5-47",
+        "source_label": "Proposition 5.47",
+        "dependency_label": "Problem 5-21",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-21",
+        "proof": "Problem 5-21."
+      },
+      {
+        "task_id": "sml.ch5.sec36.theorem-5-48",
+        "source_label": "Theorem 5.48",
+        "dependency_label": "Problem 5-22",
+        "resolved_task_id": "sml.ch5.sec37.problem-5-22",
+        "proof": "Problem 5-22."
+      }
+    ],
+    "unlistedProofLocationBacklinks": [
+      {
+        "task_id": "sml.ch1.sec6.proposition-1-45",
+        "source_label": "Proposition 1.45",
+        "dependency_label": "Problem 1-12",
+        "resolved_task_id": "sml.ch1.sec7.problem-1-12",
+        "proof": "Problem 1-12."
+      }
+    ],
+    "unresolvedInternalDependencies": [],
+    "ambiguousDependencies": [],
+    "duplicateDependencies": [],
+    "selfDependencies": [],
+    "rawDependencyCycles": [
+      [
+        "sml.ch2.sec8.proposition-2-12",
+        "sml.ch2.sec12.problem-2-2"
+      ],
+      [
+        "sml.ch3.sec14.proposition-3-14",
+        "sml.ch3.sec20.problem-3-2"
+      ],
+      [
+        "sml.ch5.sec29.theorem-5-11",
+        "sml.ch5.sec37.problem-5-2"
+      ],
+      [
+        "sml.ch5.sec31.proposition-5-21",
+        "sml.ch5.sec37.problem-5-3"
+      ],
+      [
+        "sml.ch5.sec33.theorem-5-32",
+        "sml.ch5.sec37.problem-5-14"
+      ],
+      [
+        "sml.ch5.sec33.theorem-5-33",
+        "sml.ch5.sec37.problem-5-16"
+      ],
+      [
+        "sml.ch5.sec34.lemma-5-34",
+        "sml.ch5.sec37.problem-5-17"
+      ],
+      [
+        "sml.ch5.sec36.proposition-5-47",
+        "sml.ch5.sec37.problem-5-21"
+      ],
+      [
+        "sml.ch5.sec36.theorem-5-48",
+        "sml.ch5.sec37.problem-5-22"
+      ]
+    ],
+    "dag": {
+      "nodeCount": 357,
+      "edgeCount": 156,
+      "visitedNodeCount": 357,
+      "acyclic": true,
+      "cyclicTaskIds": []
+    }
+  },
   "notes": [
     "Auxiliary Lean files are attached to their canonical owner task when a matching owner exists.",
     "Tracked official errata overlays are applied before textbook labels are matched or generated.",
     "Top-level Lean files without a JSON label are attached to the earliest paired task in the same section that directly imports them; otherwise they remain unmatched.",
     "JSON entries without matching Lean files inside imported chapters are generated as textbook-only review tasks without synthetic Lean paths.",
     "New textbook-only tasks start with both checks pending; formal review remains visible after mathematical review is completed.",
+    "Textbook dependencies resolve globally across imported chapters; trailing part references such as Example 2.13(f) fall back to the owner entry only when no exact label exists.",
+    "Terse statement-to-problem proof-location backlinks are reported but excluded from depends_on so that statement/problem pairs do not form cycles.",
+    "External appendix or unimported-chapter references are reported but are not emitted as dangling task dependencies.",
     "JSON entries outside imported chapters are separated from the current Ch1-Ch5 review queue."
   ]
 }
