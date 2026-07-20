@@ -12,8 +12,8 @@
     "semanticDesignBeforeProof": 3,
     "lowRiskCompleteCandidates": 6,
     "lowRiskPartialCandidates": 3,
-    "verifiedLowRiskCandidates": 6,
-    "uncompiledLowRiskCandidates": 3,
+    "verifiedLowRiskCandidates": 9,
+    "uncompiledLowRiskCandidates": 0,
     "byTier": {
       "A_low_risk_complete_candidate": 6,
       "B_high_leverage_owner": 27,
@@ -950,7 +950,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch5.sec28.proposition-5-4",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_4.lean",
@@ -958,8 +958,9 @@
           "TopologicalSpace.Opens.range_graphMap_eq_graphOn"
         ],
         "scope": "one of two direct sorry tokens in the task",
-        "proposal": "Reuse the imported root theorem with `exact _root_.range_graphMap_eq_graphOn (U : Set M) f`.",
-        "status": "proposal_uncompiled"
+        "proposal": "Reuse the imported root theorem with `by exact _root_.range_graphMap_eq_graphOn (U : Set M) f`.",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 17
     },
@@ -1690,7 +1691,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch5.sec35.exercise-5-44",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_44.lean",
@@ -1698,8 +1699,9 @@
           "IsBoundaryDefiningFunctionAt.eq_zero"
         ],
         "scope": "one of four direct sorry tokens in the task",
-        "proposal": "Project the boundary membership and local zero-set equivalence from `hf`, then apply the equivalence at `p`.",
-        "status": "proposal_uncompiled"
+        "proposal": "Use `by obtain ⟨s, _, hp, hzero, _⟩ := hf.2.2; exact (hzero p hp).mp hf.1`.",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 34
     },
@@ -1728,7 +1730,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch5.sec30.definition-5-30-extra-2",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_2.lean",
@@ -1739,7 +1741,8 @@
         ],
         "scope": "three of nine direct sorry tokens in the task",
         "proposal": "Use `by rfl` for the three definition-expansion equivalences.",
-        "status": "proposal_uncompiled"
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 35
     },

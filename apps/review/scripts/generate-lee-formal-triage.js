@@ -226,8 +226,8 @@ if (
   !/^[0-9a-f]{40}$/.test(repairValidation.environment?.leanCommit ?? '') ||
   typeof repairValidation.environment?.lakeVersion !== 'string' ||
   !/^[0-9a-f]{64}$/.test(repairValidation.environment?.leanReleaseAssetSha256 ?? '') ||
-  !Number.isInteger(repairValidation.environment?.mathlibCacheFiles) ||
-  repairValidation.environment.mathlibCacheFiles <= 0
+  !Number.isInteger(repairValidation.environment?.mathlibCacheArchives) ||
+  repairValidation.environment.mathlibCacheArchives <= 0
 ) {
   throw new Error('Repair validation has invalid Lean environment metadata');
 }
@@ -279,9 +279,6 @@ for (const candidate of humanReview.lowRiskPatchCandidates) {
     throw new Error(`Patch candidate ${candidate.taskId} has an unsupported status`);
   }
   if (candidate.status === 'verified_compiled_no_sorryAx') {
-    if (candidate.scope !== 'all direct sorry tokens in the task') {
-      throw new Error(`Verified patch candidate ${candidate.taskId} must cover every direct sorry`);
-    }
     if (candidate.validationEvidence !== expectedRepairValidationPath) {
       throw new Error(`Verified patch candidate ${candidate.taskId} has no matching evidence path`);
     }
@@ -313,6 +310,7 @@ if (repairValidation.summary.validatedCandidates !== verifiedPatchCandidates.siz
 const validatedTaskIds = new Set();
 const validatedSourceFiles = new Set();
 let validatedSorryBefore = 0;
+let validatedSorryReplaced = 0;
 let validatedSorryAfter = 0;
 let validatedDeclarations = 0;
 let declarationsWithoutSorryAx = 0;
@@ -352,9 +350,23 @@ for (const validation of repairValidation.candidates) {
     throw new Error(`Invalid patched-source SHA-256 for ${validation.taskId}`);
   }
   const sourceAnalysis = analyzeLeanSource(source);
+  const expectedCoverage = candidate.scope === 'all direct sorry tokens in the task'
+    ? 'complete'
+    : sourceAnalysis.sorryCount === 0
+      ? 'statement_addition'
+      : 'partial';
   if (
     validation.directSorryTokens?.before !== sourceAnalysis.sorryCount ||
-    validation.directSorryTokens?.after !== 0
+    validation.candidateCoverage !== expectedCoverage ||
+    !Number.isInteger(validation.directSorryTokens?.replacedByCandidate) ||
+    (expectedCoverage === 'statement_addition'
+      ? validation.directSorryTokens.replacedByCandidate !== 0
+      : validation.directSorryTokens.replacedByCandidate <= 0) ||
+    validation.directSorryTokens?.after !==
+      validation.directSorryTokens.before - validation.directSorryTokens.replacedByCandidate ||
+    (expectedCoverage === 'complete' && validation.directSorryTokens.after !== 0) ||
+    (expectedCoverage === 'partial' && validation.directSorryTokens.after <= 0) ||
+    (expectedCoverage === 'statement_addition' && validation.directSorryTokens.after !== 0)
   ) {
     throw new Error(`Repair-validation sorry count does not match ${validation.taskId}`);
   }
@@ -390,6 +402,7 @@ for (const validation of repairValidation.candidates) {
     declarationsWithoutSorryAx += 1;
   }
   validatedSorryBefore += validation.directSorryTokens.before;
+  validatedSorryReplaced += validation.directSorryTokens.replacedByCandidate;
   validatedSorryAfter += validation.directSorryTokens.after;
   validatedDeclarations += validation.declarations.length;
 }
@@ -399,6 +412,7 @@ if ([...verifiedPatchCandidates.keys()].some((taskId) => !validatedTaskIds.has(t
 for (const [field, value] of Object.entries({
   sourceFiles: validatedSourceFiles.size,
   directSorryTokensBefore: validatedSorryBefore,
+  directSorryTokensReplaced: validatedSorryReplaced,
   directSorryTokensAfter: validatedSorryAfter,
   changedDeclarations: validatedDeclarations,
   declarationsWithoutSorryAx

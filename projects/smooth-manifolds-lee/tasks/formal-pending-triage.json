@@ -86,7 +86,7 @@
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
     "lowRiskPatchCandidates": 10,
-    "compiledPatchCandidates": 6
+    "compiledPatchCandidates": 10
   },
   "tasks": [
     {

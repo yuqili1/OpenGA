@@ -79,10 +79,12 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. Six low-risk patch candidates have compiled
-with the pinned Lean toolchain and passed declaration-level axioms checks; the
-remaining candidates are still uncompiled proposals. Exact source hashes,
-proofs, toolchain metadata, and axioms results are recorded at:
+a statement or coverage problem. All ten low-risk patch candidates have
+compiled with the pinned Lean toolchain and passed declaration-level axioms
+checks. Six cover every direct `sorry` in their file, three intentionally cover
+only selected declarations and retain explicit residual `sorry` counts, and
+one adds the missing half of a textbook statement. Exact source hashes, proofs,
+toolchain metadata, and axioms results are recorded at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/formal-repair-validation.json
