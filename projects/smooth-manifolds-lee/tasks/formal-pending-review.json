@@ -1,0 +1,261 @@
+{
+  "schema": "openga-review.formal-pending-human-review.v1",
+  "project": "smooth-manifolds-lee",
+  "importRef": "origin/import/smooth-manifolds-lee",
+  "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
+  "leanToolchain": "leanprover/lean4:v4.30.0",
+  "reviewDate": "2026-07-20",
+  "sourceBranchPolicy": "read_only",
+  "methods": [
+    "Review every formal-pending task against its textbook statement, applied errata, review notes, and paired Lean source at the pinned import commit.",
+    "Record mathematical-statement or coverage problems separately from direct sorry tokens.",
+    "Treat a dependency as unclosed only when the task source or cached build evidence identifies an unresolved owner; import closure alone is not evidence of sorryAx.",
+    "Keep all suggested patches unverified until they compile with the pinned Lean toolchain and their declarations pass an exact axioms check."
+  ],
+  "summary": {
+    "formalPendingTasksReviewed": 201,
+    "semanticCoverageFindings": 37,
+    "dependencyOrBuildFindings": 39,
+    "lowRiskPatchCandidates": 10,
+    "compiledPatchCandidates": 0
+  },
+  "findingSemantics": {
+    "nonExclusive": true,
+    "detailsSource": "projects/smooth-manifolds-lee/tasks/all.tasks.yaml review_notes",
+    "explanation": "These human-review tags refine the objective categories in formal-pending-triage.json. A task with direct sorry may also have a statement or coverage problem."
+  },
+  "semanticCoverageFindings": {
+    "byChapter": [
+      {
+        "chapter": 1,
+        "taskIds": [
+          "sml.ch1.sec1.example-1-4",
+          "sml.ch1.sec1.example-1-8",
+          "sml.ch1.sec1.example-1-9",
+          "sml.ch1.sec2.remark-1-2-extra-6",
+          "sml.ch1.sec4.example-1-21",
+          "sml.ch1.sec4.example-1-31",
+          "sml.ch1.sec4.example-1-34",
+          "sml.ch1.sec5.theorem-1-37",
+          "sml.ch1.sec6.proposition-1-45",
+          "sml.ch1.sec6.theorem-1-46",
+          "sml.ch1.sec7.problem-1-12"
+        ]
+      },
+      {
+        "chapter": 2,
+        "taskIds": [
+          "sml.ch2.sec8.exercise-2-2",
+          "sml.ch2.sec8.proposition-2-5",
+          "sml.ch2.sec8.exercise-2-7",
+          "sml.ch2.sec11.definition-2-11-extra-2"
+        ]
+      },
+      {
+        "chapter": 3,
+        "taskIds": [
+          "sml.ch3.sec14.definition-3-14-extra-1",
+          "sml.ch3.sec15.definition-3-15-extra-2",
+          "sml.ch3.sec18.definition-3-18-extra-3",
+          "sml.ch3.sec19.example-3-26",
+          "sml.ch3.sec20.problem-3-8"
+        ]
+      },
+      {
+        "chapter": 4,
+        "taskIds": [
+          "sml.ch4.sec21.exercise-4-3",
+          "sml.ch4.sec24.example-4-19",
+          "sml.ch4.sec24.definition-4-24-extra-2",
+          "sml.ch4.sec26.example-4-35",
+          "sml.ch4.sec26.proposition-4-36",
+          "sml.ch4.sec26.proposition-4-40",
+          "sml.ch4.sec27.problem-4-3"
+        ]
+      },
+      {
+        "chapter": 5,
+        "taskIds": [
+          "sml.ch5.sec29.remark-5-29-extra-3",
+          "sml.ch5.sec30.example-5-15",
+          "sml.ch5.sec31.example-5-19",
+          "sml.ch5.sec31.proposition-5-23",
+          "sml.ch5.sec31.exercise-5-24",
+          "sml.ch5.sec31.example-5-25",
+          "sml.ch5.sec31.definition-5-31-extra-2",
+          "sml.ch5.sec32.remark-5-32-extra-1",
+          "sml.ch5.sec35.definition-5-35-extra-3",
+          "sml.ch5.sec36.definition-5-36-extra-1"
+        ]
+      }
+    ]
+  },
+  "dependencyOrBuildFindings": {
+    "byChapter": [
+      {
+        "chapter": 1,
+        "taskIds": [
+          "sml.ch1.sec1.theorem-1-2",
+          "sml.ch1.sec1.proposition-1-16",
+          "sml.ch1.sec3.exercise-1-20",
+          "sml.ch1.sec5.exercise-1-39",
+          "sml.ch1.sec5.exercise-1-41"
+        ]
+      },
+      {
+        "chapter": 2,
+        "taskIds": [
+          "sml.ch2.sec9.exercise-2-16",
+          "sml.ch2.sec9.exercise-2-19",
+          "sml.ch2.sec12.problem-2-9"
+        ]
+      },
+      {
+        "chapter": 3,
+        "taskIds": [
+          "sml.ch3.sec16.proposition-3-20"
+        ]
+      },
+      {
+        "chapter": 4,
+        "taskIds": [
+          "sml.ch4.sec22.exercise-4-7",
+          "sml.ch4.sec22.proposition-4-8",
+          "sml.ch4.sec22.exercise-4-9",
+          "sml.ch4.sec24.example-4-18",
+          "sml.ch4.sec24.example-4-20",
+          "sml.ch4.sec25.proposition-4-28",
+          "sml.ch4.sec25.exercise-4-32",
+          "sml.ch4.sec26.exercise-4-34",
+          "sml.ch4.sec26.exercise-4-38",
+          "sml.ch4.sec26.exercise-4-42",
+          "sml.ch4.sec26.exercise-4-44",
+          "sml.ch4.sec27.problem-4-5",
+          "sml.ch4.sec27.problem-4-6",
+          "sml.ch4.sec27.problem-4-12"
+        ]
+      },
+      {
+        "chapter": 5,
+        "taskIds": [
+          "sml.ch5.sec29.theorem-5-8",
+          "sml.ch5.sec30.corollary-5-13",
+          "sml.ch5.sec35.proposition-5-35",
+          "sml.ch5.sec35.exercise-5-36",
+          "sml.ch5.sec35.corollary-5-39",
+          "sml.ch5.sec35.exercise-5-42",
+          "sml.ch5.sec35.example-5-45",
+          "sml.ch5.sec36.proposition-5-49",
+          "sml.ch5.sec36.exercise-5-50",
+          "sml.ch5.sec36.exercise-5-52",
+          "sml.ch5.sec36.exercise-5-54",
+          "sml.ch5.sec37.problem-5-1",
+          "sml.ch5.sec37.problem-5-15",
+          "sml.ch5.sec37.problem-5-18",
+          "sml.ch5.sec37.problem-5-19",
+          "sml.ch5.sec37.problem-5-20"
+        ]
+      }
+    ]
+  },
+  "lowRiskPatchCandidates": [
+    {
+      "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Remark_2_8_extra_1.lean",
+      "declarations": ["is_book_function_iff"],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Use `by rfl`; the theorem restates the definition verbatim.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean",
+      "declarations": ["smooth_manifold_smooth_structure"],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Try `by rfl`; if unfolding is required, use `simp [IsManifold.maximalAtlas]`.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-22",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_22.lean",
+      "declarations": ["euclideanSpace_standard_smooth_structure"],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Use the canonical Euclidean-space manifold instance via `by infer_instance`.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch1.sec5.theorem-1-37",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Theorem_1_37.lean",
+      "declarations": ["a new interior-union-boundary coverage theorem"],
+      "scope": "missing half of the textbook statement",
+      "proposal": "Add the union-equals-univ statement and prove it from `ModelWithCorners.compl_boundary`, e.g. by rewriting the complement identity and simplifying.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch3.sec18.definition-3-18-extra-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_2.lean",
+      "declarations": ["smooth_germ_derivation_at_map_mul"],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Use `by simpa using v.leibniz f g`, matching the existing Derivation.leibniz API usage.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_3.lean",
+      "declarations": [
+        "Manifold.isRegularValue_iff",
+        "isRegularSublevelSet_iff",
+        "isDefiningFunction_iff"
+      ],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Use definitional equality for `isRegularValue_iff`; prove the two class iff statements by projecting and rebuilding their fields.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_3.lean",
+      "declarations": [
+        "Set.isDefiningMap_iff",
+        "Set.isDefiningFunction_iff",
+        "Set.isLocalDefiningMapOn_iff",
+        "Set.isLocalDefiningFunctionOn_iff"
+      ],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Unpack and rebuild the Nonempty structure witnesses; derive the function variants from the corresponding map variants by simplification.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-4",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_4.lean",
+      "declarations": ["TopologicalSpace.Opens.range_graphMap_eq_graphOn"],
+      "scope": "one of two direct sorry tokens in the task",
+      "proposal": "Reuse the imported root theorem with `exact _root_.range_graphMap_eq_graphOn (U : Set M) f`.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch5.sec30.definition-5-30-extra-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_2.lean",
+      "declarations": [
+        "Manifold.isRegularPoint_iff_surjective_mfderiv",
+        "Manifold.isCriticalPoint_iff_not_isRegularPoint",
+        "Manifold.isRegularValue_iff_forall_isRegularPoint"
+      ],
+      "scope": "three of nine direct sorry tokens in the task",
+      "proposal": "Use `by rfl` for the three definition-expansion equivalences.",
+      "status": "proposal_uncompiled"
+    },
+    {
+      "taskId": "sml.ch5.sec35.exercise-5-44",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_44.lean",
+      "declarations": ["IsBoundaryDefiningFunctionAt.eq_zero"],
+      "scope": "one of four direct sorry tokens in the task",
+      "proposal": "Project the boundary membership and local zero-set equivalence from `hf`, then apply the equivalence at `p`.",
+      "status": "proposal_uncompiled"
+    }
+  ],
+  "requiredCandidateValidation": [
+    "Compile the changed module with `lake env lean` under Lean 4.30.0.",
+    "Run `#print axioms` for every changed declaration and reject any result containing sorryAx.",
+    "Re-run the commit-pinned formal triage and the project review generator before changing formal_review status."
+  ]
+}

@@ -54,6 +54,36 @@ the report distinguishes confirmed declaration references from conservative
 import-only candidates. The audit is pinned to the exact import commit, and
 task generation fails if that ref moves until the audit is refreshed.
 
+The current `formal_review: pending` queue is reproducibly classified by:
+
+```bash
+cd apps/review
+npm run generate-lee-formal-triage
+```
+
+The generated report is tracked at:
+
+```text
+projects/smooth-manifolds-lee/tasks/formal-pending-triage.json
+```
+
+It separates textbook-only entries, direct `sorry` tokens, confirmed
+transitive `sorryAx`, declaration-free `#check`/`recall` placeholders, and
+items that still require semantic or dependency review. The report is pinned
+to the same audited import commit.
+
+The chapter-by-chapter human review of that queue is recorded separately at:
+
+```text
+projects/smooth-manifolds-lee/tasks/formal-pending-review.json
+```
+
+Human findings are non-exclusive: a task with a direct `sorry` may also have
+a statement or coverage problem. Low-risk patch candidates are proposals, not
+accepted proofs; they remain unverified until they compile with the pinned
+Lean toolchain and pass declaration-level axioms checks. The imported Lean
+source branch remains read-only during this review.
+
 Lean source files are read from the git ref recorded in the tasks, currently
 `origin/import/smooth-manifolds-lee`. In a contributor fork where that ref is
 available on the `upstream` remote instead, the review tooling automatically

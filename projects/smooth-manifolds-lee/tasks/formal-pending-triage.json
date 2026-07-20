@@ -1,0 +1,3775 @@
+{
+  "schema": "openga-review.formal-pending-triage.v1",
+  "project": "smooth-manifolds-lee",
+  "importRef": "origin/import/smooth-manifolds-lee",
+  "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
+  "reviewDate": "2026-07-20",
+  "summary": {
+    "formalPendingTasks": 201,
+    "categories": {
+      "textbook_only": 22,
+      "direct_sorry": 106,
+      "confirmed_transitive_sorryAx": 1,
+      "reference_only": 25,
+      "semantic_or_dependency_review": 47
+    },
+    "directSorryTokens": 357
+  },
+  "byChapter": [
+    {
+      "chapter": 1,
+      "formalPendingTasks": 33,
+      "categories": {
+        "textbook_only": 0,
+        "direct_sorry": 17,
+        "confirmed_transitive_sorryAx": 0,
+        "reference_only": 7,
+        "semantic_or_dependency_review": 9
+      }
+    },
+    {
+      "chapter": 2,
+      "formalPendingTasks": 20,
+      "categories": {
+        "textbook_only": 3,
+        "direct_sorry": 10,
+        "confirmed_transitive_sorryAx": 0,
+        "reference_only": 3,
+        "semantic_or_dependency_review": 4
+      }
+    },
+    {
+      "chapter": 3,
+      "formalPendingTasks": 20,
+      "categories": {
+        "textbook_only": 2,
+        "direct_sorry": 13,
+        "confirmed_transitive_sorryAx": 0,
+        "reference_only": 2,
+        "semantic_or_dependency_review": 3
+      }
+    },
+    {
+      "chapter": 4,
+      "formalPendingTasks": 49,
+      "categories": {
+        "textbook_only": 2,
+        "direct_sorry": 27,
+        "confirmed_transitive_sorryAx": 0,
+        "reference_only": 5,
+        "semantic_or_dependency_review": 15
+      }
+    },
+    {
+      "chapter": 5,
+      "formalPendingTasks": 79,
+      "categories": {
+        "textbook_only": 15,
+        "direct_sorry": 39,
+        "confirmed_transitive_sorryAx": 1,
+        "reference_only": 8,
+        "semantic_or_dependency_review": 16
+      }
+    }
+  ],
+  "categoryDefinitions": {
+    "textbook_only": "No imported Lean file is paired with the textbook entry.",
+    "direct_sorry": "At least one paired task or auxiliary Lean file contains a direct sorry token.",
+    "confirmed_transitive_sorryAx": "No direct sorry is required; the commit-pinned formal audit proves a declaration path to sorryAx.",
+    "reference_only": "The paired files contain #check/recall commands but no Lean declaration and no direct sorry.",
+    "semantic_or_dependency_review": "No direct sorry was found, but the task is still pending because its statement, proof coverage, or trusted dependency requires semantic review."
+  },
+  "humanReview": {
+    "report": "projects/smooth-manifolds-lee/tasks/formal-pending-review.json",
+    "formalPendingTasksReviewed": 201,
+    "semanticCoverageFindings": 37,
+    "dependencyOrBuildFindings": 39,
+    "lowRiskPatchCandidates": 10,
+    "compiledPatchCandidates": 0
+  },
+  "tasks": [
+    {
+      "taskId": "sml.ch1.sec1.definition-1-extra-1",
+      "chapter": 1,
+      "title": "Definition 1-extra-1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Definition_1_extra_1.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Definition_1_extra_1.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec1.theorem-1-2",
+      "chapter": 1,
+      "title": "Theorem 1.2",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Theorem_1_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Theorem_1_2.lean",
+          "line": 10,
+          "command": "recall",
+          "target": "TopologicalManifold.dimension_eq_of_homeomorph"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec1.example-1-4",
+      "chapter": 1,
+      "title": "Example 1.4",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Example_1_4.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec1.exercise-1-6",
+      "chapter": 1,
+      "title": "Exercise 1.6",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Exercise_1_6.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Exercise_1_6.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec1.example-1-8",
+      "chapter": 1,
+      "title": "Example 1.8",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Example_1_8.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec1.example-1-9",
+      "chapter": 1,
+      "title": "Example 1.9",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Example_1_9.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec1.proposition-1-16",
+      "chapter": 1,
+      "title": "Proposition 1.16",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Proposition_1_16.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
+      "chapter": 1,
+      "title": "Definition 1.2-extra-5",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean",
+          "line": 19,
+          "command": "#check",
+          "target": "(IsManifold I ∞ M)"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec2.remark-1-2-extra-6",
+      "chapter": 1,
+      "title": "Remark 1.2-extra-6",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Remark_1_2_extra_6.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Remark_1_2_extra_6.lean",
+          "line": 10,
+          "command": "recall",
+          "target": "IsManifold"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec3.proposition-1-19",
+      "chapter": 1,
+      "title": "Proposition 1.19",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Proposition_1_19.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Proposition_1_19.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec3.exercise-1-20",
+      "chapter": 1,
+      "title": "Exercise 1.20",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Exercise_1_20.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Exercise_1_20.lean",
+          "line": 19,
+          "command": "recall",
+          "target": "exists_countable_regular_coordinate_ball_basis"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-21",
+      "chapter": 1,
+      "title": "Example 1.21",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_21.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-22",
+      "chapter": 1,
+      "title": "Example 1.22",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_22.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_22.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-27",
+      "chapter": 1,
+      "title": "Example 1.27",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_27.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_27.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_27.lean",
+          "line": 15,
+          "command": "#check",
+          "target": "(Units.isOpenEmbedding_val (R := Matrix (Fin n) (Fin n) ℝ)).isManifold_singleton"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-28",
+      "chapter": 1,
+      "title": "Example 1.28",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean",
+          "line": 37,
+          "command": "#check",
+          "target": "("
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-30",
+      "chapter": 1,
+      "title": "Example 1.30",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_30.lean"
+      ],
+      "directSorryCount": 6,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_30.lean",
+          "directSorryCount": 6
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-31",
+      "chapter": 1,
+      "title": "Example 1.31",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_31.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-34",
+      "chapter": 1,
+      "title": "Example 1.34",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_34.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_34.lean",
+          "line": 24,
+          "command": "#check",
+          "target": "(inferInstance :"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-36",
+      "chapter": 1,
+      "title": "Example 1.36",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_36.lean"
+      ],
+      "directSorryCount": 6,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_36.lean",
+          "directSorryCount": 6
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec5.theorem-1-37",
+      "chapter": 1,
+      "title": "Theorem 1.37",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Theorem_1_37.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Theorem_1_37.lean",
+          "line": 22,
+          "command": "recall",
+          "target": "ModelWithCorners.disjoint_interior_boundary"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec5.proposition-1-38",
+      "chapter": 1,
+      "title": "Proposition 1.38",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Proposition_1_38.lean"
+      ],
+      "directSorryCount": 20,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Proposition_1_38.lean",
+          "directSorryCount": 20
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Proposition_1_38.lean",
+          "line": 353,
+          "command": "recall",
+          "target": "ModelWithCorners.Boundaryless.iff_boundary_eq_empty"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Proposition_1_38.lean",
+          "line": 364,
+          "command": "#check",
+          "target": "(ModelWithCorners.Boundaryless.boundary_eq_empty : (𝓡 0).boundary M = ∅)"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec5.exercise-1-39",
+      "chapter": 1,
+      "title": "Exercise 1.39",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 22,
+          "command": "#check",
+          "target": "manifoldInterior_isOpen"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 23,
+          "command": "#check",
+          "target": "manifoldInteriorTopologicalManifold"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 24,
+          "command": "#check",
+          "target": "manifoldInterior_boundaryless"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 25,
+          "command": "#check",
+          "target": "manifoldBoundary_isClosed"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 26,
+          "command": "#check",
+          "target": "boundaryTopologicalManifold"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 27,
+          "command": "#check",
+          "target": "manifoldBoundary_boundaryless"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 28,
+          "command": "#check",
+          "target": "ModelWithCorners.Boundaryless.iff_boundary_eq_empty"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 29,
+          "command": "#check",
+          "target": "(ModelWithCorners.Boundaryless.boundary_eq_empty : (𝓡 0).boundary M = ∅)"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_39.lean",
+          "line": 31,
+          "command": "#check",
+          "target": "ModelWithCorners.compl_boundary"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec5.proposition-1-40",
+      "chapter": 1,
+      "title": "Proposition 1.40",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Proposition_1_40.lean"
+      ],
+      "directSorryCount": 9,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Proposition_1_40.lean",
+          "directSorryCount": 9
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec5.exercise-1-41",
+      "chapter": 1,
+      "title": "Exercise 1.41",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 11,
+          "command": "recall",
+          "target": "exists_countable_precompact_coordinate_ball_half_ball_basis"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "topologicalManifoldWithBoundary_locallyCompactSpace"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 13,
+          "command": "recall",
+          "target": "topologicalManifoldWithBoundary_paracompactSpace"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 14,
+          "command": "recall",
+          "target": "topologicalManifoldWithBoundary_locPathConnectedSpace"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 15,
+          "command": "recall",
+          "target": "topologicalManifoldWithBoundary_countable_connectedComponents"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 16,
+          "command": "recall",
+          "target": "connectedComponent_isOpen"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 17,
+          "command": "recall",
+          "target": "connectedComponent_connectedSpace"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 18,
+          "command": "recall",
+          "target": "connectedComponent_topologicalManifoldWithBoundary"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Exercise_1_41.lean",
+          "line": 19,
+          "command": "recall",
+          "target": "countable_fundamentalGroup"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec6.definition-1-6-extra-1",
+      "chapter": 1,
+      "title": "Definition 1.6-extra-1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Definition_1_6_extra_1.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Definition_1_6_extra_1.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Definition_1_6_extra_1.lean",
+          "line": 13,
+          "command": "recall",
+          "target": "ContMDiffOn"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec6.definition-1-6-extra-3",
+      "chapter": 1,
+      "title": "Definition 1.6-extra-3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Definition_1_6_extra_3.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Definition_1_6_extra_3.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec6.exercise-1-42",
+      "chapter": 1,
+      "title": "Exercise 1.42",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Exercise_1_42.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Exercise_1_42.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec6.proposition-1-45",
+      "chapter": 1,
+      "title": "Proposition 1.45",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Proposition_1_45.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Proposition_1_45.lean",
+          "line": 25,
+          "command": "recall",
+          "target": "ModelWithCorners.boundary_of_boundaryless_left"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec6.theorem-1-46",
+      "chapter": 1,
+      "title": "Theorem 1.46",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Theorem_1_46.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-7",
+      "chapter": 1,
+      "title": "Problem 1-7",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_7.lean"
+      ],
+      "directSorryCount": 24,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_7.lean",
+          "directSorryCount": 24
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-10",
+      "chapter": 1,
+      "title": "Problem 1-10",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_10.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_10.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-11",
+      "chapter": 1,
+      "title": "Problem 1-11",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_11.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_11.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-12",
+      "chapter": 1,
+      "title": "Problem 1-12",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_12.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
+      "chapter": 2,
+      "title": "Remark 2.8-extra-1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Remark_2_8_extra_1.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Remark_2_8_extra_1.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec8.exercise-2-2",
+      "chapter": 2,
+      "title": "Exercise 2.2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Exercise_2_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec8.proposition-2-5",
+      "chapter": 2,
+      "title": "Proposition 2.5",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Proposition_2_5.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec8.exercise-2-7",
+      "chapter": 2,
+      "title": "Exercise 2.7",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Exercise_2_7.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Exercise_2_7.lean",
+          "line": 9,
+          "command": "recall",
+          "target": "contMDiff_iff"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Exercise_2_7.lean",
+          "line": 13,
+          "command": "recall",
+          "target": "contMDiff_of_locally_contMDiffOn"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Exercise_2_7.lean",
+          "line": 17,
+          "command": "recall",
+          "target": "ContMDiff.contMDiffOn"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec8.proposition-2-12",
+      "chapter": 2,
+      "title": "Proposition 2.12",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec8.example-2-13",
+      "chapter": 2,
+      "title": "Example 2.13",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec9.proposition-2-15",
+      "chapter": 2,
+      "title": "Proposition 2.15",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean"
+      ],
+      "directSorryCount": 8,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean",
+          "directSorryCount": 8
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean",
+          "line": 29,
+          "command": "#check",
+          "target": "Diffeomorph.trans"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean",
+          "line": 139,
+          "command": "#check",
+          "target": "Diffeomorph.toHomeomorph"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec9.exercise-2-16",
+      "chapter": 2,
+      "title": "Exercise 2.16",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 13,
+          "command": "recall",
+          "target": "Diffeomorph.trans"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 14,
+          "command": "recall",
+          "target": "Diffeomorph.pi"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 15,
+          "command": "recall",
+          "target": "Diffeomorph.restrictOpen"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 16,
+          "command": "recall",
+          "target": "diffeomorph_isOpenMap"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 17,
+          "command": "recall",
+          "target": "diffeomorphic_refl"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 18,
+          "command": "recall",
+          "target": "diffeomorphic_symm"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_16.lean",
+          "line": 19,
+          "command": "recall",
+          "target": "diffeomorphic_trans"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec9.theorem-2-18",
+      "chapter": 2,
+      "title": "Theorem 2.18",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Theorem_2_18.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Theorem_2_18.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Theorem_2_18.lean",
+          "line": 30,
+          "command": "#check",
+          "target": "Diffeomorph.image_boundary"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec9.exercise-2-19",
+      "chapter": 2,
+      "title": "Exercise 2.19",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_19.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_19.lean",
+          "line": 11,
+          "command": "recall",
+          "target": "smooth_boundary_chart_frontier_independence"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_19.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "Diffeomorph.image_boundary"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Exercise_2_19.lean",
+          "line": 13,
+          "command": "recall",
+          "target": "Diffeomorph.restrictInterior"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec10.theorem-2-23",
+      "chapter": 2,
+      "title": "Theorem 2.23",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_10/Theorem_2_23.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_10/Theorem_2_23.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec11.definition-2-11-extra-2",
+      "chapter": 2,
+      "title": "Definition 2.11-extra-2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Definition_2_11_extra_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec11.lemma-2-26",
+      "chapter": 2,
+      "title": "Lemma 2.26",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-2",
+      "chapter": 2,
+      "title": "Problem 2-2",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-3",
+      "chapter": 2,
+      "title": "Problem 2-3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_3.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_3.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_3.lean",
+          "line": 37,
+          "command": "recall",
+          "target": "contMDiff_neg_sphere {m : ℕ∞ω} {n : ℕ} [Fact (Module.finrank ℝ E = n + 1)] :"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-5",
+      "chapter": 2,
+      "title": "Problem 2-5",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_5.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_5.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-9",
+      "chapter": 2,
+      "title": "Problem 2-9",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_9.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_9_corecheck.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_9_pre_north.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_9_prefixcheck.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-10",
+      "chapter": 2,
+      "title": "Problem 2-10",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_10.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_10.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-11",
+      "chapter": 2,
+      "title": "Problem 2-11",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_11.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_11.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec12.problem-2-12",
+      "chapter": 2,
+      "title": "Problem 2-12",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_12.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_12.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec13.proposition-3-2",
+      "chapter": 3,
+      "title": "Proposition 3.2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean"
+      ],
+      "directSorryCount": 15,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean",
+          "directSorryCount": 15
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec13.corollary-3-3",
+      "chapter": 3,
+      "title": "Corollary 3.3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Corollary_3_3.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Corollary_3_3.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec14.definition-3-14-extra-1",
+      "chapter": 3,
+      "title": "Definition 3.14-extra-1",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Definition_3_14_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Definition_3_14_extra_1.lean",
+          "line": 23,
+          "command": "recall",
+          "target": "mfderiv (F : M → N) (p : M) :"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec14.lemma-3-11",
+      "chapter": 3,
+      "title": "Lemma 3.11",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec14.proposition-3-12",
+      "chapter": 3,
+      "title": "Proposition 3.12",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Proposition_3_12.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Proposition_3_12.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec14.proposition-3-13",
+      "chapter": 3,
+      "title": "Proposition 3.13",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Proposition_3_13.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Proposition_3_13.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec14.proposition-3-14",
+      "chapter": 3,
+      "title": "Proposition 3.14",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec15.definition-3-15-extra-1",
+      "chapter": 3,
+      "title": "Definition 3.15-extra-1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_15/Definition_3_15_extra_1.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_15/Definition_3_15_extra_1.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec15.definition-3-15-extra-2",
+      "chapter": 3,
+      "title": "Definition 3.15-extra-2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_15/Definition_3_15_extra_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_15/Definition_3_15_extra_2.lean",
+          "line": 19,
+          "command": "#check",
+          "target": "chart_coordinate_vectors_basis"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec16.proposition-3-18",
+      "chapter": 3,
+      "title": "Proposition 3.18",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_18.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_18.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec16.proposition-3-20",
+      "chapter": 3,
+      "title": "Proposition 3.20",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_20.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec16.corollary-3-22",
+      "chapter": 3,
+      "title": "Corollary 3.22",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Corollary_3_22.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Corollary_3_22.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec18.definition-3-18-extra-2",
+      "chapter": 3,
+      "title": "Definition 3.18-extra-2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_2.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_2.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec18.definition-3-18-extra-3",
+      "chapter": 3,
+      "title": "Definition 3.18-extra-3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_3.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_3.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec19.example-3-26",
+      "chapter": 3,
+      "title": "Example 3.26",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 21,
+          "command": "#check",
+          "target": "(Type u)"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 22,
+          "command": "#check",
+          "target": "TopCat"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 23,
+          "command": "#check",
+          "target": "GrpCat"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 24,
+          "command": "#check",
+          "target": "Ab"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 25,
+          "command": "#check",
+          "target": "RingCat"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 26,
+          "command": "#check",
+          "target": "CommRingCat"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 27,
+          "command": "#check",
+          "target": "ModuleCat ℝ"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 28,
+          "command": "#check",
+          "target": "ModuleCat ℂ"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_19/Example_3_26.lean",
+          "line": 31,
+          "command": "recall",
+          "target": "Pointed"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec20.problem-3-1",
+      "chapter": 3,
+      "title": "Problem 3-1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_1.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_1.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec20.problem-3-2",
+      "chapter": 3,
+      "title": "Problem 3-2",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec20.problem-3-6",
+      "chapter": 3,
+      "title": "Problem 3-6",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_6.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_6.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec20.problem-3-7",
+      "chapter": 3,
+      "title": "Problem 3-7",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_7.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_7.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec20.problem-3-8",
+      "chapter": 3,
+      "title": "Problem 3-8",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_8.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_8.lean",
+          "line": 18,
+          "command": "recall",
+          "target": "curveVelocityClassEquivTangentSpace {E : Type u} [NormedAddCommGroup E]"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec21.definition-4-21-extra-1",
+      "chapter": 4,
+      "title": "Definition 4.21-extra-1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Definition_4_21_extra_1.lean"
+      ],
+      "directSorryCount": 8,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Definition_4_21_extra_1.lean",
+          "directSorryCount": 8
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec21.proposition-4-1",
+      "chapter": 4,
+      "title": "Proposition 4.1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Proposition_4_1.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Proposition_4_1.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec21.example-4-2",
+      "chapter": 4,
+      "title": "Example 4.2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean"
+      ],
+      "directSorryCount": 9,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean",
+          "directSorryCount": 9
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec21.exercise-4-3",
+      "chapter": 4,
+      "title": "Exercise 4.3",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Exercise_4_3.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec21.exercise-4-4",
+      "chapter": 4,
+      "title": "Exercise 4.4",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Exercise_4_4.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Exercise_4_4.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec22.proposition-4-6",
+      "chapter": 4,
+      "title": "Proposition 4.6",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+          "line": 65,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.isLocalHomeomorph"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+          "line": 68,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.isOpenMap"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+          "line": 73,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.isLocalDiffeomorphOn"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+          "line": 76,
+          "command": "#check",
+          "target": "Diffeomorph.isLocalDiffeomorph"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+          "line": 80,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.diffeomorphOfBijective"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec22.exercise-4-7",
+      "chapter": 4,
+      "title": "Exercise 4.7",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 10,
+          "command": "#check",
+          "target": "isLocalDiffeomorph_comp"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 11,
+          "command": "#check",
+          "target": "isLocalDiffeomorph_pi"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 12,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.isLocalHomeomorph"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 13,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.isOpenMap"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 14,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.isLocalDiffeomorphOn"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 15,
+          "command": "#check",
+          "target": "Diffeomorph.isLocalDiffeomorph"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 16,
+          "command": "#check",
+          "target": "IsLocalDiffeomorph.diffeomorphOfBijective"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_7.lean",
+          "line": 17,
+          "command": "#check",
+          "target": "isLocalDiffeomorph_iff_writtenInExtChartAt"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec22.proposition-4-8",
+      "chapter": 4,
+      "title": "Proposition 4.8",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_8.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec22.exercise-4-9",
+      "chapter": 4,
+      "title": "Exercise 4.9",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Exercise_4_9.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec22.example-4-11",
+      "chapter": 4,
+      "title": "Example 4.11",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec23.theorem-4-12",
+      "chapter": 4,
+      "title": "Theorem 4.12",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec23.corollary-4-13",
+      "chapter": 4,
+      "title": "Corollary 4.13",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Corollary_4_13.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Corollary_4_13.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec23.theorem-4-14",
+      "chapter": 4,
+      "title": "Theorem 4.14",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_14.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_14.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec23.theorem-4-15",
+      "chapter": 4,
+      "title": "Theorem 4.15",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.exercise-4-16",
+      "chapter": 4,
+      "title": "Exercise 4.16",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Exercise_4_16.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Exercise_4_16.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.example-4-17",
+      "chapter": 4,
+      "title": "Example 4.17",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_17.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_17.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_17.lean",
+          "line": 19,
+          "command": "#check",
+          "target": "Manifold.IsSmoothEmbedding.of_opens"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_17.lean",
+          "line": 56,
+          "command": "#check",
+          "target": "torus_of_revolution_map_isSmoothEmbedding"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec24.example-4-18",
+      "chapter": 4,
+      "title": "Example 4.18",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_18.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.example-4-19",
+      "chapter": 4,
+      "title": "Example 4.19",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_19.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.example-4-20",
+      "chapter": 4,
+      "title": "Example 4.20",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Example_4_20.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.proposition-4-22",
+      "chapter": 4,
+      "title": "Proposition 4.22",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Proposition_4_22.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Proposition_4_22.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.example-4-23",
+      "chapter": 4,
+      "title": "Example 4.23",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.theorem-4-25",
+      "chapter": 4,
+      "title": "Theorem 4.25",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Theorem_4_25.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Theorem_4_25.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec24.definition-4-24-extra-2",
+      "chapter": 4,
+      "title": "Definition 4.24-extra-2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Definition_4_24_extra_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec25.theorem-4-26",
+      "chapter": 4,
+      "title": "Theorem 4.26",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_26.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_26.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec25.proposition-4-28",
+      "chapter": 4,
+      "title": "Proposition 4.28",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Proposition_4_28.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec25.theorem-4-29",
+      "chapter": 4,
+      "title": "Theorem 4.29",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_29.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_29.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec25.theorem-4-30",
+      "chapter": 4,
+      "title": "Theorem 4.30",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_30.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_30.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec25.theorem-4-31",
+      "chapter": 4,
+      "title": "Theorem 4.31",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_31.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_31.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec25.exercise-4-32",
+      "chapter": 4,
+      "title": "Exercise 4.32",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Exercise_4_32.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Exercise_4_32.lean",
+          "line": 14,
+          "command": "recall",
+          "target": "existsUnique_diffeomorph_of_surjective_smooth_submersions_constant_on_each_others_fibers"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec26.proposition-4-33",
+      "chapter": 4,
+      "title": "Proposition 4.33",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_33.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_33.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_33.lean",
+          "line": 27,
+          "command": "#check",
+          "target": "Manifold.IsSmoothCoveringMap.isLocalDiffeomorph"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec26.exercise-4-34",
+      "chapter": 4,
+      "title": "Exercise 4.34",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_34.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_34.lean",
+          "line": 10,
+          "command": "recall",
+          "target": "Manifold.IsSmoothCoveringMap.isSmoothSubmersion"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_34.lean",
+          "line": 11,
+          "command": "recall",
+          "target": "Manifold.IsSmoothCoveringMap.isOpenMap"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_34.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "Manifold.IsSmoothCoveringMap.isQuotientMap"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_34.lean",
+          "line": 13,
+          "command": "recall",
+          "target": "Manifold.IsSmoothCoveringMap.diffeomorphOfInjective"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_34.lean",
+          "line": 14,
+          "command": "recall",
+          "target": "IsCoveringMap.isSmoothCoveringMap_iff_isLocalDiffeomorph"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec26.example-4-35",
+      "chapter": 4,
+      "title": "Example 4.35",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Example_4_35.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec26.proposition-4-36",
+      "chapter": 4,
+      "title": "Proposition 4.36",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_36.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec26.exercise-4-38",
+      "chapter": 4,
+      "title": "Exercise 4.38",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_38.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec26.proposition-4-40",
+      "chapter": 4,
+      "title": "Proposition 4.40",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_40.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec26.proposition-4-41",
+      "chapter": 4,
+      "title": "Proposition 4.41",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_41.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Proposition_4_41.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec26.exercise-4-42",
+      "chapter": 4,
+      "title": "Exercise 4.42",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_42.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_42.lean",
+          "line": 10,
+          "command": "recall",
+          "target": "exists_smooth_boundary_covering_structure"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_42.lean",
+          "line": 11,
+          "command": "recall",
+          "target": "preimage_boundary_eq_boundary_of_smooth_boundary_covering_structure"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_42.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "exists_unique_smooth_boundary_covering_structure"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec26.corollary-4-43",
+      "chapter": 4,
+      "title": "Corollary 4.43",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Corollary_4_43.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Corollary_4_43.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec26.exercise-4-44",
+      "chapter": 4,
+      "title": "Exercise 4.44",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_44.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_44.lean",
+          "line": 10,
+          "command": "recall",
+          "target": "exists_universal_smooth_covering_manifold"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec26.exercise-4-45",
+      "chapter": 4,
+      "title": "Exercise 4.45",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_45.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Exercise_4_45.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-3",
+      "chapter": 4,
+      "title": "Problem 4-3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_3.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_3.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-5",
+      "chapter": 4,
+      "title": "Problem 4-5",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_5.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-6",
+      "chapter": 4,
+      "title": "Problem 4-6",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_6.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-7",
+      "chapter": 4,
+      "title": "Problem 4-7",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_7.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_7.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-8",
+      "chapter": 4,
+      "title": "Problem 4-8",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_8.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_8.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-10",
+      "chapter": 4,
+      "title": "Problem 4-10",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_10.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_10.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-11",
+      "chapter": 4,
+      "title": "Problem 4-11",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_11.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_11.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-12",
+      "chapter": 4,
+      "title": "Problem 4-12",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_12.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch4.sec27.problem-4-13",
+      "chapter": 4,
+      "title": "Problem 4-13",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_13.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_13.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-1",
+      "chapter": 5,
+      "title": "Proposition 5.1",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_1.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_1.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-2",
+      "chapter": 5,
+      "title": "Proposition 5.2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-3",
+      "chapter": 5,
+      "title": "Proposition 5.3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_3.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_3.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-4",
+      "chapter": 5,
+      "title": "Proposition 5.4",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_4.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_4.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-7",
+      "chapter": 5,
+      "title": "Proposition 5.7",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_7.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_7.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec29.theorem-5-8",
+      "chapter": 5,
+      "title": "Theorem 5.8",
+      "category": "confirmed_transitive_sorryAx",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/Common.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/Index.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/LocalNormalFormAPI.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/LocalSliceAtlas.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/LocalSliceImmersion.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec29.remark-5-29-extra-2",
+      "chapter": 5,
+      "title": "Remark 5.29-extra-2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Remark_5_29_extra_2.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Remark_5_29_extra_2.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Remark_5_29_extra_2.lean",
+          "line": 24,
+          "command": "recall",
+          "target": "Set.SatisfiesLocalSliceCondition"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec29.example-5-9",
+      "chapter": 5,
+      "title": "Example 5.9",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Example_5_9.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Example_5_9.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec29.theorem-5-11",
+      "chapter": 5,
+      "title": "Theorem 5.11",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec29.remark-5-29-extra-3",
+      "chapter": 5,
+      "title": "Remark 5.29-extra-3",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Remark_5_29_extra_3.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Remark_5_29_extra_3.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "immersed_submanifold_structure_unique_of_same_carrier"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec30.theorem-5-12",
+      "chapter": 5,
+      "title": "Theorem 5.12",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Theorem_5_12.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Theorem_5_12.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec30.corollary-5-13",
+      "chapter": 5,
+      "title": "Corollary 5.13",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Corollary_5_13.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec30.definition-5-30-extra-2",
+      "chapter": 5,
+      "title": "Definition 5.30-extra-2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_2.lean"
+      ],
+      "directSorryCount": 9,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_2.lean",
+          "directSorryCount": 9
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec30.corollary-5-14",
+      "chapter": 5,
+      "title": "Corollary 5.14",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Corollary_5_14.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Corollary_5_14.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec30.example-5-15",
+      "chapter": 5,
+      "title": "Example 5.15",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Example_5_15.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Example_5_15.lean",
+          "line": 15,
+          "command": "recall",
+          "target": "unitSphere_isEmbeddedSubmanifold (n : ℕ) :"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Example_5_15.lean",
+          "line": 23,
+          "command": "#check",
+          "target": "(unitSphere_isEmbeddedSubmanifold n).isSmoothEmbedding_subtype_val"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec30.proposition-5-16",
+      "chapter": 5,
+      "title": "Proposition 5.16",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Proposition_5_16.lean"
+      ],
+      "directSorryCount": 6,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Proposition_5_16.lean",
+          "directSorryCount": 6
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
+      "chapter": 5,
+      "title": "Definition 5.30-extra-3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_3.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_3.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec30.example-5-17",
+      "chapter": 5,
+      "title": "Example 5.17",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Example_5_17.lean"
+      ],
+      "directSorryCount": 13,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Example_5_17.lean",
+          "directSorryCount": 13
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.proposition-5-18",
+      "chapter": 5,
+      "title": "Proposition 5.18",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Proposition_5_18.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Proposition_5_18.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.example-5-19",
+      "chapter": 5,
+      "title": "Example 5.19",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_19.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.proposition-5-21",
+      "chapter": 5,
+      "title": "Proposition 5.21",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.proposition-5-22",
+      "chapter": 5,
+      "title": "Proposition 5.22",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Proposition_5_22.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Proposition_5_22.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.definition-5-31-extra-2",
+      "chapter": 5,
+      "title": "Definition 5.31-extra-2",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Definition_5_31_extra_2.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Definition_5_31_extra_2.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.proposition-5-23",
+      "chapter": 5,
+      "title": "Proposition 5.23",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Proposition_5_23.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.exercise-5-24",
+      "chapter": 5,
+      "title": "Exercise 5.24",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_24.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_24.lean",
+          "line": 24,
+          "command": "recall",
+          "target": "ImmersedSubmanifold.IsSmoothLocalParametrization"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_24.lean",
+          "line": 25,
+          "command": "recall",
+          "target": "IsImmersion.toImmersedSubmanifold"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_24.lean",
+          "line": 29,
+          "command": "#check",
+          "target": "IsImmersion.isSmoothLocalParametrization_of_mem_maximalAtlas"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_24.lean",
+          "line": 33,
+          "command": "#check",
+          "target": "IsImmersion.isSmoothLocalParametrization_iff_exists_chart"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_24.lean",
+          "line": 36,
+          "command": "#check",
+          "target": "IsImmersion.exists_isSmoothLocalParametrization_through"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec31.example-5-25",
+      "chapter": 5,
+      "title": "Example 5.25",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_25.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_25.lean",
+          "line": 9,
+          "command": "#check",
+          "target": "ImmersedSubmanifold.IsGlobalParametrization"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_25.lean",
+          "line": 12,
+          "command": "#check",
+          "target": "IsSmoothEmbedding.toImmersedSubmanifold"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_25.lean",
+          "line": 15,
+          "command": "#check",
+          "target": "TopologicalSpace.Opens.graphMap"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_25.lean",
+          "line": 18,
+          "command": "#check",
+          "target": "graphMap_isSmoothEmbedding"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_25.lean",
+          "line": 21,
+          "command": "#check",
+          "target": "TopologicalSpace.Opens.range_graphMap_eq_graphOn"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec31.example-5-26",
+      "chapter": 5,
+      "title": "Example 5.26",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_26.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_26.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec32.example-5-28",
+      "chapter": 5,
+      "title": "Example 5.28",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Example_5_28.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Example_5_28.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec32.theorem-5-29",
+      "chapter": 5,
+      "title": "Theorem 5.29",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_29.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_29.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec32.remark-5-32-extra-1",
+      "chapter": 5,
+      "title": "Remark 5.32-extra-1",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Remark_5_32_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec33.theorem-5-31",
+      "chapter": 5,
+      "title": "Theorem 5.31",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_33/Theorem_5_31.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_33/Theorem_5_31.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec33.theorem-5-32",
+      "chapter": 5,
+      "title": "Theorem 5.32",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec33.theorem-5-33",
+      "chapter": 5,
+      "title": "Theorem 5.33",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec34.lemma-5-34",
+      "chapter": 5,
+      "title": "Lemma 5.34",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.proposition-5-35",
+      "chapter": 5,
+      "title": "Proposition 5.35",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_35.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.exercise-5-36",
+      "chapter": 5,
+      "title": "Exercise 5.36",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_36.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_36.lean",
+          "line": 11,
+          "command": "recall",
+          "target": "tangentVector_mem_submanifold_iff_exists_curve"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec35.proposition-5-37",
+      "chapter": 5,
+      "title": "Proposition 5.37",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_37.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_37.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.proposition-5-38",
+      "chapter": 5,
+      "title": "Proposition 5.38",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_38.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_38.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.corollary-5-39",
+      "chapter": 5,
+      "title": "Corollary 5.39",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Corollary_5_39.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.exercise-5-40",
+      "chapter": 5,
+      "title": "Exercise 5.40",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_40.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_40.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.proposition-5-41",
+      "chapter": 5,
+      "title": "Proposition 5.41",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_41.lean"
+      ],
+      "directSorryCount": 8,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_41.lean",
+          "directSorryCount": 8
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.exercise-5-42",
+      "chapter": 5,
+      "title": "Exercise 5.42",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "inward_pointing_iff_boundary_coordinate_component_pos"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 15,
+          "command": "recall",
+          "target": "outward_pointing_iff_boundary_coordinate_component_neg"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 18,
+          "command": "recall",
+          "target": "tangent_to_boundary_iff_boundary_coordinate_component_eq_zero"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 22,
+          "command": "recall",
+          "target": "boundary_vector_trichotomy"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 25,
+          "command": "recall",
+          "target": "tangent_to_boundary_not_inward_pointing"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 28,
+          "command": "recall",
+          "target": "tangent_to_boundary_not_outward_pointing"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 31,
+          "command": "recall",
+          "target": "inward_pointing_not_outward_pointing"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_42.lean",
+          "line": 34,
+          "command": "recall",
+          "target": "inward_pointing_iff_neg_outward_pointing"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec35.definition-5-35-extra-3",
+      "chapter": 5,
+      "title": "Definition 5.35-extra-3",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Definition_5_35_extra_3.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.proposition-5-43",
+      "chapter": 5,
+      "title": "Proposition 5.43",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_43.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_43.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.exercise-5-44",
+      "chapter": 5,
+      "title": "Exercise 5.44",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_44.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Exercise_5_44.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec35.example-5-45",
+      "chapter": 5,
+      "title": "Example 5.45",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Example_5_45.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Definition_5_35_extra_4.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-1",
+      "chapter": 5,
+      "title": "Definition 5.36-extra-1",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_1.lean",
+          "line": 24,
+          "command": "#check",
+          "target": "Manifold.IsImmersion J I ⊤ (Subtype.val : S → M)"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_1.lean",
+          "line": 28,
+          "command": "#check",
+          "target": "Manifold.IsSmoothEmbedding J I ⊤ (Subtype.val : S → M)"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.proposition-5-46",
+      "chapter": 5,
+      "title": "Proposition 5.46",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Proposition_5_46.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Proposition_5_46.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec36.proposition-5-47",
+      "chapter": 5,
+      "title": "Proposition 5.47",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
+      "chapter": 5,
+      "title": "Definition 5.36-extra-3",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_3.lean"
+      ],
+      "directSorryCount": 3,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_3.lean",
+          "directSorryCount": 3
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec36.theorem-5-48",
+      "chapter": 5,
+      "title": "Theorem 5.48",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec36.proposition-5-49",
+      "chapter": 5,
+      "title": "Proposition 5.49",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Proposition_5_49.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Proposition_5_49.lean",
+          "line": 32,
+          "command": "#check",
+          "target": "Manifold.IsSmoothEmbedding.of_opens"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Proposition_5_49.lean",
+          "line": 307,
+          "command": "#check",
+          "target": "Set.isProperlyEmbedded_iff_isClosed"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.exercise-5-50",
+      "chapter": 5,
+      "title": "Exercise 5.50",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_50.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_50.lean",
+          "line": 126,
+          "command": "recall",
+          "target": "Manifold.IsSmoothEmbedding.of_opens"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_50.lean",
+          "line": 132,
+          "command": "recall",
+          "target": "smooth_embedding_range_has_manifold_with_boundary"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_50.lean",
+          "line": 137,
+          "command": "recall",
+          "target": "Set.isProperlyEmbedded_iff_isClosed"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_50.lean",
+          "line": 143,
+          "command": "recall",
+          "target": "immersed_submanifold_has_embedded_neighborhood"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.theorem-5-51",
+      "chapter": 5,
+      "title": "Theorem 5.51",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/Index.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean",
+          "directSorryCount": 3
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec36.exercise-5-52",
+      "chapter": 5,
+      "title": "Exercise 5.52",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_52.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_52.lean",
+          "line": 15,
+          "command": "recall",
+          "target": "satisfiesLocalSliceConditionWithBoundary_has_manifold_with_boundary_structure"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_52.lean",
+          "line": 19,
+          "command": "recall",
+          "target": "local_slice_criterion_for_embedded_submanifold_with_boundary"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.theorem-5-53",
+      "chapter": 5,
+      "title": "Theorem 5.53",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean",
+          "line": 44,
+          "command": "recall",
+          "target": "Manifold.IsSmoothEmbedding.contMDiff_toSubtype"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.exercise-5-54",
+      "chapter": 5,
+      "title": "Exercise 5.54",
+      "category": "reference_only",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_54.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_54.lean",
+          "line": 11,
+          "command": "recall",
+          "target": "contMDiff_restrict_subtype_of_isEmbeddedSubmanifoldWithBoundary"
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Exercise_5_54.lean",
+          "line": 12,
+          "command": "recall",
+          "target": "Manifold.IsSmoothEmbedding.contMDiff_toSubtype"
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-1",
+      "chapter": 5,
+      "title": "Problem 5-1",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-2",
+      "chapter": 5,
+      "title": "Problem 5-2",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-3",
+      "chapter": 5,
+      "title": "Problem 5-3",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-6",
+      "chapter": 5,
+      "title": "Problem 5-6",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_6.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_6.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-7",
+      "chapter": 5,
+      "title": "Problem 5-7",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_7.lean"
+      ],
+      "directSorryCount": 5,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_7.lean",
+          "directSorryCount": 5
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-8",
+      "chapter": 5,
+      "title": "Problem 5-8",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_8.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_8.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-9",
+      "chapter": 5,
+      "title": "Problem 5-9",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_9.lean"
+      ],
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_9.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-10",
+      "chapter": 5,
+      "title": "Problem 5-10",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_10.lean"
+      ],
+      "directSorryCount": 17,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_10.lean",
+          "directSorryCount": 17
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-11",
+      "chapter": 5,
+      "title": "Problem 5-11",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_11.lean"
+      ],
+      "directSorryCount": 4,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_11.lean",
+          "directSorryCount": 4
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-12",
+      "chapter": 5,
+      "title": "Problem 5-12",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_12.lean"
+      ],
+      "directSorryCount": 7,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_12.lean",
+          "directSorryCount": 7
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-13",
+      "chapter": 5,
+      "title": "Problem 5-13",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_13.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_13.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-14",
+      "chapter": 5,
+      "title": "Problem 5-14",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-15",
+      "chapter": 5,
+      "title": "Problem 5-15",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_15.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-16",
+      "chapter": 5,
+      "title": "Problem 5-16",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-17",
+      "chapter": 5,
+      "title": "Problem 5-17",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-18",
+      "chapter": 5,
+      "title": "Problem 5-18",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_18.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-19",
+      "chapter": 5,
+      "title": "Problem 5-19",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_19.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-20",
+      "chapter": 5,
+      "title": "Problem 5-20",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_20.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-21",
+      "chapter": 5,
+      "title": "Problem 5-21",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-22",
+      "chapter": 5,
+      "title": "Problem 5-22",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-23",
+      "chapter": 5,
+      "title": "Problem 5-23",
+      "category": "direct_sorry",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_23.lean"
+      ],
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_23.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-24",
+      "chapter": 5,
+      "title": "Problem 5-24",
+      "category": "textbook_only",
+      "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    }
+  ]
+}

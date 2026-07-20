@@ -9,6 +9,7 @@
   "scripts": {
     "copy-tasks": "node scripts/copy-tasks.js",
     "generate-lee-tasks": "node scripts/generate-lee-tasks.js",
+    "generate-lee-formal-triage": "node scripts/generate-lee-formal-triage.js",
     "generate-lee-deps": "node scripts/generate-lee-deps.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "vite --host 127.0.0.1",
