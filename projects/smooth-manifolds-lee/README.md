@@ -82,7 +82,7 @@ Human findings are non-exclusive: a task with a direct `sorry` may also have
 a statement or coverage problem. All thirteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
 checks. Seven cover every direct `sorry` in their task, five intentionally cover
-only selected declarations and retain explicit residual `sorry` counts, and
+only selected declarations and retain fifteen explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
 
@@ -99,6 +99,7 @@ The larger verified repairs are also preserved as replayable patches at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch
+projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
 ```
 

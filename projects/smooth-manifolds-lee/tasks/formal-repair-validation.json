@@ -18,10 +18,10 @@
     "validatedCandidates": 13,
     "sourceFiles": 14,
     "directSorryTokensBefore": 38,
-    "directSorryTokensReplaced": 22,
-    "directSorryTokensAfter": 16,
-    "changedDeclarations": 23,
-    "declarationsWithoutSorryAx": 23
+    "directSorryTokensReplaced": 23,
+    "directSorryTokensAfter": 15,
+    "changedDeclarations": 24,
+    "declarationsWithoutSorryAx": 24
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -246,9 +246,11 @@
       "module": "SmoothManifoldsLee.Chap04.Sec04_23.Theorem_4_12",
       "candidateCoverage": "partial",
       "sourceSha256": "f94b972e98ee95affab69143d18b20ffd8c2152e64f0af6d7d58d8d695560d58",
-      "patchedSourceSha256": "f90a714ed327d9aa9d226aa189096dcc305fe441146ca8e45eb54c070dc40c31",
-      "directSorryTokens": {"before": 5, "replacedByCandidate": 2, "after": 3},
+      "patchedSourceSha256": "69ffbf0fc9e39a22185357e5ebbc657f3324634be58125fdd7e8bbf686d81ac1",
+      "directSorryTokens": {"before": 5, "replacedByCandidate": 3, "after": 2},
       "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch",
+      "patchSha256": "934721a90dcf3652092a7adf351f85da9ef78b5660339a1140cf9e339f1daabc",
       "declarations": [
         {
           "name": "rank_normal_form_apply_of_lt",
@@ -259,6 +261,12 @@
         {
           "name": "LocalCoordinateNormalFormAt.mapsTo_source",
           "proof": "by\n  exact h.mapsTo",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "smooth_immersion_local_inclusion_form",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }
@@ -389,7 +397,8 @@
   "limitations": [
     "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
-    "Five validated candidates are partial: their patched temporary files retain sixteen direct sorry tokens outside the candidate scope.",
+    "Five validated candidates are partial: their patched temporary files retain fifteen direct sorry tokens outside the candidate scope.",
+    "The Theorem 4.12 immersion normal form is verified without using the remaining constant-rank or submersion owner holes; those two direct sorry tokens remain explicit.",
     "The Proposition 5.2 candidate closes both current direct sorry tokens, but it does not formalize the textbook's uniqueness of the image smooth structure; that semantic-coverage finding remains unresolved.",
     "The downstream Problem 5.1 module compiles with the Proposition 5.2 candidate but retains pre-existing transitive sorryAx from its recorded Chapter 4 owners.",
     "The multi-file Theorem 5.51 helper repair has a tracked replayable patch; its main theorem still depends on the three remaining owner holes and therefore still reports sorryAx.",

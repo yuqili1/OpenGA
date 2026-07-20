@@ -439,10 +439,12 @@
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean",
       "declarations": [
         "rank_normal_form_apply_of_lt",
-        "LocalCoordinateNormalFormAt.mapsTo_source"
+        "LocalCoordinateNormalFormAt.mapsTo_source",
+        "smooth_immersion_local_inclusion_form"
       ],
-      "scope": "two of five direct sorry tokens in the task",
-      "proposal": "Close the coordinate evaluation with `by simp [rank_normal_form, hri, hmi]` and project `mapsTo_source` with `by exact h.mapsTo`.",
+      "scope": "three of five direct sorry tokens in the task",
+      "proposal": "Close the two elementary helpers directly, then convert mathlib's native immersion normal form to the standard Euclidean coordinate inclusion by splitting its finite-dimensional complement, normalizing the target linear coordinates, and centering both charts.",
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
