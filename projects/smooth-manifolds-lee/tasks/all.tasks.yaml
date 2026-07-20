@@ -6985,7 +6985,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.15 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 2 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 的带边流形局部浸入定理陈述正确；Lean：已验证补丁闭合当前文件两处 `sorry`，边界图平移与目标补空间正规化均通过编译及 axioms 检查。当前声明假设 mathlib 以局部正规形定义的 `Manifold.IsImmersion`；它与 Lee 的“微分处处单射”定义之间的桥仍在 `Definition_4_21_extra_1.lean` 含 `sorry`，因此现有声明 proof-complete，但教材原始假设的语义覆盖仍 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section23.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean

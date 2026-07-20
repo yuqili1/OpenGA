@@ -79,9 +79,9 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All thirteen low-risk patch candidates have
+a statement or coverage problem. All fourteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Seven cover every direct `sorry` in their task, five intentionally cover
+checks. Eight cover every direct `sorry` in their task, five intentionally cover
 only selected declarations and retain fifteen explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
@@ -98,11 +98,17 @@ image structures is a diffeomorphism. The pinned source still lacks that theorem
 so the semantic finding remains tracked with `verified_patch` status until the
 patch is applied.
 
+The Theorem 4.15 patch closes both direct holes in its current boundary-immersion
+statement. That statement uses mathlib's local-normal-form definition of
+`Manifold.IsImmersion`; the separate equivalence with Lee's differential-injectivity
+definition remains an unresolved bridge in `Definition_4_21_extra_1.lean`.
+
 The larger verified repairs are also preserved as replayable patches at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch
+projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
 ```
 

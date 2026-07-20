@@ -1,0 +1,340 @@
+--- a/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean
++++ b/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean
+@@ -64 +64,2 @@
+-    MapsTo F h.domChart.source h.codChart.source := sorry
++    MapsTo F h.domChart.source h.codChart.source := by
++  exact h.mapsTo
+@@ -67,0 +69,232 @@
++private def boundaryImmersionChartPartialDiffeomorph
++    (e : OpenPartialHomeomorph M (EuclideanHalfSpace m))
++    (he : e ∈ IsManifold.maximalAtlas J_m ∞ M) :
++    PartialDiffeomorph J_m J_m M (EuclideanHalfSpace m) ∞ where
++  toPartialEquiv := e.toPartialEquiv
++  open_source := e.open_source
++  open_target := e.open_target
++  contMDiffOn_toFun := contMDiffOn_of_mem_maximalAtlas he
++  contMDiffOn_invFun := contMDiffOn_symm_of_mem_maximalAtlas he
++
++private theorem boundaryImmersionChart_maps_boundary
++    (e : OpenPartialHomeomorph M (EuclideanHalfSpace m))
++    (he : e ∈ IsManifold.maximalAtlas J_m ∞ M)
++    {p : M} (hep : p ∈ e.source) (hp : p ∈ (𝓡∂ m).boundary M) :
++    (e p).1 0 = 0 := by
++  have hlocal : IsLocalDiffeomorphAt J_m J_m ∞ e p := by
++    exact PartialDiffeomorph.isLocalDiffeomorphAt
++      (I := J_m) (J := J_m) (M := M) (N := EuclideanHalfSpace m)
++      (n := ∞) (boundaryImmersionChartPartialDiffeomorph e he) hep
++  have heboundary : (𝓡∂ m).IsBoundaryPoint (e p) :=
++    (hlocal.isBoundaryPoint_iff (by simp)).mp hp
++  rw [(𝓡∂ m).isBoundaryPoint_iff,
++    frontier_range_modelWithCornersEuclideanHalfSpace m] at heboundary
++  exact heboundary.symm
++
++private noncomputable def boundaryImmersionHalfSpaceAddRight
++    (a : EuclideanHalfSpace m) (ha : a.1 0 = 0) :
++    EuclideanHalfSpace m ≃ₜ EuclideanHalfSpace m :=
++  (Homeomorph.addRight (-a.1)).subtype (by
++    intro x
++    simp [ha])
++
++@[simp] private theorem boundaryImmersionHalfSpaceAddRight_apply_val
++    (a x : EuclideanHalfSpace m) (ha : a.1 0 = 0) :
++    (boundaryImmersionHalfSpaceAddRight a ha x).1 = x.1 - a.1 := by
++  rfl
++
++@[simp] private theorem boundaryImmersionHalfSpaceAddRight_symm_apply_val
++    (a x : EuclideanHalfSpace m) (ha : a.1 0 = 0) :
++    ((boundaryImmersionHalfSpaceAddRight a ha).symm x).1 = x.1 + a.1 := by
++  change (Homeomorph.addRight (-a.1)).symm x.1 = x.1 + a.1
++  change x.1 + -(-a.1) = x.1 + a.1
++  simp
++
++private theorem boundaryImmersionHalfSpaceAddRight_mem_contDiffGroupoid
++    (a : EuclideanHalfSpace m) (ha : a.1 0 = 0) :
++    (boundaryImmersionHalfSpaceAddRight a ha).toOpenPartialHomeomorph ∈
++      contDiffGroupoid ∞ (𝓡∂ m) := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · have hsmooth : ContDiff ℝ ∞
++        (fun x : EuclideanSpace ℝ (Fin m) ↦ x - a.1) :=
++      contDiff_id.sub contDiff_const
++    apply hsmooth.contDiffOn.congr
++    intro x hx
++    have hxrange : x ∈ Set.range (𝓡∂ m) := hx.2
++    have hright : ((𝓡∂ m).symm x).1 = x := by
++      simpa using (𝓡∂ m).right_inv hxrange
++    change ((boundaryImmersionHalfSpaceAddRight a ha ((𝓡∂ m).symm x)).1) =
++      x - a.1
++    rw [boundaryImmersionHalfSpaceAddRight_apply_val, hright]
++  · have hsmooth : ContDiff ℝ ∞
++        (fun x : EuclideanSpace ℝ (Fin m) ↦ x + a.1) :=
++      contDiff_id.add contDiff_const
++    apply hsmooth.contDiffOn.congr
++    intro x hx
++    have hxrange : x ∈ Set.range (𝓡∂ m) := hx.2
++    have hright : ((𝓡∂ m).symm x).1 = x := by
++      simpa using (𝓡∂ m).right_inv hxrange
++    change (((boundaryImmersionHalfSpaceAddRight a ha).symm
++      ((𝓡∂ m).symm x)).1) = x + a.1
++    rw [boundaryImmersionHalfSpaceAddRight_symm_apply_val, hright]
++
++private theorem boundaryImmersionComplement_finiteDimensional
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) :
++    FiniteDimensional ℝ h.complement := by
++  let inclusion : h.complement →ₗ[ℝ] EuclideanSpace ℝ (Fin n) :=
++    h.equiv.toLinearEquiv.toLinearMap.comp
++      (LinearMap.inr ℝ (EuclideanSpace ℝ (Fin m)) h.complement)
++  refine FiniteDimensional.of_injective inclusion ?_
++  intro x y hxy
++  have hpair : ((0 : EuclideanSpace ℝ (Fin m)), x) = (0, y) := by
++    apply h.equiv.injective
++    simpa [inclusion] using hxy
++  exact congrArg Prod.snd hpair
++
++private theorem boundaryImmersionSourceDim_le
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) : m ≤ n := by
++  letI : FiniteDimensional ℝ h.complement :=
++    boundaryImmersionComplement_finiteDimensional h
++  have hsum : m + Module.finrank ℝ h.complement = n := by
++    simpa only [Module.finrank_prod, finrank_euclideanSpace_fin] using
++      h.equiv.toLinearEquiv.finrank_eq
++  omega
++
++private theorem boundaryImmersionComplement_finrank_eq
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) :
++    letI : FiniteDimensional ℝ h.complement :=
++      boundaryImmersionComplement_finiteDimensional h
++    Module.finrank ℝ h.complement = n - m := by
++  letI : FiniteDimensional ℝ h.complement :=
++    boundaryImmersionComplement_finiteDimensional h
++  have hsum : m + Module.finrank ℝ h.complement = n := by
++    simpa only [Module.finrank_prod, finrank_euclideanSpace_fin] using
++      h.equiv.toLinearEquiv.finrank_eq
++  omega
++
++private noncomputable def boundaryImmersionComplementEuclideanEquiv
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) :
++    h.complement ≃L[ℝ] EuclideanSpace ℝ (Fin (n - m)) := by
++  letI : FiniteDimensional ℝ h.complement :=
++    boundaryImmersionComplement_finiteDimensional h
++  apply ContinuousLinearEquiv.ofFinrankEq
++  simpa only [finrank_euclideanSpace_fin] using
++    boundaryImmersionComplement_finrank_eq h
++
++private noncomputable def boundaryImmersionStandardTargetSplit
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) :
++    EuclideanSpace ℝ (Fin n) ≃L[ℝ]
++      EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin (n - m)) := by
++  have hsum : m + (n - m) = n := Nat.add_sub_of_le (boundaryImmersionSourceDim_le h)
++  exact
++    (LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ (finCongr hsum.symm)).toContinuousLinearEquiv.trans
++      (EuclideanSpace.finAddEquivProd (𝕜 := ℝ) (n := m) (m := n - m))
++
++private noncomputable def boundaryImmersionTargetLinearNormalizingEquiv
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) :
++    EuclideanSpace ℝ (Fin n) ≃L[ℝ] EuclideanSpace ℝ (Fin n) :=
++  h.equiv.symm |>.trans
++    ((ContinuousLinearEquiv.refl ℝ (EuclideanSpace ℝ (Fin m))).prodCongr
++      (boundaryImmersionComplementEuclideanEquiv h)) |>.trans
++    (boundaryImmersionStandardTargetSplit h).symm
++
++private theorem boundaryImmersionStandardTargetSplit_symm_apply_zero
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p)
++    (u : EuclideanSpace ℝ (Fin m)) :
++    (boundaryImmersionStandardTargetSplit h).symm
++        (u, (0 : EuclideanSpace ℝ (Fin (n - m)))) =
++      rank_normal_form m n m u := by
++  have hsum : m + (n - m) = n := Nat.add_sub_of_le (boundaryImmersionSourceDim_le h)
++  ext i
++  simp [boundaryImmersionStandardTargetSplit, rank_normal_form,
++    LinearEquiv.prodCongr_symm, LinearEquiv.prodCongr_apply,
++    WithLp.linearEquiv_apply]
++  by_cases hi : i.1 < m
++  · have hcast :
++        Fin.cast hsum.symm i = Fin.castAdd (n - m) ⟨i.1, hi⟩ := by
++      ext
++      rfl
++    rw [hcast, finSumFinEquiv_symm_apply_castAdd]
++    simp [hi]
++  · have hmi : m ≤ i.1 := Nat.le_of_not_gt hi
++    let j : Fin (n - m) := ⟨i.1 - m, by omega⟩
++    have hcast : Fin.cast hsum.symm i = Fin.natAdd m j := by
++      ext
++      simp [j]
++      omega
++    rw [hcast, finSumFinEquiv_symm_apply_natAdd]
++    simp [hi]
++
++private theorem boundaryImmersionTargetLinearNormalizingEquiv_apply_writtenInCharts
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p)
++    (u : EuclideanSpace ℝ (Fin m)) :
++    boundaryImmersionTargetLinearNormalizingEquiv h
++        (h.equiv (u, (0 : h.complement))) =
++      rank_normal_form m n m u := by
++  rw [boundaryImmersionTargetLinearNormalizingEquiv]
++  simp only [ContinuousLinearEquiv.trans_apply,
++    ContinuousLinearEquiv.symm_apply_apply,
++    ContinuousLinearEquiv.prodCongr_apply,
++    ContinuousLinearEquiv.refl_apply,
++    map_zero]
++  exact boundaryImmersionStandardTargetSplit_symm_apply_zero h u
++
++private theorem boundaryImmersionTranslation_mem_contDiffGroupoid
++    {k : ℕ} (v : EuclideanSpace ℝ (Fin k)) :
++    (Homeomorph.addRight v).toOpenPartialHomeomorph ∈ contDiffGroupoid ∞
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin k))) := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · simpa [modelWithCornersSelf_coe, Homeomorph.addRight] using
++      (contDiff_id.add contDiff_const).contDiffOn
++  · simpa [modelWithCornersSelf_coe, Homeomorph.addRight] using
++      (contDiff_id.add contDiff_const).contDiffOn
++
++private theorem boundaryImmersionLinearEquiv_mem_contDiffGroupoid
++    {k : ℕ} (L : EuclideanSpace ℝ (Fin k) ≃L[ℝ] EuclideanSpace ℝ (Fin k)) :
++    L.toHomeomorph.toOpenPartialHomeomorph ∈ contDiffGroupoid ∞
++      (𝓘(ℝ, EuclideanSpace ℝ (Fin k))) := by
++  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid, contDiffPregroupoid]
++  constructor
++  · simpa [modelWithCornersSelf_coe] using L.contDiff.contDiffOn
++  · simpa [modelWithCornersSelf_coe] using L.symm.contDiff.contDiffOn
++
++private theorem boundaryImmersionWrittenOnChartSource
++    {F : M → N} {p y : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p)
++    (hy : y ∈ h.domChart.source) :
++    h.codChart (F y) = h.equiv ((h.domChart y).1, (0 : h.complement)) := by
++  let u : EuclideanSpace ℝ (Fin m) := (h.domChart.extend J_m) y
++  have hu : u ∈ (h.domChart.extend J_m).target :=
++    (h.domChart.extend J_m).map_source
++      (by simpa [OpenPartialHomeomorph.extend_source] using hy)
++  have hw := h.writtenInCharts hu
++  have hleft : h.domChart.symm (h.domChart y) = y := h.domChart.left_inv hy
++  simpa [u, Function.comp, OpenPartialHomeomorph.extend_coe,
++    OpenPartialHomeomorph.extend_coe_symm, modelWithCornersSelf_coe,
++    modelWithCornersSelf_coe_symm, hleft] using hw
++
++private theorem boundaryRankNormalForm_full_add
++    (x y : EuclideanSpace ℝ (Fin m)) :
++    rank_normal_form m n m (x + y) =
++      rank_normal_form m n m x + rank_normal_form m n m y := by
++  ext i
++  simp only [rank_normal_form, PiLp.add_apply]
++  by_cases hi : i.1 < m
++  · simp [hi]
++  · simp [hi]
++
++private noncomputable def boundaryImmersionCenteredDomainChart
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p)
++    (hboundary : (h.domChart p).1 0 = 0) :
++    OpenPartialHomeomorph M (EuclideanHalfSpace m) :=
++  h.domChart.transHomeomorph
++    (boundaryImmersionHalfSpaceAddRight (h.domChart p) hboundary)
++
++private noncomputable def boundaryImmersionCenteredNormalizingCodomainChart
++    {F : M → N} {p : M} (h : Manifold.IsImmersionAt J_m I_n ∞ F p) :
++    OpenPartialHomeomorph N (EuclideanSpace ℝ (Fin n)) :=
++  (h.codChart.transHomeomorph
++      (boundaryImmersionTargetLinearNormalizingEquiv h).toHomeomorph).transHomeomorph
++    (Homeomorph.addRight (-(rank_normal_form m n m (h.domChart p).1)))
++
+@@ -75 +308,99 @@
+-  sorry
++  by
++    let hFp := hF.isImmersionAt p
++    have hpCoordBoundary : (hFp.domChart p).1 0 = 0 :=
++      boundaryImmersionChart_maps_boundary hFp.domChart hFp.domChart_mem_maximalAtlas
++        hFp.mem_domChart_source hp
++    let domChart := boundaryImmersionCenteredDomainChart hFp hpCoordBoundary
++    let codChart := boundaryImmersionCenteredNormalizingCodomainChart hFp
++    have hdom_mem : domChart ∈ IsManifold.maximalAtlas J_m ∞ M := by
++      simpa [domChart, boundaryImmersionCenteredDomainChart,
++        OpenPartialHomeomorph.transHomeomorph_eq_trans] using
++          (Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++            hFp.domChart_mem_maximalAtlas
++            (boundaryImmersionHalfSpaceAddRight_mem_contDiffGroupoid
++              (hFp.domChart p) hpCoordBoundary))
++    have hcod_linear_mem :
++        hFp.codChart.transHomeomorph
++            (boundaryImmersionTargetLinearNormalizingEquiv hFp).toHomeomorph ∈
++          IsManifold.maximalAtlas I_n ∞ N := by
++      rw [OpenPartialHomeomorph.transHomeomorph_eq_trans]
++      exact Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++        hFp.codChart_mem_maximalAtlas
++        (boundaryImmersionLinearEquiv_mem_contDiffGroupoid
++          (boundaryImmersionTargetLinearNormalizingEquiv hFp))
++    have hcod_mem : codChart ∈ IsManifold.maximalAtlas I_n ∞ N := by
++      simpa [codChart, boundaryImmersionCenteredNormalizingCodomainChart,
++        OpenPartialHomeomorph.transHomeomorph_eq_trans] using
++          (Manifold.IsImmersionAtOfComplement.trans_mem_maximalAtlas_of_mem_groupoid_infty
++            hcod_linear_mem
++            (boundaryImmersionTranslation_mem_contDiffGroupoid
++              (-(rank_normal_form m n m (hFp.domChart p).1))))
++    refine ⟨{
++      domChart := domChart
++      codChart := codChart
++      domChart_mem_maximalAtlas := hdom_mem
++      codChart_mem_maximalAtlas := hcod_mem
++      domChart_centered := ?_
++      codChart_centered := ?_
++      mapsTo := ?_
++      eqOn := ?_ }, trivial⟩
++    · constructor
++      · simpa [domChart, boundaryImmersionCenteredDomainChart,
++          OpenPartialHomeomorph.transHomeomorph_source] using hFp.mem_domChart_source
++      · apply EuclideanHalfSpace.ext
++        change (hFp.domChart p).1 - (hFp.domChart p).1 =
++          (0 : EuclideanSpace ℝ (Fin m))
++        exact sub_self _
++    · constructor
++      · simpa [codChart, boundaryImmersionCenteredNormalizingCodomainChart,
++          OpenPartialHomeomorph.transHomeomorph_source] using hFp.mem_codChart_source
++      · have hwritten :=
++          boundaryImmersionWrittenOnChartSource hFp hFp.mem_domChart_source
++        have hnormal :=
++          boundaryImmersionTargetLinearNormalizingEquiv_apply_writtenInCharts hFp
++            (hFp.domChart p).1
++        simp only [codChart, boundaryImmersionCenteredNormalizingCodomainChart,
++          OpenPartialHomeomorph.transHomeomorph_apply, Function.comp_apply,
++          Homeomorph.coe_addRight]
++        rw [hwritten]
++        change (boundaryImmersionTargetLinearNormalizingEquiv hFp)
++            (hFp.equiv ((hFp.domChart p).1, (0 : hFp.complement))) +
++            -rank_normal_form m n m (hFp.domChart p).1 = 0
++        rw [hnormal]
++        simp
++    · intro y hy
++      have hy' : y ∈ hFp.domChart.source := by
++        simpa [domChart, boundaryImmersionCenteredDomainChart,
++          OpenPartialHomeomorph.transHomeomorph_source] using hy
++      have hFy : F y ∈ hFp.codChart.source := hFp.source_subset_preimage_source hy'
++      simpa [codChart, boundaryImmersionCenteredNormalizingCodomainChart,
++        OpenPartialHomeomorph.transHomeomorph_source] using hFy
++    · intro z hz
++      let y : M := domChart.symm z
++      have hy_dom : y ∈ domChart.source := domChart.map_target hz
++      have hy_native : y ∈ hFp.domChart.source := by
++        simpa [domChart, boundaryImmersionCenteredDomainChart,
++          OpenPartialHomeomorph.transHomeomorph_source] using hy_dom
++      have hdom_centered : (hFp.domChart y).1 - (hFp.domChart p).1 = z.1 := by
++        have hright := domChart.right_inv hz
++        have hval := congrArg Subtype.val hright
++        simpa [y, domChart, boundaryImmersionCenteredDomainChart,
++          OpenPartialHomeomorph.transHomeomorph_apply,
++          boundaryImmersionHalfSpaceAddRight_apply_val] using hval
++      have hdom : (hFp.domChart y).1 = z.1 + (hFp.domChart p).1 := by
++        rw [sub_eq_iff_eq_add] at hdom_centered
++        simpa [add_comm] using hdom_centered
++      have hwritten := boundaryImmersionWrittenOnChartSource hFp hy_native
++      have hnormal :=
++        boundaryImmersionTargetLinearNormalizingEquiv_apply_writtenInCharts hFp
++          (hFp.domChart y).1
++      change codChart (F y) = boundary_immersion_normal_form m n z
++      simp only [codChart, boundaryImmersionCenteredNormalizingCodomainChart,
++        boundary_immersion_normal_form, OpenPartialHomeomorph.transHomeomorph_apply,
++        Function.comp_apply, Homeomorph.coe_addRight]
++      rw [hwritten]
++      change (boundaryImmersionTargetLinearNormalizingEquiv hFp)
++            (hFp.equiv ((hFp.domChart y).1, (0 : hFp.complement))) +
++            -rank_normal_form m n m (hFp.domChart p).1 = rank_normal_form m n m z.1
++      rw [hnormal, hdom, boundaryRankNormalForm_full_add]
++      simp

@@ -14,11 +14,11 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 38,
+    "semanticCoverageFindings": 39,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 13,
-    "compiledPatchCandidates": 13
+    "lowRiskPatchCandidates": 14,
+    "compiledPatchCandidates": 14
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -66,6 +66,7 @@
         "chapter": 4,
         "taskIds": [
           "sml.ch4.sec21.exercise-4-3",
+          "sml.ch4.sec23.theorem-4-15",
           "sml.ch4.sec24.example-4-19",
           "sml.ch4.sec24.definition-4-24-extra-2",
           "sml.ch4.sec26.example-4-35",
@@ -445,6 +446,23 @@
       "scope": "three of five direct sorry tokens in the task",
       "proposal": "Close the two elementary helpers directly, then convert mathlib's native immersion normal form to the standard Euclidean coordinate inclusion by splitting its finite-dimensional complement, normalizing the target linear coordinates, and centering both charts.",
       "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-immersion-local-inclusion.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch4.sec23.theorem-4-15",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_15.lean",
+      "declarations": [
+        "BoundaryLocalCoordinateNormalFormAt.mapsTo_source",
+        "smooth_immersion_boundary_local_inclusion_form"
+      ],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Project the structure's existing maps-to field directly, then center the boundary chart by a boundary-tangent translation and normalize the immersion complement to the standard Euclidean coordinate inclusion.",
+      "semanticCoverage": {
+        "status": "unresolved",
+        "finding": "The verified patch completes the current Lean statement under mathlib's local-normal-form definition of `Manifold.IsImmersion`. Lee defines immersion by injectivity of the differential; the finite-dimensional equivalence is still the separate sorry in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv`, so coverage from the textbook hypothesis remains externally blocked."
+      },
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
