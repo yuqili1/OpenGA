@@ -8,8 +8,8 @@
   "summary": {
     "directSorryTasks": 106,
     "directSorryTokens": 357,
-    "reviewedRepairOwners": 28,
-    "semanticDesignBeforeProof": 9,
+    "reviewedRepairOwners": 29,
+    "semanticDesignBeforeProof": 11,
     "lowRiskCompleteCandidates": 11,
     "lowRiskPartialCandidates": 9,
     "verifiedLowRiskCandidates": 20,
@@ -1407,6 +1407,51 @@
       "rank": 23
     },
     {
+      "taskId": "sml.ch4.sec26.corollary-4-43",
+      "chapter": 4,
+      "title": "Corollary 4.43",
+      "tier": "B_high_leverage_owner",
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Corollary_4_43.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "reviewedDownstreamTaskIds": [
+        "sml.ch4.sec26.exercise-4-44",
+        "sml.ch4.sec26.exercise-4-45"
+      ],
+      "reviewedRepairOwnerEvidence": "reviewed_reference_and_source_usage",
+      "sourceModuleDirectImporterTaskIds": [
+        "sml.ch4.sec26.exercise-4-44"
+      ],
+      "formalPendingSourceModuleDirectImporterTaskIds": [
+        "sml.ch4.sec26.exercise-4-44"
+      ],
+      "referenceGraph": {
+        "directUnlockTaskIds": [
+          "sml.ch4.sec26.exercise-4-44",
+          "sml.ch4.sec26.exercise-4-45"
+        ],
+        "transitiveUnlockTaskIds": [
+          "sml.ch4.sec26.exercise-4-44",
+          "sml.ch4.sec26.exercise-4-45"
+        ],
+        "formalPendingTransitiveUnlockTaskIds": [
+          "sml.ch4.sec26.exercise-4-44",
+          "sml.ch4.sec26.exercise-4-45"
+        ]
+      },
+      "reviewFlags": {
+        "semanticCoverageFinding": true,
+        "dependencyOrBuildFinding": true
+      },
+      "firstAction": "resolve_statement_or_coverage_before_proof",
+      "lowRiskCandidate": null,
+      "rank": 24
+    },
+    {
       "taskId": "sml.ch1.sec5.proposition-1-40",
       "chapter": 1,
       "title": "Proposition 1.40",
@@ -1448,7 +1493,7 @@
       },
       "firstAction": "scope_proof_and_dependencies",
       "lowRiskCandidate": null,
-      "rank": 24
+      "rank": 25
     },
     {
       "taskId": "sml.ch1.sec3.proposition-1-19",
@@ -1490,7 +1535,7 @@
       },
       "firstAction": "scope_proof_and_dependencies",
       "lowRiskCandidate": null,
-      "rank": 25
+      "rank": 26
     },
     {
       "taskId": "sml.ch5.sec35.proposition-5-38",
@@ -1523,12 +1568,12 @@
         "formalPendingTransitiveUnlockTaskIds": []
       },
       "reviewFlags": {
-        "semanticCoverageFinding": false,
-        "dependencyOrBuildFinding": false
+        "semanticCoverageFinding": true,
+        "dependencyOrBuildFinding": true
       },
-      "firstAction": "scope_proof_and_dependencies",
+      "firstAction": "resolve_statement_or_coverage_before_proof",
       "lowRiskCandidate": null,
-      "rank": 26
+      "rank": 27
     },
     {
       "taskId": "sml.ch5.sec31.definition-5-31-extra-2",
@@ -1566,7 +1611,7 @@
       },
       "firstAction": "resolve_statement_or_coverage_before_proof",
       "lowRiskCandidate": null,
-      "rank": 27
+      "rank": 28
     },
     {
       "taskId": "sml.ch1.sec1.definition-1-extra-1",
@@ -1618,48 +1663,6 @@
         "directUnlockTaskIds": [],
         "transitiveUnlockTaskIds": [],
         "formalPendingTransitiveUnlockTaskIds": []
-      },
-      "reviewFlags": {
-        "semanticCoverageFinding": false,
-        "dependencyOrBuildFinding": false
-      },
-      "firstAction": "scope_proof_and_dependencies",
-      "lowRiskCandidate": null,
-      "rank": 28
-    },
-    {
-      "taskId": "sml.ch4.sec26.corollary-4-43",
-      "chapter": 4,
-      "title": "Corollary 4.43",
-      "tier": "B_high_leverage_owner",
-      "directSorryCount": 1,
-      "directSorryFiles": [
-        {
-          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Corollary_4_43.lean",
-          "directSorryCount": 1
-        }
-      ],
-      "reviewedDownstreamTaskIds": [],
-      "reviewedRepairOwnerEvidence": null,
-      "sourceModuleDirectImporterTaskIds": [
-        "sml.ch4.sec26.exercise-4-44"
-      ],
-      "formalPendingSourceModuleDirectImporterTaskIds": [
-        "sml.ch4.sec26.exercise-4-44"
-      ],
-      "referenceGraph": {
-        "directUnlockTaskIds": [
-          "sml.ch4.sec26.exercise-4-44",
-          "sml.ch4.sec26.exercise-4-45"
-        ],
-        "transitiveUnlockTaskIds": [
-          "sml.ch4.sec26.exercise-4-44",
-          "sml.ch4.sec26.exercise-4-45"
-        ],
-        "formalPendingTransitiveUnlockTaskIds": [
-          "sml.ch4.sec26.exercise-4-44",
-          "sml.ch4.sec26.exercise-4-45"
-        ]
       },
       "reviewFlags": {
         "semanticCoverageFinding": false,

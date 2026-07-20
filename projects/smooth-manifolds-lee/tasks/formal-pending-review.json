@@ -14,9 +14,9 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 45,
-    "dependencyOrBuildFindings": 39,
-    "reviewedRepairOwners": 28,
+    "semanticCoverageFindings": 47,
+    "dependencyOrBuildFindings": 41,
+    "reviewedRepairOwners": 29,
     "lowRiskPatchCandidates": 21,
     "compiledPatchCandidates": 21
   },
@@ -63,11 +63,11 @@
         ]
       },
       {
-      "chapter": 4,
-      "taskIds": [
-        "sml.ch4.sec21.definition-4-21-extra-1",
-        "sml.ch4.sec21.example-4-2",
-        "sml.ch4.sec21.exercise-4-3",
+        "chapter": 4,
+        "taskIds": [
+          "sml.ch4.sec21.definition-4-21-extra-1",
+          "sml.ch4.sec21.example-4-2",
+          "sml.ch4.sec21.exercise-4-3",
           "sml.ch4.sec22.proposition-4-6",
           "sml.ch4.sec23.theorem-4-15",
           "sml.ch4.sec24.example-4-19",
@@ -78,6 +78,7 @@
           "sml.ch4.sec26.example-4-35",
           "sml.ch4.sec26.proposition-4-36",
           "sml.ch4.sec26.proposition-4-40",
+          "sml.ch4.sec26.corollary-4-43",
           "sml.ch4.sec27.problem-4-3"
         ]
       },
@@ -94,6 +95,7 @@
           "sml.ch5.sec31.definition-5-31-extra-2",
           "sml.ch5.sec32.remark-5-32-extra-1",
           "sml.ch5.sec35.definition-5-35-extra-3",
+          "sml.ch5.sec35.proposition-5-38",
           "sml.ch5.sec36.definition-5-36-extra-1"
         ]
       }
@@ -138,6 +140,7 @@
           "sml.ch4.sec26.exercise-4-34",
           "sml.ch4.sec26.exercise-4-38",
           "sml.ch4.sec26.exercise-4-42",
+          "sml.ch4.sec26.corollary-4-43",
           "sml.ch4.sec26.exercise-4-44",
           "sml.ch4.sec27.problem-4-5",
           "sml.ch4.sec27.problem-4-6",
@@ -151,6 +154,7 @@
           "sml.ch5.sec30.corollary-5-13",
           "sml.ch5.sec35.proposition-5-35",
           "sml.ch5.sec35.exercise-5-36",
+          "sml.ch5.sec35.proposition-5-38",
           "sml.ch5.sec35.corollary-5-39",
           "sml.ch5.sec35.exercise-5-42",
           "sml.ch5.sec35.example-5-45",
@@ -324,6 +328,14 @@
         "sml.ch3.sec14.proposition-3-12"
       ],
       "evidence": "reviewed_reference_graph"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec26.corollary-4-43",
+      "downstreamTaskIds": [
+        "sml.ch4.sec26.exercise-4-44",
+        "sml.ch4.sec26.exercise-4-45"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
     },
     {
       "ownerTaskId": "sml.ch5.sec36.definition-5-36-extra-3",

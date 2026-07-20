@@ -8065,7 +8065,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Corollary 4.43 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 1 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 的有限维实、无边界连通光滑流形版本正确；Lean：当前声明推广到任意 `NontriviallyNormedField` 与任意带角模型，并要求覆盖空间位于和 `M: Type uM` 无约束的独立 `Type uMtilde`，存在适用范围与基数/universe 风险，应至少对齐实流形范围并令总空间 universe 受 `uM` 约束。mathlib 只有覆盖提升/唯一性，没有通用 universal-cover 存在构造；项目 Proposition 4.40 已无 `sorryAx` 地解决“给定拓扑覆盖后提升光滑结构”，但不能补存在性。唯一 direct `sorry` 及其 `sorryAx` 因此保留；真实 Lean 直接下游为 Exercise 4.44，而 Exercise 4.45 只是教材图依赖且不 import 本文件，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section26.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_26/Corollary_4_43.lean
@@ -10369,7 +10369,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：局部 defining map 在 S 上为 submersion，故 T_pS=ker dΦ_p，是正则层集定理的切空间形式；Lean：`tangentSpace_eq_ker_mfderiv_of_isLocalDefiningMapOn` 仍直接含 `sorry`。
+  - 数学：Lee 在有限维实流形上的局部 defining map 结论 `T_pS = ker dΦ_p` 是标准正则层集切空间定理，正确；Lean：声明把局部映射表示为全局 `M → N`（仅要求在 `U` 上光滑），又推广到任意 `NontriviallyNormedField`，却未给现有隐函数定理所需的 `CompleteSpace` 假设，故当前超一般版本不能视为已验证的忠实推广。沿 `S` 常值与链式法则只能直接得到 `T_pS ≤ ker dΦ_p`；反向包含仍需正则层集/局部正规形和维数结论，而相关 mathlib/project 桥接尚未完成。唯一 direct `sorry` 保留；Corollary 5.39 与 Exercise 5.40 均实际 import 并调用本定理，尽管 `all.tasks` 的静态 `unlocks` 仍为空，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section35.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_38.lean

@@ -121,6 +121,21 @@ model-map derivative is the identity continuous linear map at every half-space
 point, so the theorem's boundary equation is an unused but harmless stronger
 hypothesis; the exact axioms check is free of `sorryAx`.
 
+Corollary 4.43 requires statement repair before a proof attempt. Lee's
+finite-dimensional real theorem is correct, but the Lean declaration ranges
+over arbitrary nontrivially normed fields and models with corners, and asks for
+the covering type in an independent unconstrained universe. Mathlib supplies
+lifting uniqueness but no general universal-cover existence construction; the
+project's verified Proposition 4.40 can only add a smooth structure after a
+topological cover has been supplied.
+
+Proposition 5.38 is also correct in Lee's real finite-dimensional setting. Its
+Lean version represents the local defining map by a global function and
+generalizes the scalar field without the completeness assumptions required by
+the available implicit-function machinery. The easy tangent-to-kernel
+inclusion does not prove the reverse inclusion; that direction still needs a
+regular-level-set theorem or equivalent dimension/local-normal-form result.
+
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
 the representative-independent form that the identity between any two candidate
