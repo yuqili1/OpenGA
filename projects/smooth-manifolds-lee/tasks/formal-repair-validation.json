@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 10,
-    "sourceFiles": 10,
-    "directSorryTokensBefore": 26,
-    "directSorryTokensReplaced": 16,
-    "directSorryTokensAfter": 10,
-    "changedDeclarations": 17,
-    "declarationsWithoutSorryAx": 17
+    "validatedCandidates": 11,
+    "sourceFiles": 11,
+    "directSorryTokensBefore": 31,
+    "directSorryTokensReplaced": 18,
+    "directSorryTokensAfter": 13,
+    "changedDeclarations": 19,
+    "declarationsWithoutSorryAx": 19
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -239,6 +239,30 @@
       ]
     },
     {
+      "taskId": "sml.ch4.sec23.theorem-4-12",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean",
+      "module": "SmoothManifoldsLee.Chap04.Sec04_23.Theorem_4_12",
+      "candidateCoverage": "partial",
+      "sourceSha256": "f94b972e98ee95affab69143d18b20ffd8c2152e64f0af6d7d58d8d695560d58",
+      "patchedSourceSha256": "f90a714ed327d9aa9d226aa189096dcc305fe441146ca8e45eb54c070dc40c31",
+      "directSorryTokens": {"before": 5, "replacedByCandidate": 2, "after": 3},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "rank_normal_form_apply_of_lt",
+          "proof": "by\n  simp [rank_normal_form, hri, hmi]",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "LocalCoordinateNormalFormAt.mapsTo_source",
+          "proof": "by\n  exact h.mapsTo",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
       "taskId": "sml.ch1.sec5.theorem-1-37",
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Theorem_1_37.lean",
       "module": "SmoothManifoldsLee.Chap01.Sec01_05.Theorem_1_37",
@@ -260,7 +284,7 @@
   "limitations": [
     "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
-    "Three validated candidates are partial: their patched temporary files retain ten direct sorry tokens outside the candidate scope.",
+    "Four validated candidates are partial: their patched temporary files retain thirteen direct sorry tokens outside the candidate scope.",
     "The statement-addition candidate validates an explicit coverage repair for Theorem 1.37; the pinned source still has that coverage finding until the theorem is applied.",
     "The reported standard axioms vary by declaration; no changed declaration depends on sorryAx."
   ]
