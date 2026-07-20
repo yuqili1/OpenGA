@@ -19,6 +19,11 @@ const smoothManifoldsLeeOverlayPath = path.join(
   'projects/smooth-manifolds-lee/sources/errata/ism-2e.json'
 );
 
+const smoothManifoldsLeeClarificationPath = path.join(
+  projectRoot,
+  'projects/smooth-manifolds-lee/sources/clarifications/openga.json'
+);
+
 const projectConfigs: ProjectConfig[] = [
   {
     id: defaultProjectId,
@@ -37,7 +42,10 @@ const projectConfigs: ProjectConfig[] = [
     reviewKind: 'lean_textbook',
     yamlPath: path.join(projectRoot, 'projects/smooth-manifolds-lee/tasks/all.tasks.yaml'),
     textbookZipPath: process.env.SMOOTH_MANIFOLDS_LEE_ZIP ?? smoothManifoldsLeeZipPath,
-    textbookOverlayPaths: [smoothManifoldsLeeOverlayPath]
+    textbookOverlayPaths: [
+      smoothManifoldsLeeOverlayPath,
+      smoothManifoldsLeeClarificationPath
+    ]
   }
 ];
 

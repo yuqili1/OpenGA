@@ -1,7 +1,32 @@
 {
   "importRef": "origin/import/smooth-manifolds-lee",
   "textbookZipPath": "projects/smooth-manifolds-lee/sources/smooth-manifolds.zip",
-  "textbookOverlayPath": "projects/smooth-manifolds-lee/sources/errata/ism-2e.json",
+  "textbookOverlayPaths": [
+    "projects/smooth-manifolds-lee/sources/errata/ism-2e.json",
+    "projects/smooth-manifolds-lee/sources/clarifications/openga.json"
+  ],
+  "textbookOverlaySources": [
+    {
+      "kind": "official_errata",
+      "title": "Corrections to Introduction to Smooth Manifolds (Second Edition)",
+      "url": "https://sites.math.washington.edu/~lee/Books/ISM/errata.pdf",
+      "operationCount": 9
+    },
+    {
+      "kind": "openga_clarification",
+      "title": "OpenGA smooth-manifolds-lee review clarifications (not official errata)",
+      "url": "https://github.com/LehengChen/OpenGA",
+      "operationCount": 1
+    }
+  ],
+  "formalReviewAudit": {
+    "path": "projects/smooth-manifolds-lee/tasks/formal-audit.json",
+    "reviewDate": "2026-07-20",
+    "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
+    "confirmedFalsePositiveCount": 1,
+    "importOnlyCandidateCount": 14,
+    "exactGetAxiomsStatus": "not_run"
+  },
   "generatedReviewTasks": 357,
   "leanPairedReviewTasks": 335,
   "textbookOnlyReviewTasks": 22,
@@ -1204,24 +1229,24 @@
     }
   ],
   "textbookDependencyGraph": {
-    "textbookDependencyReferenceCount": 189,
-    "exactResolvedReferenceCount": 162,
+    "textbookDependencyReferenceCount": 190,
+    "exactResolvedReferenceCount": 163,
     "subpartResolvedReferenceCount": 3,
     "externalReferenceCount": 24,
-    "rawInternalEdgeCount": 165,
-    "retainedEdgeCount": 156,
+    "rawInternalEdgeCount": 166,
+    "retainedEdgeCount": 157,
     "suppressedProofLocationBacklinkCount": 9,
-    "nonemptyDependsOnTaskCount": 123,
+    "nonemptyDependsOnTaskCount": 124,
     "nonemptyDependencyUnlockTaskCount": 104,
     "structuralUnlockEdgeCount": 399,
-    "totalUnlockEdgeCount": 555,
+    "totalUnlockEdgeCount": 556,
     "relationCounts": {
       "same_section": 65,
       "same_chapter_cross_section": 52,
-      "cross_chapter": 39
+      "cross_chapter": 40
     },
-    "dependsOnSha256": "f347ecabe7c300726cafa5a3c9533964ae08989cc7514d478e6599eab4a7e653",
-    "unlocksSha256": "db7adfe16ba74008cfa96d2c430ddc808d1d9ec2dfe57f2388fab3bdb2f77534",
+    "dependsOnSha256": "219801da30893f2121ba494c05cb00973bb025c788bfb411a400fb069fe29403",
+    "unlocksSha256": "47e04da183b881b61fcee90e5c9dbaebb2c347fb122986fbae59794ea186e942",
     "resolvedSubpartDependencies": [
       {
         "task_id": "sml.ch4.sec27.problem-4-10",
@@ -1533,7 +1558,7 @@
     ],
     "dag": {
       "nodeCount": 357,
-      "edgeCount": 156,
+      "edgeCount": 157,
       "visitedNodeCount": 357,
       "acyclic": true,
       "cyclicTaskIds": []
@@ -1541,10 +1566,11 @@
   },
   "notes": [
     "Auxiliary Lean files are attached to their canonical owner task when a matching owner exists.",
-    "Tracked official errata overlays are applied before textbook labels are matched or generated.",
+    "Tracked official errata and separately attributed OpenGA clarifications are applied before textbook labels are matched or generated.",
     "Top-level Lean files without a JSON label are attached to the earliest paired task in the same section that directly imports them; otherwise they remain unmatched.",
     "JSON entries without matching Lean files inside imported chapters are generated as textbook-only review tasks without synthetic Lean paths.",
     "New textbook-only tasks start with both checks pending; formal review remains visible after mathematical review is completed.",
+    "The transitive sorryAx audit is pinned to the exact import commit; import closure alone does not downgrade a task without a declaration-reference path.",
     "Textbook dependencies resolve globally across imported chapters; trailing part references such as Example 2.13(f) fall back to the owner entry only when no exact label exists.",
     "Terse statement-to-problem proof-location backlinks are reported but excluded from depends_on so that statement/problem pairs do not form cycles.",
     "External appendix or unimported-chapter references are reported but are not emitted as dangling task dependencies.",

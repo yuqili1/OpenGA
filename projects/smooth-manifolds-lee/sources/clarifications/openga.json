@@ -1,0 +1,23 @@
+{
+  "schema": "openga-review.textbook-overlay.v1",
+  "source": {
+    "kind": "openga_clarification",
+    "title": "OpenGA smooth-manifolds-lee review clarifications (not official errata)",
+    "url": "https://github.com/LehengChen/OpenGA"
+  },
+  "operations": [
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section29.json",
+      "label": "Theorem 5.11",
+      "review_date": "2026-07-20",
+      "patch": {
+        "append_content": "\n\n**OpenGA clarification (not Lee's text and not official errata).** The $(n-1)$-dimensional conclusion is the positive-dimensional case $n>0$. If $n=0$, Proposition 1.38(d) gives $\\partial M=\\varnothing$. Equip the empty set with its empty $0$-dimensional smooth atlas; the empty inclusion $\\varnothing\\hookrightarrow M$ is vacuously a smooth embedding and is proper.\n\n**OpenGA 澄清（非 Lee 原文，亦非官方勘误）。** 上述 $(n-1)$ 维结论是 $n>0$ 的情形。当 $n=0$ 时，Proposition 1.38(d) 给出 $\\partial M=\\varnothing$。为空集赋予空的 $0$ 维光滑图册；空包含映射 $\\varnothing\\hookrightarrow M$ 真空地是光滑嵌入，并且是 proper map。",
+        "dependencies": [
+          "Proposition 1.38",
+          "Problem 5-2"
+        ]
+      }
+    }
+  ]
+}

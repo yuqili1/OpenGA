@@ -1,0 +1,73 @@
+{
+  "schema": "openga-review.formal-audit.v1",
+  "project": "smooth-manifolds-lee",
+  "importRef": "origin/import/smooth-manifolds-lee",
+  "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
+  "leanToolchain": "leanprover/lean4:v4.30.0",
+  "reviewDate": "2026-07-20",
+  "scope": {
+    "formalDoneTasksExaminedBeforeCorrection": 157,
+    "taskAndAuxiliaryOleanFilesExamined": 162,
+    "taskModulesWhoseOleanContainsSorryAx": 3
+  },
+  "methods": [
+    "Scan each formal-done task module and attached auxiliary .olean symbol table for sorryAx.",
+    "Use the cached .ilean declaration-reference graph to distinguish a real transitive dependency from unrelated import-closure contamination.",
+    "Inspect the referenced Lean source declarations directly on the import branch."
+  ],
+  "confirmedFalsePositives": [
+    {
+      "taskId": "sml.ch5.sec29.theorem-5-8",
+      "outcome": "formal_review changed from done to pending",
+      "taskModulesWhoseOleanContainsSorryAx": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/Common.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8/LocalNormalFormAPI.lean"
+      ],
+      "transitiveSources": [
+        {
+          "wrapper": "LocalNormalFormAPI.rank_normal_form_apply_of_lt",
+          "sourceDeclaration": "rank_normal_form_apply_of_lt",
+          "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean",
+          "sourceProof": "sorry"
+        },
+        {
+          "wrapper": "LocalNormalFormAPI.smooth_immersion_local_inclusion_form",
+          "sourceDeclaration": "smooth_immersion_local_inclusion_form",
+          "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean",
+          "sourceProof": "sorry"
+        }
+      ]
+    }
+  ],
+  "importOnlyCandidatesNotDowngraded": [
+    "sml.ch1.sec1.exercise-1-1",
+    "sml.ch1.sec1.lemma-1-10",
+    "sml.ch1.sec1.proposition-1-11",
+    "sml.ch1.sec1.proposition-1-12",
+    "sml.ch1.sec1.theorem-1-15",
+    "sml.ch1.sec4.example-1-32",
+    "sml.ch1.sec7.problem-1-3",
+    "sml.ch2.sec11.exercise-2-27",
+    "sml.ch4.sec25.exercise-4-27",
+    "sml.ch4.sec26.exercise-4-37",
+    "sml.ch4.sec27.problem-4-4",
+    "sml.ch4.sec27.problem-4-9",
+    "sml.ch5.sec36.remark-5-36-extra-5",
+    "sml.ch5.sec37.problem-5-5"
+  ],
+  "candidateEvidence": {
+    "taskOleanContainsSorryAx": false,
+    "ileanReferencePathToKnownSorryDeclaration": false,
+    "decision": "Do not downgrade from import closure alone."
+  },
+  "exactGetAxiomsFollowUp": {
+    "status": "not_run",
+    "reason": "A Lean 4.30.0 executable was unavailable in the review environment.",
+    "requiredFor": "Final declaration-level certification of the 14 import-only candidates."
+  },
+  "reviewTotalsAfterCorrection": {
+    "formalDone": 156,
+    "formalPending": 201
+  }
+}

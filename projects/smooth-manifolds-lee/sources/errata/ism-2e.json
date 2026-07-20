@@ -1,6 +1,7 @@
 {
   "schema": "openga-review.textbook-overlay.v1",
   "source": {
+    "kind": "official_errata",
     "title": "Corrections to Introduction to Smooth Manifolds (Second Edition)",
     "url": "https://sites.math.washington.edu/~lee/Books/ISM/errata.pdf"
   },

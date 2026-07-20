@@ -66,7 +66,7 @@ function safeTextbookJsonPath(value: unknown, context: string): string {
   return textbookJson;
 }
 
-function erratumDate(value: unknown, context: string): string {
+function overlayDate(value: unknown, context: string): string {
   const date = text(value, context);
   const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (!match) throw new Error(`${context} must be a valid ISO calendar date`);
@@ -172,33 +172,45 @@ function parseEntry(value: unknown, context: string): TextbookEntry & { label: s
   };
 }
 
-function parseOverlayOperation(value: unknown, context: string): TextbookOverlayOperation {
+function parseOverlayOperation(
+  value: unknown,
+  context: string,
+  sourceKind: TextbookOverlayDocument['source']['kind']
+): TextbookOverlayOperation {
   const raw = asRecord(value, context);
   const operation = text(raw.operation, `${context}.operation`);
   const textbookJson = safeTextbookJsonPath(raw.textbook_json, `${context}.textbook_json`);
   const label = text(raw.label, `${context}.label`);
-  const date = erratumDate(raw.erratum_date, `${context}.erratum_date`);
+  const dateKey = sourceKind === 'official_errata' ? 'erratum_date' : 'review_date';
+  const otherDateKey = sourceKind === 'official_errata' ? 'review_date' : 'erratum_date';
+  if (raw[otherDateKey] !== undefined) {
+    throw new Error(`${context}.${otherDateKey} is not valid for ${sourceKind}`);
+  }
+  const date = overlayDate(raw[dateKey], `${context}.${dateKey}`);
+  const datedOperation = dateKey === 'erratum_date'
+    ? { erratum_date: date }
+    : { review_date: date };
 
   if (operation === 'merge') {
-    assertKeys(raw, ['operation', 'textbook_json', 'label', 'erratum_date', 'patch'], context);
+    assertKeys(raw, ['operation', 'textbook_json', 'label', dateKey, 'patch'], context);
     return {
       operation,
       textbook_json: textbookJson,
       label,
-      erratum_date: date,
+      ...datedOperation,
       patch: parsePatch(raw.patch, `${context}.patch`)
     };
   }
 
   if (operation === 'append') {
-    assertKeys(raw, ['operation', 'textbook_json', 'label', 'erratum_date', 'entry'], context);
+    assertKeys(raw, ['operation', 'textbook_json', 'label', dateKey, 'entry'], context);
     const entry = parseEntry(raw.entry, `${context}.entry`);
     if (entry.label !== label) throw new Error(`${context}.entry.label must equal ${context}.label`);
     return {
       operation,
       textbook_json: textbookJson,
       label,
-      erratum_date: date,
+      ...datedOperation,
       entry
     };
   }
@@ -215,7 +227,13 @@ export function parseTextbookOverlay(
   assertKeys(raw, ['schema', 'source', 'operations'], sourceName);
   if (raw.schema !== overlaySchema) throw new Error(`${sourceName}.schema must be ${overlaySchema}`);
   const source = asRecord(raw.source, `${sourceName}.source`);
-  assertKeys(source, ['title', 'url'], `${sourceName}.source`);
+  assertKeys(source, ['kind', 'title', 'url'], `${sourceName}.source`);
+  const kind = source.kind ?? 'official_errata';
+  if (kind !== 'official_errata' && kind !== 'openga_clarification') {
+    throw new Error(
+      `${sourceName}.source.kind must be "official_errata" or "openga_clarification"`
+    );
+  }
   const title = text(source.title, `${sourceName}.source.title`);
   const url = text(source.url, `${sourceName}.source.url`);
   try {
@@ -228,9 +246,9 @@ export function parseTextbookOverlay(
   }
   return {
     schema: overlaySchema,
-    source: { title, url },
+    source: { kind, title, url },
     operations: raw.operations.map((operation, index) =>
-      parseOverlayOperation(operation, `${sourceName}.operations[${index}]`)
+      parseOverlayOperation(operation, `${sourceName}.operations[${index}]`, kind)
     )
   };
 }

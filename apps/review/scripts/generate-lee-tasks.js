@@ -12,15 +12,16 @@ const importRef = configuredImportRef ?? 'origin/import/smooth-manifolds-lee';
 const textbookZipPath =
   process.env.SMOOTH_MANIFOLDS_LEE_ZIP ??
   path.join(projectRoot, 'projects/smooth-manifolds-lee/sources/smooth-manifolds.zip');
-const textbookOverlayPath = path.join(
-  projectRoot,
-  'projects/smooth-manifolds-lee/sources/errata/ism-2e.json'
-);
+const textbookOverlayPaths = [
+  path.join(projectRoot, 'projects/smooth-manifolds-lee/sources/errata/ism-2e.json'),
+  path.join(projectRoot, 'projects/smooth-manifolds-lee/sources/clarifications/openga.json')
+];
 const jsonPrefix =
   'sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee';
 const taskDir = path.join(projectRoot, 'projects/smooth-manifolds-lee/tasks');
 const outputPath = path.join(taskDir, 'all.tasks.yaml');
 const reportPath = path.join(taskDir, 'generation-report.json');
+const formalAuditPath = path.join(taskDir, 'formal-audit.json');
 const previousTaskPaths = [outputPath, path.join(taskDir, 'section01.tasks.yaml')];
 
 function run(command, args, options = {}) {
@@ -85,15 +86,70 @@ function zipJsonEntries() {
     .sort();
 }
 
-function loadTextbookOverlay() {
-  const document = JSON.parse(fs.readFileSync(textbookOverlayPath, 'utf-8'));
-  if (
-    document.schema !== 'openga-review.textbook-overlay.v1' ||
-    !Array.isArray(document.operations)
-  ) {
-    throw new Error(`Invalid textbook overlay: ${textbookOverlayPath}`);
-  }
-  return document.operations;
+function isIsoCalendarDate(value) {
+  if (typeof value !== 'string') return false;
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return false;
+  const [year, month, day] = match.slice(1).map(Number);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  return parsed.getUTCFullYear() === year &&
+    parsed.getUTCMonth() === month - 1 &&
+    parsed.getUTCDate() === day;
+}
+
+function loadTextbookOverlays() {
+  const seenTargets = new Set();
+  const documents = textbookOverlayPaths.map((overlayPath, documentIndex) => {
+    const document = JSON.parse(fs.readFileSync(overlayPath, 'utf-8'));
+    const sourceKind = document.source?.kind ?? 'official_errata';
+    if (
+      document.schema !== 'openga-review.textbook-overlay.v1' ||
+      !document.source ||
+      !['official_errata', 'openga_clarification'].includes(sourceKind) ||
+      typeof document.source.title !== 'string' ||
+      typeof document.source.url !== 'string' ||
+      !document.source.url.startsWith('https://') ||
+      !Array.isArray(document.operations) ||
+      document.operations.length === 0
+    ) {
+      throw new Error(`Invalid textbook overlay: ${overlayPath}`);
+    }
+    const dateKey = sourceKind === 'official_errata' ? 'erratum_date' : 'review_date';
+    const otherDateKey = sourceKind === 'official_errata' ? 'review_date' : 'erratum_date';
+    for (const [operationIndex, operation] of document.operations.entries()) {
+      if (
+        !['merge', 'append'].includes(operation.operation) ||
+        typeof operation.textbook_json !== 'string' ||
+        typeof operation.label !== 'string' ||
+        !isIsoCalendarDate(operation[dateKey]) ||
+        operation[otherDateKey] !== undefined
+      ) {
+        throw new Error(
+          `Invalid ${sourceKind} operation ${documentIndex}:${operationIndex} in ${overlayPath}`
+        );
+      }
+      const target = `${operation.textbook_json}\0${operation.label}`;
+      if (seenTargets.has(target)) {
+        throw new Error(
+          `Duplicate textbook overlay target: ${operation.textbook_json}#${operation.label}`
+        );
+      }
+      seenTargets.add(target);
+    }
+    return {
+      path: overlayPath,
+      source: { ...document.source, kind: sourceKind },
+      operations: document.operations
+    };
+  });
+  const operations = documents.flatMap((document, documentIndex) =>
+    document.operations.map((operation, operationIndex) => ({
+      operationKey: `${documentIndex}:${operationIndex}`,
+      sourceKind: document.source.kind,
+      operation
+    }))
+  );
+  return { documents, operations };
 }
 
 function applyTextbookEntryPatch(entry, patch, context) {
@@ -128,9 +184,9 @@ function applyTextbookEntryPatch(entry, patch, context) {
   return result;
 }
 
-function applyTextbookOverlay(entries, entryPath, operations, appliedOperations) {
+function applyTextbookOverlays(entries, entryPath, overlayOperations, appliedOperations) {
   const result = entries.map((entry) => ({ ...entry }));
-  operations.forEach((operation, operationIndex) => {
+  overlayOperations.forEach(({ operation, operationKey, sourceKind }) => {
     if (operation.textbook_json !== entryPath) return;
     const matches = result
       .map((entry, index) => (entry.label === operation.label ? index : -1))
@@ -139,7 +195,7 @@ function applyTextbookOverlay(entries, entryPath, operations, appliedOperations)
       result[matches[0]] = applyTextbookEntryPatch(
         result[matches[0]],
         operation.patch,
-        `${entryPath}#${operation.label}`
+        `${sourceKind} ${entryPath}#${operation.label}`
       );
     } else if (operation.operation === 'append' && matches.length === 0) {
       if (operation.entry?.label !== operation.label) {
@@ -151,21 +207,20 @@ function applyTextbookOverlay(entries, entryPath, operations, appliedOperations)
         `Overlay ${operation.operation} for ${entryPath}#${operation.label} matched ${matches.length} entries`
       );
     }
-    appliedOperations.add(operationIndex);
+    appliedOperations.add(operationKey);
   });
   return result;
 }
 
-function loadTextbookSections() {
+function loadTextbookSections(overlayOperations) {
   const sections = new Map();
-  const overlayOperations = loadTextbookOverlay();
   const appliedOperations = new Set();
   for (const entryPath of zipJsonEntries()) {
     const match = entryPath.match(/section(\d+)\.json$/);
     if (!match) continue;
     const sectionNumber = Number(match[1]);
     const raw = run('unzip', ['-p', textbookZipPath, entryPath]);
-    const entries = applyTextbookOverlay(
+    const entries = applyTextbookOverlays(
       JSON.parse(raw),
       entryPath,
       overlayOperations,
@@ -179,9 +234,10 @@ function loadTextbookSections() {
   }
   if (appliedOperations.size !== overlayOperations.length) {
     const missing = overlayOperations
-      .map((operation, index) => ({ operation, index }))
-      .filter(({ index }) => !appliedOperations.has(index))
-      .map(({ operation }) => `${operation.textbook_json}#${operation.label}`);
+      .filter(({ operationKey }) => !appliedOperations.has(operationKey))
+      .map(({ sourceKind, operation }) =>
+        `${sourceKind}:${operation.textbook_json}#${operation.label}`
+      );
     throw new Error(`Textbook overlay targets were not applied: ${missing.join(', ')}`);
   }
   return sections;
@@ -1060,6 +1116,70 @@ function buildDataset(candidates, sections, previous, dependencyGraph) {
   };
 }
 
+function loadAndValidateFormalAudit(dataset) {
+  const audit = JSON.parse(fs.readFileSync(formalAuditPath, 'utf-8'));
+  if (
+    audit.schema !== 'openga-review.formal-audit.v1' ||
+    audit.project !== 'smooth-manifolds-lee' ||
+    typeof audit.importRef !== 'string' ||
+    typeof audit.importCommit !== 'string' ||
+    !isIsoCalendarDate(audit.reviewDate) ||
+    !Array.isArray(audit.confirmedFalsePositives) ||
+    !Array.isArray(audit.importOnlyCandidatesNotDowngraded)
+  ) {
+    throw new Error(`Invalid formal review audit: ${formalAuditPath}`);
+  }
+  const currentImportCommit = run('git', ['rev-parse', `${importReadRef}^{commit}`]).trim();
+  if (audit.importCommit !== currentImportCommit) {
+    throw new Error(
+      `Formal review audit is for ${audit.importCommit}, but ${importReadRef} is ${currentImportCommit}`
+    );
+  }
+
+  const leafTasks = dataset.tasks.filter((task) => task.kind === 'leaf');
+  const taskById = new Map(leafTasks.map((task) => [task.id, task]));
+  const confirmedIds = audit.confirmedFalsePositives.map((item) => item.taskId);
+  const candidateIds = audit.importOnlyCandidatesNotDowngraded;
+  if (new Set(confirmedIds).size !== confirmedIds.length) {
+    throw new Error('Formal review audit contains duplicate confirmed task IDs');
+  }
+  if (new Set(candidateIds).size !== candidateIds.length) {
+    throw new Error('Formal review audit contains duplicate import-only candidate IDs');
+  }
+  for (const taskId of confirmedIds) {
+    const task = taskById.get(taskId);
+    if (!task || task.checks?.formal_review !== 'pending') {
+      throw new Error(`Confirmed formal audit finding must remain pending: ${taskId}`);
+    }
+  }
+  for (const taskId of candidateIds) {
+    const task = taskById.get(taskId);
+    if (!task || task.checks?.formal_review !== 'done') {
+      throw new Error(`Import-only formal audit candidate is not done: ${taskId}`);
+    }
+  }
+
+  const formalDone = leafTasks.filter((task) => task.checks?.formal_review === 'done').length;
+  const formalPending = leafTasks.filter((task) => task.checks?.formal_review === 'pending').length;
+  if (
+    audit.reviewTotalsAfterCorrection?.formalDone !== formalDone ||
+    audit.reviewTotalsAfterCorrection?.formalPending !== formalPending
+  ) {
+    throw new Error(
+      `Formal review audit totals are stale: expected ${formalDone}/${formalPending}`
+    );
+  }
+
+  return {
+    path: displayPath(formalAuditPath),
+    reviewDate: audit.reviewDate,
+    importCommit: audit.importCommit,
+    confirmedFalsePositiveCount: confirmedIds.length,
+    importOnlyCandidateCount: candidateIds.length,
+    exactGetAxiomsStatus: audit.exactGetAxiomsFollowUp?.status ?? 'unknown'
+  };
+}
+
 function report(
   candidates,
   sections,
@@ -1067,6 +1187,8 @@ function report(
   nestedAuxLean,
   attachedAuxLean,
   unattachedNestedAuxLean,
+  textbookOverlayDocuments,
+  formalReviewAudit,
   textbookDependencyGraph
 ) {
   const pairedCandidates = candidates.filter((item) => item.leanPath !== null);
@@ -1099,7 +1221,14 @@ function report(
   return {
     importRef,
     textbookZipPath: displayPath(textbookZipPath),
-    textbookOverlayPath: displayPath(textbookOverlayPath),
+    textbookOverlayPaths: textbookOverlayDocuments.map((document) => displayPath(document.path)),
+    textbookOverlaySources: textbookOverlayDocuments.map((document) => ({
+      kind: document.source.kind,
+      title: document.source.title,
+      url: document.source.url,
+      operationCount: document.operations.length
+    })),
+    formalReviewAudit,
     generatedReviewTasks: candidates.length,
     leanPairedReviewTasks: pairedCandidates.length,
     textbookOnlyReviewTasks: textbookOnlyCandidates.length,
@@ -1116,10 +1245,11 @@ function report(
     textbookDependencyGraph,
     notes: [
       'Auxiliary Lean files are attached to their canonical owner task when a matching owner exists.',
-      'Tracked official errata overlays are applied before textbook labels are matched or generated.',
+      'Tracked official errata and separately attributed OpenGA clarifications are applied before textbook labels are matched or generated.',
       'Top-level Lean files without a JSON label are attached to the earliest paired task in the same section that directly imports them; otherwise they remain unmatched.',
       'JSON entries without matching Lean files inside imported chapters are generated as textbook-only review tasks without synthetic Lean paths.',
       'New textbook-only tasks start with both checks pending; formal review remains visible after mathematical review is completed.',
+      'The transitive sorryAx audit is pinned to the exact import commit; import closure alone does not downgrade a task without a declaration-reference path.',
       'Textbook dependencies resolve globally across imported chapters; trailing part references such as Example 2.13(f) fall back to the owner entry only when no exact label exists.',
       'Terse statement-to-problem proof-location backlinks are reported but excluded from depends_on so that statement/problem pairs do not form cycles.',
       'External appendix or unimported-chapter references are reported but are not emitted as dangling task dependencies.',
@@ -1129,7 +1259,8 @@ function report(
 }
 
 fs.mkdirSync(taskDir, { recursive: true });
-const sections = loadTextbookSections();
+const textbookOverlays = loadTextbookOverlays();
+const sections = loadTextbookSections(textbookOverlays.operations);
 const previous = previousTasksById();
 const {
   candidates,
@@ -1140,6 +1271,7 @@ const {
 } = buildCandidates(sections);
 const textbookDependencyGraph = buildTextbookDependencyGraph(candidates, sections);
 const dataset = buildDataset(candidates, sections, previous, textbookDependencyGraph);
+const formalReviewAudit = loadAndValidateFormalAudit(dataset);
 const yamlText = dump(dataset, { indent: 2, lineWidth: -1, seqNoIndent: true, sortKeys: false });
 const reportText = JSON.stringify(
   report(
@@ -1149,6 +1281,8 @@ const reportText = JSON.stringify(
     nestedAuxLean,
     attachedAuxLean,
     unattachedNestedAuxLean,
+    textbookOverlays.documents,
+    formalReviewAudit,
     textbookDependencyGraph.diagnostics
   ),
   null,

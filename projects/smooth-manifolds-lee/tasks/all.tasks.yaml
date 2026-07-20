@@ -1730,6 +1730,7 @@ tasks:
   depends_on: []
   unlocks:
   - sml.ch1.sec5.exercise-1-39
+  - sml.ch5.sec29.theorem-5-11
   dcref: lee-sm:proposition:1.38
   chapter: 1
   title: Proposition 1.38
@@ -8989,9 +8990,9 @@ tasks:
   status: todo
   checks:
     informal_review: done
-    formal_review: done
+    formal_review: pending
   review_notes:
-  - 数学：嵌入 k-子流形等价于每点存在将其拉直成 k-切片的坐标图，是标准局部切片判据；Lean：`local_slice_criterion_for_embedded_submanifold` 双向构造拓扑、图册和光滑嵌入，主辅文件无占位且有新鲜构建产物。
+  - 数学：嵌入 k-子流形等价于每点存在将其拉直成 k-切片的坐标图，是标准局部切片判据；Lean：主文件及辅助文件没有直接 `sorry`，但 `LocalNormalFormAPI` 中两个包装定理分别复用了 Chapter 4 Theorem 4.12 中仍以 `sorry` 证明的 `rank_normal_form_apply_of_lt` 和 `smooth_immersion_local_inclusion_form`，形成传递性 `sorryAx` 依赖，故 formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section29.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Theorem_5_8.lean
@@ -9106,7 +9107,8 @@ tasks:
 - id: sml.ch5.sec29.theorem-5-11
   kind: leaf
   parent: sml.ch5.sec29
-  depends_on: []
+  depends_on:
+  - sml.ch1.sec5.proposition-1-38
   unlocks:
   - sml.ch5.sec37.problem-5-2
   dcref: lee-sm:theorem:5.11
@@ -9115,10 +9117,10 @@ tasks:
   description: Textbook source review for Theorem 5.11; no imported Lean file is currently paired.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：对 n≥1，边界是无边界的 (n−1) 维 properly embedded 子流形，结论标准；但本书允许 n=0，此时边界为空而“−1 维流形”未定义，应补 n≥1，或把 n=0 的空边界单独表述。Lean：没有 Theorem_5_11.lean 或可配对辅助文件。
+  - 数学：Lee 原文遗漏 n=0，此时“−1 维流形”未定义；独立的 OpenGA clarification（非 Lee 原文、非官方勘误）现已明确拆分 n>0 的 (n−1) 维结论与 n=0 时的空边界，因此澄清后的表述正确。Lean：没有 Theorem_5_11.lean；后续应按 n=0 与环境维数 n+1 两支形式化，不能用 Nat 的 n−1 掩盖零维边界问题。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section29.json
   editable: []

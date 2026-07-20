@@ -21,25 +21,29 @@ export type TextbookEntryPatch = {
   proof?: string | null;
 };
 
-export type TextbookOverlayOperation =
+type TextbookOverlayDate =
+  | { erratum_date: string; review_date?: never }
+  | { review_date: string; erratum_date?: never };
+
+export type TextbookOverlayOperation = TextbookOverlayDate & (
   | {
       operation: 'merge';
       textbook_json: string;
       label: string;
-      erratum_date: string;
       patch: TextbookEntryPatch;
     }
   | {
       operation: 'append';
       textbook_json: string;
       label: string;
-      erratum_date: string;
       entry: TextbookEntry & { label: string };
-    };
+    }
+);
 
 export type TextbookOverlayDocument = {
   schema: 'openga-review.textbook-overlay.v1';
   source: {
+    kind: 'official_errata' | 'openga_clarification';
     title: string;
     url: string;
   };
