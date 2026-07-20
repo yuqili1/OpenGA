@@ -12,6 +12,8 @@
     "semanticDesignBeforeProof": 3,
     "lowRiskCompleteCandidates": 6,
     "lowRiskPartialCandidates": 3,
+    "verifiedLowRiskCandidates": 6,
+    "uncompiledLowRiskCandidates": 3,
     "byTier": {
       "A_low_risk_complete_candidate": 6,
       "B_high_leverage_owner": 27,
@@ -84,9 +86,9 @@
   ],
   "orderingPolicy": [
     "For any queued task with a semantic-coverage finding, repair the statement or coverage design before attempting its proof.",
-    "A: uncompiled low-risk proposals that could remove every direct sorry in their task.",
+    "A: low-risk candidates that could remove every direct sorry in their task.",
     "B: owners with at least two reviewed downstream tasks, at least two pending textbook-reference descendants, or at least four pending direct source-module importers.",
-    "C: remaining uncompiled low-risk proposals that remove only part of a task.",
+    "C: remaining low-risk candidates that remove only part of a task.",
     "D: owners with one reviewed downstream task, one pending reference-graph descendant, or one pending direct source-module importer.",
     "E: remaining direct-sorry tasks with no currently mapped downstream task.",
     "Within a tier, sort by reviewed downstream tasks, pending reference descendants, pending source importers, then fewer direct sorry tokens."
@@ -96,7 +98,7 @@
     "The unlock graph represents reviewed textbook references; it does not certify Lean proof dependencies or sorryAx propagation.",
     "Direct source-module importers are a coverage signal only; importing a module does not prove use of one of its sorry-backed declarations.",
     "Reviewed downstream links are source findings recorded in formal-pending-review.json and carry their own evidence kind.",
-    "Every low-risk patch remains proposal_uncompiled until Lean 4.30.0 compilation and exact axioms checks succeed."
+    "A low-risk patch is verified_compiled_no_sorryAx only after Lean 4.30.0 compilation and exact declaration-level axioms checks succeed; all others remain proposal_uncompiled."
   ],
   "queue": [
     {
@@ -139,7 +141,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_3.lean",
@@ -150,7 +152,8 @@
         ],
         "scope": "all direct sorry tokens in the task",
         "proposal": "Use definitional equality for `isRegularValue_iff`; prove the two class iff statements by projecting and rebuilding their fields.",
-        "status": "proposal_uncompiled"
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 1
     },
@@ -191,7 +194,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_3.lean",
@@ -202,8 +205,9 @@
           "Set.isLocalDefiningFunctionOn_iff"
         ],
         "scope": "all direct sorry tokens in the task",
-        "proposal": "Unpack and rebuild the Nonempty structure witnesses; derive the function variants from the corresponding map variants by simplification.",
-        "status": "proposal_uncompiled"
+        "proposal": "Unpack and rebuild each Nonempty structure witness directly.",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 2
     },
@@ -236,7 +240,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch3.sec18.definition-3-18-extra-2",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_2.lean",
@@ -244,8 +248,9 @@
           "smooth_germ_derivation_at_map_mul"
         ],
         "scope": "all direct sorry tokens in the task",
-        "proposal": "Use `by simpa using v.leibniz f g`, matching the existing Derivation.leibniz API usage.",
-        "status": "proposal_uncompiled"
+        "proposal": "Use `by exact v.leibniz f g`, matching the existing Derivation.leibniz API directly.",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 3
     },
@@ -274,7 +279,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean",
@@ -282,8 +287,9 @@
           "smooth_manifold_smooth_structure"
         ],
         "scope": "all direct sorry tokens in the task",
-        "proposal": "Try `by rfl`; if unfolding is required, use `simp [IsManifold.maximalAtlas]`.",
-        "status": "proposal_uncompiled"
+        "proposal": "Use `by rfl`; definitional equality closes the theorem.",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 4
     },
@@ -312,7 +318,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch1.sec4.example-1-22",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_22.lean",
@@ -321,7 +327,8 @@
         ],
         "scope": "all direct sorry tokens in the task",
         "proposal": "Use the canonical Euclidean-space manifold instance via `by infer_instance`.",
-        "status": "proposal_uncompiled"
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 5
     },
@@ -350,7 +357,7 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "compile_low_risk_proposal",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Remark_2_8_extra_1.lean",
@@ -359,7 +366,8 @@
         ],
         "scope": "all direct sorry tokens in the task",
         "proposal": "Use `by rfl`; the theorem restates the definition verbatim.",
-        "status": "proposal_uncompiled"
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
       "rank": 6
     },

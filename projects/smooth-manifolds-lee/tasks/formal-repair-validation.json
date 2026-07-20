@@ -1,0 +1,171 @@
+{
+  "schema": "openga-review.formal-repair-validation.v1",
+  "project": "smooth-manifolds-lee",
+  "importRef": "origin/import/smooth-manifolds-lee",
+  "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
+  "leanToolchain": "leanprover/lean4:v4.30.0",
+  "mathlibCommit": "c5ea00351c28e24afc9f0f84379aa41082b1188f",
+  "validationDate": "2026-07-20",
+  "sourceBranchPolicy": "read_only",
+  "environment": {
+    "leanVersion": "4.30.0",
+    "leanCommit": "d024af099ca4bf2c86f649261ebf59565dc8c622",
+    "lakeVersion": "5.0.0-src+d024af0",
+    "leanReleaseAssetSha256": "4dad74141c2c119ca1aa626656be83b8e14238afba97271fd7bf1eb3f081b319",
+    "mathlibCacheFiles": 8459
+  },
+  "summary": {
+    "validatedCandidates": 6,
+    "sourceFiles": 6,
+    "directSorryTokensBefore": 11,
+    "directSorryTokensAfter": 0,
+    "changedDeclarations": 11,
+    "declarationsWithoutSorryAx": 11
+  },
+  "methods": [
+    "Verify every source-file SHA-256 against the pinned import commit before patching.",
+    "Apply each proof only in an isolated temporary copy; do not modify the imported source branch.",
+    "Compile every changed module with Lean 4.30.0 and the exact mathlib revision and package cache resolved by the imported Lake manifest, writing a fresh temporary olean.",
+    "Import all six fresh oleans together and run #print axioms for every changed declaration.",
+    "Accept a candidate only when compilation exits successfully, no direct sorry remains in its source file, and no printed axioms list contains sorryAx."
+  ],
+  "candidates": [
+    {
+      "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean",
+      "module": "SmoothManifoldsLee.Chap01.Sec01_02.Definition_1_2_extra_5",
+      "sourceSha256": "37caf7f9337974136d688d8656c69dc6f50014f72e4502ad722d0e6687a22e4e",
+      "patchedSourceSha256": "1fb139d96018efd1fd2684b5d4582201bc713a1a11e74ed0e5fdc0210d3e3a54",
+      "directSorryTokens": {"before": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "smooth_manifold_smooth_structure",
+          "proof": "by\n  rfl",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-22",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_22.lean",
+      "module": "SmoothManifoldsLee.Chap01.Sec01_04.Example_1_22",
+      "sourceSha256": "4248f046502301c602742cd5c5b2a153fa257f14f85b084b951864cae071d35f",
+      "patchedSourceSha256": "165a71bac124fb46de7e6ebb73ca5166b555c39a7dce9c97aed2e83e2137b8fb",
+      "directSorryTokens": {"before": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "euclideanSpace_standard_smooth_structure",
+          "proof": "by\n  infer_instance",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_08/Remark_2_8_extra_1.lean",
+      "module": "SmoothManifoldsLee.Chap02.Sec02_08.Remark_2_8_extra_1",
+      "sourceSha256": "f8eeb9f391cfa6d782b60f7edf7d1f56be600af8db62b934c1587023b8ccb724",
+      "patchedSourceSha256": "998a395cd355a8c5c3eebd48f4863679f1729da1c400ba79859a30ba792246ad",
+      "directSorryTokens": {"before": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "is_book_function_iff",
+          "proof": "by\n  rfl",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec18.definition-3-18-extra-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_2.lean",
+      "module": "SmoothManifoldsLee.Chap03.Sec03_18.Definition_3_18_extra_2",
+      "sourceSha256": "e1be41cb503c4a7c9a145bcbecbd594e127a458476728690beb43c67f54d8fd2",
+      "patchedSourceSha256": "f55a9df3eb32e707fe541ebd62cc3b7b246e3417be810dd8a23660ad81124673",
+      "directSorryTokens": {"before": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "smooth_germ_derivation_at_map_mul",
+          "proof": "by\n  exact v.leibniz f g",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Definition_5_30_extra_3.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_30.Definition_5_30_extra_3",
+      "sourceSha256": "c47500f6fd524add000647425498411a3804d31577cbd7e1c3a550d0c20812bd",
+      "patchedSourceSha256": "e6aa98a7a2f52dd1d9c818dae6da80a0f46bb349853b36ce5f3a01212f08766e",
+      "directSorryTokens": {"before": 4, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "Set.isDefiningMap_iff",
+          "proof": "by\n  constructor\n  · rintro ⟨h⟩\n    exact ⟨h.level, h.contMDiff, h.isLevelSet, h.surj_mfderiv⟩\n  · rintro ⟨c, hΦ, hS, hsurj⟩\n    exact ⟨⟨c, hΦ, hS, hsurj⟩⟩",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "Set.isDefiningFunction_iff",
+          "proof": "by\n  constructor\n  · rintro ⟨h⟩\n    exact ⟨h.level, h.contMDiff, h.isLevelSet, h.surj_mfderiv⟩\n  · rintro ⟨c, hf, hS, hsurj⟩\n    exact ⟨⟨c, hf, hS, hsurj⟩⟩",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "Set.isLocalDefiningMapOn_iff",
+          "proof": "by\n  constructor\n  · rintro ⟨h⟩\n    exact ⟨h.level, h.contMDiff, h.isLevelSet, h.surj_mfderiv⟩\n  · rintro ⟨c, hΦ, hS, hsurj⟩\n    exact ⟨⟨c, hΦ, hS, hsurj⟩⟩",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "Set.isLocalDefiningFunctionOn_iff",
+          "proof": "by\n  constructor\n  · rintro ⟨h⟩\n    exact ⟨h.level, h.contMDiff, h.isLevelSet, h.surj_mfderiv⟩\n  · rintro ⟨c, hf, hS, hsurj⟩\n    exact ⟨⟨c, hf, hS, hsurj⟩⟩",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_3.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_36.Definition_5_36_extra_3",
+      "sourceSha256": "53148761e830dc7bc14577c9902156f95bb84b36a0541986b29ba1884df21880",
+      "patchedSourceSha256": "4f0200e493e660f5e4efe9508ceccc1534be95b3f3ced2a13ef1affeb3533e77",
+      "directSorryTokens": {"before": 3, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "declarations": [
+        {
+          "name": "Manifold.isRegularValue_iff",
+          "proof": "Iff.rfl",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "isRegularSublevelSet_iff",
+          "proof": "by\n  constructor\n  · intro h\n    exact h.exists_regular_value\n  · intro h\n    exact ⟨h⟩",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "isDefiningFunction_iff",
+          "proof": "by\n  constructor\n  · intro h\n    exact ⟨h.contMDiff, h.isRegularSublevelSet⟩\n  · rintro ⟨hf, hD⟩\n    exact ⟨hf, hD⟩",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
+    "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
+    "The standard axioms propext, Classical.choice, and Quot.sound are present; no changed declaration depends on sorryAx."
+  ]
+}

@@ -323,9 +323,11 @@ const queue = directSorryTasks.map((triageTask) => {
     },
     firstAction: semanticCoverageFinding
       ? 'resolve_statement_or_coverage_before_proof'
-      : lowRiskCandidate
-        ? 'compile_low_risk_proposal'
-        : 'scope_proof_and_dependencies',
+      : lowRiskCandidate?.status === 'verified_compiled_no_sorryAx'
+        ? 'prepare_verified_patch_for_source_branch'
+        : lowRiskCandidate
+          ? 'compile_low_risk_proposal'
+          : 'scope_proof_and_dependencies',
     lowRiskCandidate
   };
 });
@@ -381,6 +383,12 @@ const report = {
       (task) => task.lowRiskCandidate &&
         task.lowRiskCandidate.scope !== 'all direct sorry tokens in the task'
     ).length,
+    verifiedLowRiskCandidates: queue.filter(
+      (task) => task.lowRiskCandidate?.status === 'verified_compiled_no_sorryAx'
+    ).length,
+    uncompiledLowRiskCandidates: queue.filter(
+      (task) => task.lowRiskCandidate?.status === 'proposal_uncompiled'
+    ).length,
     byTier: Object.fromEntries(
       tierOrder.map((tier) => [tier, queue.filter((task) => task.tier === tier).length])
     )
@@ -398,9 +406,9 @@ const report = {
   }),
   orderingPolicy: [
     'For any queued task with a semantic-coverage finding, repair the statement or coverage design before attempting its proof.',
-    'A: uncompiled low-risk proposals that could remove every direct sorry in their task.',
+    'A: low-risk candidates that could remove every direct sorry in their task.',
     'B: owners with at least two reviewed downstream tasks, at least two pending textbook-reference descendants, or at least four pending direct source-module importers.',
-    'C: remaining uncompiled low-risk proposals that remove only part of a task.',
+    'C: remaining low-risk candidates that remove only part of a task.',
     'D: owners with one reviewed downstream task, one pending reference-graph descendant, or one pending direct source-module importer.',
     'E: remaining direct-sorry tasks with no currently mapped downstream task.',
     'Within a tier, sort by reviewed downstream tasks, pending reference descendants, pending source importers, then fewer direct sorry tokens.'
@@ -410,7 +418,7 @@ const report = {
     'The unlock graph represents reviewed textbook references; it does not certify Lean proof dependencies or sorryAx propagation.',
     'Direct source-module importers are a coverage signal only; importing a module does not prove use of one of its sorry-backed declarations.',
     'Reviewed downstream links are source findings recorded in formal-pending-review.json and carry their own evidence kind.',
-    'Every low-risk patch remains proposal_uncompiled until Lean 4.30.0 compilation and exact axioms checks succeed.'
+    'A low-risk patch is verified_compiled_no_sorryAx only after Lean 4.30.0 compilation and exact declaration-level axioms checks succeed; all others remain proposal_uncompiled.'
   ],
   queue
 };

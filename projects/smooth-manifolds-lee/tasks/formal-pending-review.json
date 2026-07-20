@@ -10,7 +10,7 @@
     "Review every formal-pending task against its textbook statement, applied errata, review notes, and paired Lean source at the pinned import commit.",
     "Record mathematical-statement or coverage problems separately from direct sorry tokens.",
     "Treat a dependency as unclosed only when the task source or cached build evidence identifies an unresolved owner; import closure alone is not evidence of sorryAx.",
-    "Keep all suggested patches unverified until they compile with the pinned Lean toolchain and their declarations pass an exact axioms check."
+    "Mark a suggested patch as verified only after it compiles with the pinned Lean toolchain and every changed declaration passes an exact axioms check without sorryAx."
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
@@ -18,7 +18,7 @@
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
     "lowRiskPatchCandidates": 10,
-    "compiledPatchCandidates": 0
+    "compiledPatchCandidates": 6
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -394,15 +394,17 @@
       "declarations": ["is_book_function_iff"],
       "scope": "all direct sorry tokens in the task",
       "proposal": "Use `by rfl`; the theorem restates the definition verbatim.",
-      "status": "proposal_uncompiled"
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
       "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_02/Definition_1_2_extra_5.lean",
       "declarations": ["smooth_manifold_smooth_structure"],
       "scope": "all direct sorry tokens in the task",
-      "proposal": "Try `by rfl`; if unfolding is required, use `simp [IsManifold.maximalAtlas]`.",
-      "status": "proposal_uncompiled"
+      "proposal": "Use `by rfl`; definitional equality closes the theorem.",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
       "taskId": "sml.ch1.sec4.example-1-22",
@@ -410,7 +412,8 @@
       "declarations": ["euclideanSpace_standard_smooth_structure"],
       "scope": "all direct sorry tokens in the task",
       "proposal": "Use the canonical Euclidean-space manifold instance via `by infer_instance`.",
-      "status": "proposal_uncompiled"
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
       "taskId": "sml.ch1.sec5.theorem-1-37",
@@ -425,8 +428,9 @@
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_18/Definition_3_18_extra_2.lean",
       "declarations": ["smooth_germ_derivation_at_map_mul"],
       "scope": "all direct sorry tokens in the task",
-      "proposal": "Use `by simpa using v.leibniz f g`, matching the existing Derivation.leibniz API usage.",
-      "status": "proposal_uncompiled"
+      "proposal": "Use `by exact v.leibniz f g`, matching the existing Derivation.leibniz API directly.",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
       "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
@@ -438,7 +442,8 @@
       ],
       "scope": "all direct sorry tokens in the task",
       "proposal": "Use definitional equality for `isRegularValue_iff`; prove the two class iff statements by projecting and rebuilding their fields.",
-      "status": "proposal_uncompiled"
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
       "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
@@ -450,8 +455,9 @@
         "Set.isLocalDefiningFunctionOn_iff"
       ],
       "scope": "all direct sorry tokens in the task",
-      "proposal": "Unpack and rebuild the Nonempty structure witnesses; derive the function variants from the corresponding map variants by simplification.",
-      "status": "proposal_uncompiled"
+      "proposal": "Unpack and rebuild each Nonempty structure witness directly.",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
       "taskId": "sml.ch5.sec28.proposition-5-4",
@@ -483,7 +489,7 @@
     }
   ],
   "requiredCandidateValidation": [
-    "Compile the changed module with `lake env lean` under Lean 4.30.0.",
+    "Compile the changed module under Lean 4.30.0 with the exact Lake-resolved dependency environment.",
     "Run `#print axioms` for every changed declaration and reject any result containing sorryAx.",
     "Re-run the commit-pinned formal triage and the project review generator before changing formal_review status."
   ]

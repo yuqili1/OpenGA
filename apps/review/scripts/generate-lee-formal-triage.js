@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
@@ -10,6 +11,7 @@ const projectDir = path.join(projectRoot, 'projects/smooth-manifolds-lee');
 const taskPath = path.join(projectDir, 'tasks/all.tasks.yaml');
 const formalAuditPath = path.join(projectDir, 'tasks/formal-audit.json');
 const humanReviewPath = path.join(projectDir, 'tasks/formal-pending-review.json');
+const repairValidationPath = path.join(projectDir, 'tasks/formal-repair-validation.json');
 const outputPath = path.join(projectDir, 'tasks/formal-pending-triage.json');
 const metadataImportRef = 'origin/import/smooth-manifolds-lee';
 const importedProjectToolchainPath = 'staging/SmoothManifoldsLee/lean-toolchain';
@@ -136,12 +138,16 @@ function analyzeLeanSource(source) {
 const dataset = load(fs.readFileSync(taskPath, 'utf-8'));
 const formalAudit = JSON.parse(fs.readFileSync(formalAuditPath, 'utf-8'));
 const humanReview = JSON.parse(fs.readFileSync(humanReviewPath, 'utf-8'));
+const repairValidation = JSON.parse(fs.readFileSync(repairValidationPath, 'utf-8'));
 const importReadRef = resolveImportReadRef();
 const importCommit = run('git', ['rev-parse', `${importReadRef}^{commit}`]).trim();
 const importedProjectToolchain = run(
   'git',
   ['show', `${importReadRef}:${importedProjectToolchainPath}`]
 ).trim();
+const importedManifest = JSON.parse(
+  run('git', ['show', `${importReadRef}:staging/SmoothManifoldsLee/lake-manifest.json`])
+);
 if (formalAudit.importCommit !== importCommit) {
   throw new Error(
     `Formal audit is for ${formalAudit.importCommit}, but ${importReadRef} is ${importCommit}`
@@ -188,6 +194,44 @@ if (humanReview.summary.formalPendingTasksReviewed !== pendingTasks.length) {
   throw new Error('Human-review task total does not match the formal-pending queue');
 }
 
+if (repairValidation.schema !== 'openga-review.formal-repair-validation.v1') {
+  throw new Error(`Unsupported repair-validation schema: ${repairValidation.schema}`);
+}
+if (repairValidation.project !== 'smooth-manifolds-lee') {
+  throw new Error(`Unexpected repair-validation project: ${repairValidation.project}`);
+}
+if (
+  repairValidation.importRef !== metadataImportRef ||
+  repairValidation.importCommit !== importCommit
+) {
+  throw new Error('Repair validation does not match the resolved import commit');
+}
+if (
+  repairValidation.validationDate !== humanReview.reviewDate ||
+  repairValidation.leanToolchain !== importedProjectToolchain
+) {
+  throw new Error('Repair validation does not match the review date or Lean toolchain');
+}
+if (repairValidation.sourceBranchPolicy !== 'read_only') {
+  throw new Error('Repair validation must preserve the imported source branch as read-only');
+}
+const importedMathlib = importedManifest.packages?.find((pkg) => pkg.name === 'mathlib');
+if (!importedMathlib || repairValidation.mathlibCommit !== importedMathlib.rev) {
+  throw new Error('Repair validation does not match the mathlib revision in lake-manifest.json');
+}
+const leanVersionMatch = importedProjectToolchain.match(/^leanprover\/lean4:v(.+)$/);
+if (
+  !leanVersionMatch ||
+  repairValidation.environment?.leanVersion !== leanVersionMatch[1] ||
+  !/^[0-9a-f]{40}$/.test(repairValidation.environment?.leanCommit ?? '') ||
+  typeof repairValidation.environment?.lakeVersion !== 'string' ||
+  !/^[0-9a-f]{64}$/.test(repairValidation.environment?.leanReleaseAssetSha256 ?? '') ||
+  !Number.isInteger(repairValidation.environment?.mathlibCacheFiles) ||
+  repairValidation.environment.mathlibCacheFiles <= 0
+) {
+  throw new Error('Repair validation has invalid Lean environment metadata');
+}
+
 function validateGroupedFindingIds(sectionName) {
   const groups = humanReview[sectionName]?.byChapter;
   if (!Array.isArray(groups)) throw new Error(`${sectionName}.byChapter must be an array`);
@@ -218,15 +262,32 @@ if (dependencyFindingIds.length !== humanReview.summary.dependencyOrBuildFinding
   throw new Error('Dependency/build finding count does not match its summary');
 }
 
+const expectedRepairValidationPath = path.relative(projectRoot, repairValidationPath);
+const supportedCandidateStatuses = new Set([
+  'proposal_uncompiled',
+  'verified_compiled_no_sorryAx'
+]);
 const patchCandidateIds = [];
+const verifiedPatchCandidates = new Map();
 for (const candidate of humanReview.lowRiskPatchCandidates) {
   const task = pendingTasksById.get(candidate.taskId);
   if (!task) throw new Error(`Patch candidate references non-pending task ${candidate.taskId}`);
   if (!taskLeanFiles(task).includes(candidate.sourceFile)) {
     throw new Error(`Patch candidate source is not paired with ${candidate.taskId}`);
   }
-  if (candidate.status !== 'proposal_uncompiled') {
+  if (!supportedCandidateStatuses.has(candidate.status)) {
     throw new Error(`Patch candidate ${candidate.taskId} has an unsupported status`);
+  }
+  if (candidate.status === 'verified_compiled_no_sorryAx') {
+    if (candidate.scope !== 'all direct sorry tokens in the task') {
+      throw new Error(`Verified patch candidate ${candidate.taskId} must cover every direct sorry`);
+    }
+    if (candidate.validationEvidence !== expectedRepairValidationPath) {
+      throw new Error(`Verified patch candidate ${candidate.taskId} has no matching evidence path`);
+    }
+    verifiedPatchCandidates.set(candidate.taskId, candidate);
+  } else if (candidate.validationEvidence !== undefined) {
+    throw new Error(`Uncompiled patch candidate ${candidate.taskId} must not cite validation evidence`);
   }
   patchCandidateIds.push(candidate.taskId);
 }
@@ -236,8 +297,115 @@ if (new Set(patchCandidateIds).size !== patchCandidateIds.length) {
 if (patchCandidateIds.length !== humanReview.summary.lowRiskPatchCandidates) {
   throw new Error('Low-risk patch-candidate count does not match its summary');
 }
-if (humanReview.summary.compiledPatchCandidates !== 0) {
-  throw new Error('Uncompiled review proposals must not be reported as compiled patches');
+if (humanReview.summary.compiledPatchCandidates !== verifiedPatchCandidates.size) {
+  throw new Error('Compiled patch-candidate count does not match verified evidence links');
+}
+
+if (!Array.isArray(repairValidation.candidates)) {
+  throw new Error('Repair validation candidates must be an array');
+}
+if (repairValidation.candidates.length !== repairValidation.summary.validatedCandidates) {
+  throw new Error('Repair-validation candidate count does not match its summary');
+}
+if (repairValidation.summary.validatedCandidates !== verifiedPatchCandidates.size) {
+  throw new Error('Repair validation does not cover every verified patch candidate exactly');
+}
+const validatedTaskIds = new Set();
+const validatedSourceFiles = new Set();
+let validatedSorryBefore = 0;
+let validatedSorryAfter = 0;
+let validatedDeclarations = 0;
+let declarationsWithoutSorryAx = 0;
+for (const validation of repairValidation.candidates) {
+  if (validatedTaskIds.has(validation.taskId)) {
+    throw new Error(`Duplicate repair-validation candidate: ${validation.taskId}`);
+  }
+  validatedTaskIds.add(validation.taskId);
+  const candidate = verifiedPatchCandidates.get(validation.taskId);
+  if (!candidate) {
+    throw new Error(`Repair validation references a non-verified candidate: ${validation.taskId}`);
+  }
+  if (validation.sourceFile !== candidate.sourceFile) {
+    throw new Error(`Repair-validation source does not match ${validation.taskId}`);
+  }
+  if (validatedSourceFiles.has(validation.sourceFile)) {
+    throw new Error(`Repair-validation source is reused by multiple candidates: ${validation.sourceFile}`);
+  }
+  validatedSourceFiles.add(validation.sourceFile);
+  const expectedModule = validation.sourceFile
+    .replace(/^staging\/SmoothManifoldsLee\//, '')
+    .replace(/\.lean$/, '')
+    .split('/')
+    .join('.');
+  if (validation.module !== expectedModule) {
+    throw new Error(`Repair-validation module does not match ${validation.taskId}`);
+  }
+  const source = run('git', ['show', `${importReadRef}:${validation.sourceFile}`]);
+  const sourceSha256 = createHash('sha256').update(source).digest('hex');
+  if (validation.sourceSha256 !== sourceSha256) {
+    throw new Error(`Repair-validation source SHA-256 does not match ${validation.taskId}`);
+  }
+  if (
+    !/^[0-9a-f]{64}$/.test(validation.patchedSourceSha256) ||
+    validation.patchedSourceSha256 === validation.sourceSha256
+  ) {
+    throw new Error(`Invalid patched-source SHA-256 for ${validation.taskId}`);
+  }
+  const sourceAnalysis = analyzeLeanSource(source);
+  if (
+    validation.directSorryTokens?.before !== sourceAnalysis.sorryCount ||
+    validation.directSorryTokens?.after !== 0
+  ) {
+    throw new Error(`Repair-validation sorry count does not match ${validation.taskId}`);
+  }
+  if (
+    validation.moduleCompilation?.status !== 'passed' ||
+    validation.moduleCompilation?.exitCode !== 0
+  ) {
+    throw new Error(`Repair-validation compilation did not pass for ${validation.taskId}`);
+  }
+  if (!Array.isArray(validation.declarations) || validation.declarations.length === 0) {
+    throw new Error(`Repair validation has no declarations for ${validation.taskId}`);
+  }
+  const expectedDeclarationNames = new Set(candidate.declarations);
+  const declarationNames = new Set(validation.declarations.map((decl) => decl.name));
+  if (
+    declarationNames.size !== validation.declarations.length ||
+    declarationNames.size !== expectedDeclarationNames.size ||
+    [...expectedDeclarationNames].some((name) => !declarationNames.has(name))
+  ) {
+    throw new Error(`Repair-validation declarations do not match ${validation.taskId}`);
+  }
+  for (const declaration of validation.declarations) {
+    if (
+      typeof declaration.proof !== 'string' ||
+      declaration.proof.length === 0 ||
+      analyzeLeanSource(declaration.proof).sorryCount !== 0 ||
+      !Array.isArray(declaration.axioms) ||
+      declaration.containsSorryAx !== false ||
+      declaration.axioms.includes('sorryAx')
+    ) {
+      throw new Error(`Invalid declaration-level axioms evidence for ${declaration.name}`);
+    }
+    declarationsWithoutSorryAx += 1;
+  }
+  validatedSorryBefore += validation.directSorryTokens.before;
+  validatedSorryAfter += validation.directSorryTokens.after;
+  validatedDeclarations += validation.declarations.length;
+}
+if ([...verifiedPatchCandidates.keys()].some((taskId) => !validatedTaskIds.has(taskId))) {
+  throw new Error('At least one verified patch candidate is missing validation evidence');
+}
+for (const [field, value] of Object.entries({
+  sourceFiles: validatedSourceFiles.size,
+  directSorryTokensBefore: validatedSorryBefore,
+  directSorryTokensAfter: validatedSorryAfter,
+  changedDeclarations: validatedDeclarations,
+  declarationsWithoutSorryAx
+})) {
+  if (repairValidation.summary[field] !== value) {
+    throw new Error(`Repair-validation summary field ${field} does not match its candidates`);
+  }
 }
 
 const triageTasks = [];
