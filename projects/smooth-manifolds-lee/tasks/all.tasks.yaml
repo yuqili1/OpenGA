@@ -4551,7 +4551,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：欧氏几何切向量经方向导数与点导子空间线性同构，Taylor 展开给出满射，结论正确；Lean：方向导子、坐标恢复及左右逆等核心定理仍含多处 `sorry`，线性同构尚未形成无公理证明。
+  - 数学：欧氏几何切向量经方向导数与点导子空间线性同构，有限维光滑 Hadamard 分解给出满射，陈述正确，`PointDerivation` 与全局光滑函数的用法符合现代定义；Lean：隔离补丁闭合 15 个 direct `sorry` 中的 13 个，涵盖方向微分演算、Leibniz 法则、线性映射及坐标左逆，fresh compile 与精确 axioms 检查通过且这些声明均无 `sorryAx`；右逆 `geometric_to_point_derivation_right_inv` 仍需形式化光滑 Hadamard 引理，依赖它的线性等价求值定理也诚实保留，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section13.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean

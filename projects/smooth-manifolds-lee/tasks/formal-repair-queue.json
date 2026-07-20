@@ -11,8 +11,8 @@
     "reviewedRepairOwners": 26,
     "semanticDesignBeforeProof": 8,
     "lowRiskCompleteCandidates": 9,
-    "lowRiskPartialCandidates": 7,
-    "verifiedLowRiskCandidates": 16,
+    "lowRiskPartialCandidates": 8,
+    "verifiedLowRiskCandidates": 17,
     "uncompiledLowRiskCandidates": 0,
     "byTier": {
       "A_low_risk_complete_candidate": 9,
@@ -947,8 +947,31 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "scope_proof_and_dependencies",
-      "lowRiskCandidate": null,
+      "firstAction": "prepare_verified_patch_for_source_branch",
+      "lowRiskCandidate": {
+        "taskId": "sml.ch3.sec13.proposition-3-2",
+        "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean",
+        "declarations": [
+          "coordinate_cont_mdiff_map_apply",
+          "directional_fderiv_map_add",
+          "directional_fderiv_map_smul",
+          "directional_fderiv_leibniz_formula",
+          "directional_point_derivation_apply",
+          "directional_point_derivation_leibniz",
+          "geometric_to_point_derivation_map_add",
+          "geometric_to_point_derivation_map_smul",
+          "geometric_to_point_derivation_apply",
+          "point_derivation_to_geometric_map_add_formula",
+          "point_derivation_to_geometric_map_smul_formula",
+          "point_derivation_to_geometric_proj",
+          "geometric_to_point_derivation_left_inv"
+        ],
+        "scope": "thirteen of fifteen direct sorry tokens in the task",
+        "proposal": "Accept the thirteen axiom-clean directional-derivative, linearity, coordinate-recovery, and left-inverse proofs. Retain the right inverse and dependent linear-equivalence application until a smooth Hadamard decomposition is formalized.",
+        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+      },
       "rank": 15
     },
     {

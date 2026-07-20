@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 17,
-    "sourceFiles": 18,
-    "directSorryTokensBefore": 46,
-    "directSorryTokensReplaced": 30,
-    "directSorryTokensAfter": 16,
-    "changedDeclarations": 32,
-    "declarationsWithoutSorryAx": 32
+    "validatedCandidates": 18,
+    "sourceFiles": 19,
+    "directSorryTokensBefore": 61,
+    "directSorryTokensReplaced": 43,
+    "directSorryTokensAfter": 18,
+    "changedDeclarations": 45,
+    "declarationsWithoutSorryAx": 45
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -105,6 +105,98 @@
         {
           "name": "exists_supported_contMDiffMap_extension_of_isClosed",
           "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec13.proposition-3-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean",
+      "module": "SmoothManifoldsLee.Chap03.Sec03_13.Proposition_3_2",
+      "candidateCoverage": "partial",
+      "sourceSha256": "cb17213ca347e176ae0921fe284254243bec9f893bea76e962423cd52c70a930",
+      "patchedSourceSha256": "3b80ca1b4b0144df597c39f52bc7fa29d9eb35c1ccee923fff83e6aee35b6fd2",
+      "directSorryTokens": {"before": 15, "replacedByCandidate": 13, "after": 2},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+      "patchSha256": "16b4e6b119c0d095f65b25a01a816551d2ce3424e123fd87b0490e515191e9a1",
+      "declarations": [
+        {
+          "name": "coordinate_cont_mdiff_map_apply",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "directional_fderiv_map_add",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "directional_fderiv_map_smul",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "directional_fderiv_leibniz_formula",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "directional_point_derivation_apply",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "directional_point_derivation_leibniz",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "geometric_to_point_derivation_map_add",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "geometric_to_point_derivation_map_smul",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "geometric_to_point_derivation_apply",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "point_derivation_to_geometric_map_add_formula",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "point_derivation_to_geometric_map_smul_formula",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "point_derivation_to_geometric_proj",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "geometric_to_point_derivation_left_inv",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }

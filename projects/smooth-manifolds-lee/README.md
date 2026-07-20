@@ -79,10 +79,10 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All seventeen low-risk patch candidates have
+a statement or coverage problem. All eighteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Nine cover every direct `sorry` in their task, seven intentionally cover
-only selected declarations and retain sixteen explicit residual `sorry` tokens, and
+checks. Nine cover every direct `sorry` in their task, eight intentionally cover
+only selected declarations and retain eighteen explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
@@ -95,6 +95,13 @@ The Lemma 2.26 patch completes the supported smooth-extension theorem by
 combining a normally shrunk neighborhood with a global smooth selection from
 pointwise convex constraints. It passes the exact axioms check with no residual
 direct `sorry`.
+
+The Proposition 3.2 patch closes thirteen of fifteen direct holes in the
+identification of geometric tangent vectors with point derivations on
+Euclidean space. The remaining right-inverse direction requires a smooth
+Hadamard decomposition of an arbitrary smooth function; the dependent
+linear-equivalence application is therefore also retained until that result is
+available without `sorryAx`.
 
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
@@ -137,9 +144,10 @@ the boundaryless target used by Theorem 4.15, is still required.
 The larger verified repairs are also preserved as replayable patches at:
 
 ```text
+projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
+projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch
-projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-local-normal-forms.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-26-local-section-apply.patch

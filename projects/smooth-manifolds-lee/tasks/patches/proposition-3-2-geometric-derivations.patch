@@ -1,0 +1,80 @@
+--- a/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean
++++ b/SmoothManifoldsLee/Chap03/Sec03_13/Proposition_3_2.lean
+@@ -1,0 +2 @@
++import Mathlib.Analysis.Calculus.FDeriv.Mul
+@@ -27 +28 @@
+-    coordinate_cont_mdiff_map i x = x i := sorry
++    coordinate_cont_mdiff_map i x = x i := rfl
+@@ -32 +33,7 @@
+-    fderiv ℝ (f + g) a v = fderiv ℝ f a v + fderiv ℝ g a v := sorry
++    fderiv ℝ (f + g) a v = fderiv ℝ f a v + fderiv ℝ g a v := by
++  change (fderiv ℝ ((f : R^n → ℝ) + (g : R^n → ℝ)) a) v =
++    (fderiv ℝ f a) v + (fderiv ℝ g a) v
++  rw [fderiv_add
++    (f.contMDiff.contDiff.differentiable (by simp)).differentiableAt
++    (g.contMDiff.contDiff.differentiable (by simp)).differentiableAt]
++  rfl
+@@ -37 +44,5 @@
+-    fderiv ℝ (c • f) a v = c * fderiv ℝ f a v := sorry
++    fderiv ℝ (c • f) a v = c * fderiv ℝ f a v := by
++  change (fderiv ℝ (c • (f : R^n → ℝ)) a) v = c * (fderiv ℝ f a) v
++  rw [fderiv_const_smul
++    (f.contMDiff.contDiff.differentiable (by simp)).differentiableAt]
++  rfl
+@@ -43 +54,7 @@
+-    fderiv ℝ (f * g) a v = f a * fderiv ℝ g a v + g a * fderiv ℝ f a v := sorry
++    fderiv ℝ (f * g) a v = f a * fderiv ℝ g a v + g a * fderiv ℝ f a v := by
++  change (fderiv ℝ ((f : R^n → ℝ) * (g : R^n → ℝ)) a) v =
++    f a * (fderiv ℝ g a) v + g a * (fderiv ℝ f a) v
++  rw [fderiv_mul
++    (f.contMDiff.contDiff.differentiable (by simp)).differentiableAt
++    (g.contMDiff.contDiff.differentiable (by simp)).differentiableAt]
++  rfl
+@@ -58 +75 @@
+-    directional_point_derivation a v f = fderiv ℝ f a v := sorry
++    directional_point_derivation a v f = fderiv ℝ f a v := rfl
+@@ -66 +83,2 @@
+-        g a * directional_point_derivation a v f := sorry
++        g a * directional_point_derivation a v f :=
++  point_derivation_leibniz (directional_point_derivation a v) f g
+@@ -73 +91,4 @@
+-        directional_point_derivation a w := sorry
++        directional_point_derivation a w := by
++  apply Derivation.ext
++  intro f
++  simp only [directional_point_derivation_apply, Derivation.add_apply, map_add]
+@@ -79 +100,4 @@
+-      c • directional_point_derivation a v := sorry
++      c • directional_point_derivation a v := by
++  apply Derivation.ext
++  intro f
++  simp only [directional_point_derivation_apply, Derivation.smul_apply, map_smul, smul_eq_mul]
+@@ -92 +116 @@
+-      directional_point_derivation a v := sorry
++      directional_point_derivation a v := rfl
+@@ -101 +125,2 @@
+-          w₂ (coordinate_cont_mdiff_map i) • EuclideanSpace.basisFun (Fin n) ℝ i := sorry
++          w₂ (coordinate_cont_mdiff_map i) • EuclideanSpace.basisFun (Fin n) ℝ i := by
++  simp only [Derivation.add_apply, add_smul, Finset.sum_add_distrib]
+@@ -109 +134,2 @@
+-        w (coordinate_cont_mdiff_map i) • EuclideanSpace.basisFun (Fin n) ℝ i := sorry
++        w (coordinate_cont_mdiff_map i) • EuclideanSpace.basisFun (Fin n) ℝ i := by
++  simp only [Derivation.smul_apply, Finset.smul_sum, smul_smul, smul_eq_mul]
+@@ -124 +150,2 @@
+-      w (coordinate_cont_mdiff_map i) := sorry
++      w (coordinate_cont_mdiff_map i) := by
++  simp [point_derivation_to_geometric, EuclideanSpace.basisFun_apply]
+@@ -129 +156,12 @@
+-    point_derivation_to_geometric a (directional_point_derivation a v) = v := sorry
++    point_derivation_to_geometric a (directional_point_derivation a v) = v := by
++  apply (EuclideanSpace.basisFun (Fin n) ℝ).repr.injective
++  ext i
++  rw [EuclideanSpace.basisFun_repr, EuclideanSpace.basisFun_repr]
++  change EuclideanSpace.proj i
++      (point_derivation_to_geometric a (directional_point_derivation a v)) =
++    EuclideanSpace.proj i v
++  rw [point_derivation_to_geometric_proj, directional_point_derivation_apply]
++  change (fderiv ℝ (EuclideanSpace.proj i) a) v = EuclideanSpace.proj i v
++  have hproj : fderiv ℝ (EuclideanSpace.proj i) a = EuclideanSpace.proj i :=
++    (ContinuousLinearMap.hasFDerivAt (𝕜 := ℝ) (EuclideanSpace.proj i) (x := a)).fderiv
++  rw [hproj]
