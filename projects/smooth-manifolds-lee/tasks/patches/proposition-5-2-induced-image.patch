@@ -122,8 +122,51 @@
 +    · simpa [e, h, OpenPartialHomeomorph.extend, Function.comp_def] using hp.writtenInCharts
 +  · intro x
 +    rfl
-@@ -55 +173,3 @@
+@@ -55 +173,46 @@
 -    Φ = Ψ := sorry
 +    Φ = Ψ := by
 +  ext x
 +  exact (hΦ x).trans (hΨ x).symm
++
++/-- Any two charted-space representatives satisfying the induced-image predicate are equivalent:
++the identity on the image is a diffeomorphism between them. This is the representative-independent
++form of the textbook's uniqueness claim; literal equality of `ChartedSpace` values would also
++compare their chosen `chartAt` data and is stronger than equality of smooth structures. -/
++theorem induced_image_manifold_structure_unique_up_to_identity {F : N → M}
++    (cs₁ cs₂ : ChartedSpace H' (Set.range F))
++    (h₁ : @IsInducedImageManifoldStructure 𝕜 _ E _ _ H _ M _ _ I E' _ _ H' _ J
++      N _ _ F cs₁)
++    (h₂ : @IsInducedImageManifoldStructure 𝕜 _ E _ _ H _ M _ _ I E' _ _ H' _ J
++      N _ _ F cs₂) :
++    ∃ Θ : @Diffeomorph 𝕜 _ E' _ _ E' _ _ H' _ H' _ J J
++        (Set.range F) _ cs₁ (Set.range F) _ cs₂ (∞ : ℕ∞ω),
++      ∀ p, Θ p = p := by
++  unfold IsInducedImageManifoldStructure at h₁ h₂
++  dsimp only at h₁ h₂
++  rcases h₁ with ⟨_im₁, _hEmb₁, Φ₁, hΦ₁⟩
++  rcases h₂ with ⟨_im₂, _hEmb₂, Φ₂, hΦ₂⟩
++  let Θ : @Diffeomorph 𝕜 _ E' _ _ E' _ _ H' _ H' _ J J
++      (Set.range F) _ cs₁ (Set.range F) _ cs₂ (∞ : ℕ∞ω) :=
++    @Diffeomorph.trans 𝕜 _ E' _ _ E' _ _ E' _ _ H' _ H' _ H' _ J J J
++      (Set.range F) _ cs₁ N _ _ (Set.range F) _ cs₂ (∞ : ℕ∞ω)
++      (@Diffeomorph.symm 𝕜 _ E' _ _ E' _ _ H' _ H' _ J J
++        N _ _ (Set.range F) _ cs₁ (∞ : ℕ∞ω) Φ₁)
++      Φ₂
++  let e₁ : N ≃ Set.range F :=
++    @Diffeomorph.toEquiv 𝕜 _ E' _ _ E' _ _ H' _ H' _ J J
++      N _ _ (Set.range F) _ cs₁ (∞ : ℕ∞ω) Φ₁
++  let e₂ : N ≃ Set.range F :=
++    @Diffeomorph.toEquiv 𝕜 _ E' _ _ E' _ _ H' _ H' _ J J
++      N _ _ (Set.range F) _ cs₂ (∞ : ℕ∞ω) Φ₂
++  let eΘ : Set.range F ≃ Set.range F :=
++    @Diffeomorph.toEquiv 𝕜 _ E' _ _ E' _ _ H' _ H' _ J J
++      (Set.range F) _ cs₁ (Set.range F) _ cs₂ (∞ : ℕ∞ω) Θ
++  refine ⟨Θ, ?_⟩
++  intro p
++  have hp : eΘ p = p := by
++    apply Subtype.ext
++    change (e₂ (e₁.symm p) : M) = (p : M)
++    rw [show (e₂ (e₁.symm p) : M) = F (e₁.symm p) from hΦ₂ (e₁.symm p)]
++    rw [← show (e₁ (e₁.symm p) : M) = F (e₁.symm p) from hΦ₁ (e₁.symm p)]
++    simp
++  exact hp

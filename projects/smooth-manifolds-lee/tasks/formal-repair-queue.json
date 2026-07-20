@@ -9,7 +9,7 @@
     "directSorryTasks": 106,
     "directSorryTokens": 357,
     "reviewedRepairOwners": 26,
-    "semanticDesignBeforeProof": 4,
+    "semanticDesignBeforeProof": 3,
     "lowRiskCompleteCandidates": 7,
     "lowRiskPartialCandidates": 5,
     "verifiedLowRiskCandidates": 12,
@@ -145,19 +145,20 @@
         "semanticCoverageFinding": true,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "resolve_statement_or_coverage_before_proof",
+      "firstAction": "prepare_verified_patch_for_source_branch",
       "lowRiskCandidate": {
         "taskId": "sml.ch5.sec28.proposition-5-2",
         "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
         "declarations": [
           "smooth_embedding_range_has_induced_manifold_structure",
-          "image_diffeomorph_eq_of_comp_subtype_val"
+          "image_diffeomorph_eq_of_comp_subtype_val",
+          "induced_image_manifold_structure_unique_up_to_identity"
         ],
         "scope": "all direct sorry tokens in the task",
-        "proposal": "Transport the domain charts and smooth groupoid across the range homeomorphism, transfer the immersion witnesses to the subtype inclusion, and prove fixed-structure diffeomorphism equality by extensionality.",
+        "proposal": "Transport the domain charts and smooth groupoid across the range homeomorphism, transfer the immersion witnesses to the subtype inclusion, prove fixed-structure diffeomorphism equality by extensionality, and express structure uniqueness by an identity diffeomorphism between any two candidates.",
         "semanticCoverage": {
-          "status": "unresolved",
-          "finding": "The textbook asserts uniqueness of the smooth structure on the image, while the second Lean theorem only proves uniqueness of two diffeomorphisms after one image manifold structure has already been fixed. A faithful uniqueness statement should compare maximal atlases or make the identity between two candidate structures a diffeomorphism."
+          "status": "verified_patch",
+          "finding": "The pinned source only proves uniqueness of two diffeomorphisms after one image manifold structure has been fixed. The verified patch now adds the representative-independent textbook claim: the identity between any two structures satisfying the induced-image predicate is a diffeomorphism; literal equality of their noncanonical `ChartedSpace` records would be too strong."
         },
         "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch",
         "status": "verified_compiled_no_sorryAx",

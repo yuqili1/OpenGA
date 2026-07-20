@@ -296,6 +296,8 @@ const queue = directSorryTasks.map((triageTask) => {
     sourceModuleDirectImporterTaskIds.filter((id) => pendingIds.has(id));
   const lowRiskCandidate = lowRiskByTask.get(task.id) ?? null;
   const semanticCoverageFinding = semanticFindingIds.has(task.id);
+  const hasUnresolvedSemanticCoverage = semanticCoverageFinding &&
+    lowRiskCandidate?.semanticCoverage?.status !== 'verified_patch';
   return {
     taskId: task.id,
     chapter: task.chapter,
@@ -321,7 +323,7 @@ const queue = directSorryTasks.map((triageTask) => {
       semanticCoverageFinding,
       dependencyOrBuildFinding: dependencyFindingIds.has(task.id)
     },
-    firstAction: semanticCoverageFinding
+    firstAction: hasUnresolvedSemanticCoverage
       ? 'resolve_statement_or_coverage_before_proof'
       : lowRiskCandidate?.status === 'verified_compiled_no_sorryAx'
         ? 'prepare_verified_patch_for_source_branch'
@@ -374,7 +376,7 @@ const report = {
     directSorryTokens: triage.summary.directSorryTokens,
     reviewedRepairOwners: reviewedDownstreamByOwner.size,
     semanticDesignBeforeProof: queue.filter(
-      (task) => task.reviewFlags.semanticCoverageFinding
+      (task) => task.firstAction === 'resolve_statement_or_coverage_before_proof'
     ).length,
     lowRiskCompleteCandidates: queue.filter(
       (task) => task.lowRiskCandidate?.scope === 'all direct sorry tokens in the task'

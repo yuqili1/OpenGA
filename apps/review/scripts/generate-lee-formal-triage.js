@@ -375,6 +375,10 @@ const supportedCandidateStatuses = new Set([
   'proposal_uncompiled',
   'verified_compiled_no_sorryAx'
 ]);
+const supportedSemanticCoverageStatuses = new Set([
+  'unresolved',
+  'verified_patch'
+]);
 const patchCandidateIds = [];
 const verifiedPatchCandidates = new Map();
 for (const candidate of humanReview.lowRiskPatchCandidates) {
@@ -390,12 +394,18 @@ for (const candidate of humanReview.lowRiskPatchCandidates) {
   }
   if (candidate.semanticCoverage !== undefined) {
     if (
-      candidate.semanticCoverage?.status !== 'unresolved' ||
+      !supportedSemanticCoverageStatuses.has(candidate.semanticCoverage?.status) ||
       typeof candidate.semanticCoverage?.finding !== 'string' ||
       candidate.semanticCoverage.finding.length === 0 ||
       !semanticFindingIds.includes(candidate.taskId)
     ) {
       throw new Error(`Patch candidate ${candidate.taskId} has invalid semantic-coverage data`);
+    }
+    if (
+      candidate.semanticCoverage.status === 'verified_patch' &&
+      candidate.status !== 'verified_compiled_no_sorryAx'
+    ) {
+      throw new Error(`Patch candidate ${candidate.taskId} has unverified semantic coverage`);
     }
   }
   if (candidate.status === 'verified_compiled_no_sorryAx') {

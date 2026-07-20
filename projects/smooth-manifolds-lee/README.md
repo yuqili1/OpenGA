@@ -83,17 +83,20 @@ a statement or coverage problem. All thirteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
 checks. Seven cover every direct `sorry` in their task, five intentionally cover
 only selected declarations and retain fifteen explicit residual `sorry` tokens, and
-one adds the missing half of a textbook statement. Exact source hashes, proofs,
+one adds the missing half of a textbook statement; Proposition 5.2 also carries a
+verified semantic-coverage repair. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/formal-repair-validation.json
 ```
 
-Here, “complete” refers only to direct-`sorry` coverage. Proposition 5.2 now has
-a verified proof for both existing holes, but the Lean statement still omits
-the textbook's uniqueness claim for the image smooth structure; the semantic
-finding remains pending independently.
+Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
+patch now proves both existing holes and adds the textbook's uniqueness claim in
+the representative-independent form that the identity between any two candidate
+image structures is a diffeomorphism. The pinned source still lacks that theorem,
+so the semantic finding remains tracked with `verified_patch` status until the
+patch is applied.
 
 The larger verified repairs are also preserved as replayable patches at:
 

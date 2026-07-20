@@ -20,8 +20,8 @@
     "directSorryTokensBefore": 38,
     "directSorryTokensReplaced": 23,
     "directSorryTokensAfter": 15,
-    "changedDeclarations": 24,
-    "declarationsWithoutSorryAx": 24
+    "changedDeclarations": 25,
+    "declarationsWithoutSorryAx": 25
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -277,13 +277,13 @@
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
       "module": "SmoothManifoldsLee.Chap05.Sec05_28.Proposition_5_2",
       "candidateCoverage": "complete",
-      "semanticCoverageStatus": "unresolved",
+      "semanticCoverageStatus": "verified_patch",
       "sourceSha256": "64e829fb8ca5611d9e30fa707024abcb3885b2a974c144ae041ffdb84dbd053e",
-      "patchedSourceSha256": "6a49c39263f914b53ce2a12540c6263ca034399fe50375463cc717640376ed5e",
+      "patchedSourceSha256": "beef4d6b798f4957f502ddbd7443f444a9a88cc3ae56dfd5ce0e7dfc0e0446c9",
       "directSorryTokens": {"before": 2, "replacedByCandidate": 2, "after": 0},
       "moduleCompilation": {"status": "passed", "exitCode": 0},
       "patchFile": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch",
-      "patchSha256": "388138b8436c107430c641ba01c53135f2b67e9a4d6cac09e758b68ebe03c4c2",
+      "patchSha256": "6b8315848c7b23ae8bebf1b158819f999915914c2a9927c4e817b7a352e8c2f1",
       "downstreamCompilation": {
         "passed": [
           {
@@ -321,6 +321,12 @@
         },
         {
           "name": "image_diffeomorph_eq_of_comp_subtype_val",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "induced_image_manifold_structure_unique_up_to_identity",
           "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
@@ -399,7 +405,7 @@
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
     "Five validated candidates are partial: their patched temporary files retain fifteen direct sorry tokens outside the candidate scope.",
     "The Theorem 4.12 immersion normal form is verified without using the remaining constant-rank or submersion owner holes; those two direct sorry tokens remain explicit.",
-    "The Proposition 5.2 candidate closes both current direct sorry tokens, but it does not formalize the textbook's uniqueness of the image smooth structure; that semantic-coverage finding remains unresolved.",
+    "The Proposition 5.2 candidate closes both current direct sorry tokens and adds a verified identity-diffeomorphism formulation of the textbook's uniqueness claim; the pinned source still has that semantic-coverage finding until the patch is applied.",
     "The downstream Problem 5.1 module compiles with the Proposition 5.2 candidate but retains pre-existing transitive sorryAx from its recorded Chapter 4 owners.",
     "The multi-file Theorem 5.51 helper repair has a tracked replayable patch; its main theorem still depends on the three remaining owner holes and therefore still reports sorryAx.",
     "The statement-addition candidate validates an explicit coverage repair for Theorem 1.37; the pinned source still has that coverage finding until the theorem is applied.",
