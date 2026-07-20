@@ -1,0 +1,474 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean
+@@ -2,0 +3 @@
++import SmoothManifoldsLee.Chap05.Sec05_29.Theorem_5_8.Common
+@@ -16,0 +18,128 @@
++/-- A nested subtype patch is homeomorphic to the corresponding intersection. -/
++private noncomputable def subtype_patch_intersection_homeomorph
++    {X : Type*} [TopologicalSpace X] (S T : Set X) :
++    {y : S | y.1 ∈ T} ≃ₜ (S ∩ T : Set X) where
++  toEquiv := Equiv.subtypeSubtypeEquivSubtypeInter (fun x : X ↦ x ∈ S) (fun x : X ↦ x ∈ T)
++  continuous_toFun := by
++    exact Continuous.subtype_mk
++      (continuous_subtype_val.comp continuous_subtype_val)
++      (fun y ↦ by exact ⟨y.1.2, y.2⟩)
++  continuous_invFun := by
++    have hToS : Continuous fun y : (S ∩ T : Set X) ↦ (⟨y.1, y.2.1⟩ : S) :=
++      Continuous.subtype_mk continuous_subtype_val (fun y ↦ y.2.1)
++    exact Continuous.subtype_mk hToS (fun y ↦ y.2.2)
++
++/-- The last free coordinate of a positive-dimensional slice. -/
++private def projected_last_coordinate (hk : 0 < k) : Fin k :=
++  ⟨k - 1, Nat.pred_lt (Nat.ne_of_gt hk)⟩
++
++/-- The last free coordinate, viewed as an ambient coordinate. -/
++private def euclidean_half_slice_ambient_last_coordinate
++    (hk : 0 < k) (hkn : k ≤ n) : Fin n :=
++  ⟨k - 1, lt_of_lt_of_le (Nat.pred_lt (Nat.ne_of_gt hk)) hkn⟩
++
++/-- Projection preserves the last free coordinate. -/
++private theorem euclidean_slice_projection_last_coordinate
++    (hk : 0 < k) (hkn : k ≤ n) (x : EuclideanSpace ℝ (Fin n)) :
++    euclidean_slice_projection hkn x (projected_last_coordinate hk) =
++      x (euclidean_half_slice_ambient_last_coordinate hk hkn) := by
++  rfl
++
++/-- Swap Lee's last free coordinate into mathlib's boundary-coordinate slot `0`. -/
++private def half_slice_boundary_coordinate_swap [NeZero k] (hk : 0 < k) : Fin k ≃ Fin k :=
++  Equiv.swap 0 (projected_last_coordinate hk)
++
++/-- Lee's last-coordinate half-space is homeomorphic to mathlib's first-coordinate half-space. -/
++private noncomputable def half_slice_last_coordinate_homeomorph
++    [NeZero k] (hk : 0 < k) :
++    {u : EuclideanSpace ℝ (Fin k) | 0 ≤ u (projected_last_coordinate hk)} ≃ₜ
++      EuclideanHalfSpace k := by
++  let e : EuclideanSpace ℝ (Fin k) ≃ₜ EuclideanSpace ℝ (Fin k) :=
++    (LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ (half_slice_boundary_coordinate_swap hk)).toHomeomorph
++  exact e.subtype fun u ↦ by
++    simpa [e, half_slice_boundary_coordinate_swap, projected_last_coordinate]
++
++/-- Project a Euclidean half-slice to its free coordinates and put its boundary coordinate first. -/
++private noncomputable def euclidean_half_slice_projection_homeomorph
++    [NeZero k]
++    (U : Set (EuclideanSpace ℝ (Fin n)))
++    (hk : 0 < k) (hkn : k ≤ n) (c : Fin (n - k) → ℝ) :
++    Set.euclideanHalfSlice U k hk hkn c ≃ₜ
++      {z : EuclideanHalfSpace k |
++        euclidean_slice_inclusion hkn c
++          ((half_slice_last_coordinate_homeomorph (k := k) hk).symm z).1 ∈ U} := by
++  let sourceAsSlice :
++      Set.euclideanHalfSlice U k hk hkn c ≃ₜ
++        {x : Set.euclideanSlice U k hkn c |
++          0 ≤ x.1 (euclidean_half_slice_ambient_last_coordinate hk hkn)} := by
++    simpa [Set.euclideanHalfSlice, euclidean_half_slice_ambient_last_coordinate] using
++      (subtype_patch_intersection_homeomorph
++        (S := Set.euclideanSlice U k hkn c)
++        (T := {y : EuclideanSpace ℝ (Fin n) |
++          0 ≤ y (euclidean_half_slice_ambient_last_coordinate hk hkn)})).symm
++  let projectedAsNested :
++      {x : Set.euclideanSlice U k hkn c |
++          0 ≤ x.1 (euclidean_half_slice_ambient_last_coordinate hk hkn)} ≃ₜ
++        {u : {u : EuclideanSpace ℝ (Fin k) |
++            euclidean_slice_inclusion hkn c u ∈ U} |
++          0 ≤ u.1 (projected_last_coordinate hk)} :=
++    (euclidean_slice_projection_homeomorph U hkn c).subtype fun x ↦ by
++      change
++        0 ≤ x.1 (euclidean_half_slice_ambient_last_coordinate hk hkn) ↔
++          0 ≤ (euclidean_slice_projection hkn x.1) (projected_last_coordinate hk)
++      rw [euclidean_slice_projection_last_coordinate (hk := hk) (hkn := hkn) x.1]
++  let reorderTarget :
++      {u : {u : EuclideanSpace ℝ (Fin k) |
++            euclidean_slice_inclusion hkn c u ∈ U} |
++          0 ≤ u.1 (projected_last_coordinate hk)} ≃ₜ
++        {u : {u : EuclideanSpace ℝ (Fin k) |
++            0 ≤ u (projected_last_coordinate hk)} |
++          euclidean_slice_inclusion hkn c u.1 ∈ U} := by
++    let leftFlatten :
++        {u : {u : EuclideanSpace ℝ (Fin k) |
++              euclidean_slice_inclusion hkn c u ∈ U} |
++            0 ≤ u.1 (projected_last_coordinate hk)} ≃ₜ
++          ({u : EuclideanSpace ℝ (Fin k) |
++              euclidean_slice_inclusion hkn c u ∈ U} ∩
++            {u : EuclideanSpace ℝ (Fin k) |
++              0 ≤ u (projected_last_coordinate hk)} : Set (EuclideanSpace ℝ (Fin k))) :=
++      subtype_patch_intersection_homeomorph
++        (S := {u : EuclideanSpace ℝ (Fin k) | euclidean_slice_inclusion hkn c u ∈ U})
++        (T := {u : EuclideanSpace ℝ (Fin k) | 0 ≤ u (projected_last_coordinate hk)})
++    let rightFlatten :
++        {u : {u : EuclideanSpace ℝ (Fin k) |
++              0 ≤ u (projected_last_coordinate hk)} |
++            euclidean_slice_inclusion hkn c u.1 ∈ U} ≃ₜ
++          ({u : EuclideanSpace ℝ (Fin k) |
++              0 ≤ u (projected_last_coordinate hk)} ∩
++            {u : EuclideanSpace ℝ (Fin k) |
++              euclidean_slice_inclusion hkn c u ∈ U} : Set (EuclideanSpace ℝ (Fin k))) :=
++      subtype_patch_intersection_homeomorph
++        (S := {u : EuclideanSpace ℝ (Fin k) | 0 ≤ u (projected_last_coordinate hk)})
++        (T := {u : EuclideanSpace ℝ (Fin k) | euclidean_slice_inclusion hkn c u ∈ U})
++    exact leftFlatten.trans <|
++      (Homeomorph.setCongr <| by
++        ext u
++        constructor <;> intro hu
++        · exact ⟨hu.2, hu.1⟩
++        · exact ⟨hu.2, hu.1⟩).trans rightFlatten.symm
++  let halfSpaceAsNested :
++      {u : {u : EuclideanSpace ℝ (Fin k) |
++            0 ≤ u (projected_last_coordinate hk)} |
++          euclidean_slice_inclusion hkn c u.1 ∈ U} ≃ₜ
++        {z : EuclideanHalfSpace k |
++          euclidean_slice_inclusion hkn c
++            ((half_slice_last_coordinate_homeomorph (k := k) hk).symm z).1 ∈ U} :=
++    (half_slice_last_coordinate_homeomorph (k := k) hk).subtype fun u ↦ by
++      have hu :
++          ((half_slice_last_coordinate_homeomorph (k := k) hk).symm
++            ((half_slice_last_coordinate_homeomorph (k := k) hk) u)) = u :=
++        (half_slice_last_coordinate_homeomorph (k := k) hk).left_inv u
++      change
++        euclidean_slice_inclusion hkn c u.1 ∈ U ↔
++          euclidean_slice_inclusion hkn c
++            (((half_slice_last_coordinate_homeomorph (k := k) hk).symm
++              ((half_slice_last_coordinate_homeomorph (k := k) hk) u)).1) ∈ U
++      exact hu.symm ▸ Iff.rfl
++  exact sourceAsSlice.trans <| projectedAsNested.trans <| reorderTarget.trans halfSpaceAsNested
++
+@@ -20 +149 @@
+-theorem euclidean_half_slice_projection_partial_homeomorph
++noncomputable def euclidean_half_slice_projection_partial_homeomorph
+@@ -25,6 +154,43 @@
+-  -- Route correction: the long coordinate permutation from Lee's half-slice convention to
+-  -- mathlib's half-space convention is isolated in this theorem-local helper.
+-  -- TODO: first project the free coordinates, then permute them so `lastFreeCoordinate hk hkn`
+-  -- becomes coordinate `0` in `ℍ^{k}`, and define the inverse by undoing that permutation and
+-  -- reinserting the fixed tail coordinates `c`.
+-  sorry
++  cases k with
++  | zero =>
++      cases (Nat.not_lt_zero 0 hk)
++  | succ k =>
++      let targetOpen : TopologicalSpace.Opens (EuclideanHalfSpace (k + 1)) :=
++        ⟨{z : EuclideanHalfSpace (k + 1) |
++            euclidean_slice_inclusion hkn c
++              ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 ∈ U}, by
++          have hcoord :
++              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
++                ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 :=
++            continuous_subtype_val.comp
++              (half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm.continuous
++          have hmap :
++              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
++                euclidean_slice_inclusion hkn c
++                  (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1) :=
++            (euclidean_slice_inclusion_continuous hkn c).comp hcoord
++          simpa [Set.preimage, Function.comp] using hU.preimage hmap⟩
++      let xProjected :
++          {u : EuclideanSpace ℝ (Fin (k + 1)) |
++            0 ≤ u (projected_last_coordinate (k := k + 1) hk)} :=
++        ⟨euclidean_slice_projection hkn x.1, by
++          simpa [euclidean_slice_projection_last_coordinate (k := k + 1) (hk := hk)
++            (hkn := hkn) x.1] using x.2.2⟩
++      let targetNonempty : Nonempty targetOpen := by
++        refine ⟨⟨half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected, ?_⟩⟩
++        have hxPerm :
++            ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
++              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)) = xProjected :=
++          (half_slice_last_coordinate_homeomorph (k := k + 1) hk).left_inv xProjected
++        have hxInU : euclidean_slice_inclusion hkn c xProjected.1 ∈ U := by
++          simpa [xProjected, euclidean_slice_inclusion_projection hkn c x.2.1] using x.2.1.1
++        change euclidean_slice_inclusion hkn c
++          (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
++              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)).1) ∈ U
++        exact hxPerm.symm ▸ hxInU
++      exact
++        OpenPartialHomeomorph.trans'
++          ((euclidean_half_slice_projection_homeomorph
++            (k := k + 1) (U := U) (hk := hk) (hkn := hkn) c).toOpenPartialHomeomorph)
++          (targetOpen.openPartialHomeomorphSubtypeCoe targetNonempty)
++          rfl
+@@ -39,5 +205,39 @@
+-  -- Route correction: this theorem isolates the exact source-membership fact needed in the target
+-  -- file before the full half-slice chart implementation is completed.
+-  -- TODO: unfold the canonical half-slice chart source once and read off the center inequalities
+-  -- and fixed-tail equations at `x`.
+-  sorry
++  cases k with
++  | zero =>
++      cases (Nat.not_lt_zero 0 hk)
++  | succ k =>
++      let targetOpen : TopologicalSpace.Opens (EuclideanHalfSpace (k + 1)) :=
++        ⟨{z : EuclideanHalfSpace (k + 1) |
++            euclidean_slice_inclusion hkn c
++              ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 ∈ U}, by
++          have hcoord :
++              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
++                ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 :=
++            continuous_subtype_val.comp
++              (half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm.continuous
++          have hmap :
++              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
++                euclidean_slice_inclusion hkn c
++                  (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1) :=
++            (euclidean_slice_inclusion_continuous hkn c).comp hcoord
++          simpa [Set.preimage, Function.comp] using hU.preimage hmap⟩
++      let xProjected :
++          {u : EuclideanSpace ℝ (Fin (k + 1)) |
++            0 ≤ u (projected_last_coordinate (k := k + 1) hk)} :=
++        ⟨euclidean_slice_projection hkn x.1, by
++          simpa [euclidean_slice_projection_last_coordinate (k := k + 1) (hk := hk)
++            (hkn := hkn) x.1] using x.2.2⟩
++      let targetNonempty : Nonempty targetOpen := by
++        refine ⟨⟨half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected, ?_⟩⟩
++        have hxPerm :
++            ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
++              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)) = xProjected :=
++          (half_slice_last_coordinate_homeomorph (k := k + 1) hk).left_inv xProjected
++        have hxInU : euclidean_slice_inclusion hkn c xProjected.1 ∈ U := by
++          simpa [xProjected, euclidean_slice_inclusion_projection hkn c x.2.1] using x.2.1.1
++        change euclidean_slice_inclusion hkn c
++          (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
++              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)).1) ∈ U
++        exact hxPerm.symm ▸ hxInU
++      simpa [euclidean_half_slice_projection_partial_homeomorph, targetOpen, xProjected,
++        targetNonempty]
+--- a/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean
+@@ -14,0 +15 @@
++import SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_51.EuclideanHalfSlice
+@@ -952,238 +952,0 @@
+-/-- Helper for Theorem 5.51: an ambient boundary-slice chart induces a chart on the canonical
+-subtype patch by first identifying the patch with the Euclidean half-slice image and then using
+-the theorem-local half-slice chart. -/
+-private def projected_last_coordinate (hk : 0 < k) : Fin k :=
+-  ⟨k - 1, Nat.pred_lt (Nat.ne_of_gt hk)⟩
+-
+-/-- Helper for Theorem 5.51: the distinguished nonnegative coordinate of a Euclidean half-slice,
+-viewed in ambient `ℝ^n`. -/
+-private def euclidean_half_slice_ambient_last_coordinate (hk : 0 < k) (hkn : k ≤ n) : Fin n :=
+-  ⟨k - 1, lt_of_lt_of_le (Nat.pred_lt (Nat.ne_of_gt hk)) hkn⟩
+-
+-/-- Helper for Theorem 5.51: projecting to the first `k` coordinates carries the last free
+-half-slice coordinate to the last coordinate of `ℝ^k`. -/
+-private theorem euclidean_slice_projection_last_coordinate
+-    (hk : 0 < k) (hkn : k ≤ n) (x : EuclideanSpace ℝ (Fin n)) :
+-    euclidean_slice_projection hkn x (projected_last_coordinate hk) =
+-      x (euclidean_half_slice_ambient_last_coordinate hk hkn) := by
+-  -- Both sides are the same ambient coordinate after unfolding the projection index cast.
+-  rfl
+-
+-/-- Helper for Theorem 5.51: swap the last coordinate of `ℝ^k` into slot `0`, matching mathlib's
+-half-space convention. -/
+-private def half_slice_boundary_coordinate_swap [NeZero k] (hk : 0 < k) : Fin k ≃ Fin k :=
+-  Equiv.swap 0 (projected_last_coordinate hk)
+-
+-/-- Helper for Theorem 5.51: Lee's “last coordinate nonnegative” convention is homeomorphic to the
+-standard Euclidean half-space by swapping coordinates `0` and `k - 1`. -/
+-private noncomputable def half_slice_last_coordinate_homeomorph
+-    [NeZero k]
+-    (hk : 0 < k) :
+-    {u : EuclideanSpace ℝ (Fin k) | 0 ≤ u (projected_last_coordinate hk)} ≃ₜ
+-      EuclideanHalfSpace k := by
+-  let e : EuclideanSpace ℝ (Fin k) ≃ₜ EuclideanSpace ℝ (Fin k) :=
+-    (LinearIsometryEquiv.piLpCongrLeft 2 ℝ ℝ (half_slice_boundary_coordinate_swap hk)).toHomeomorph
+-  -- Route correction: isolate the coordinate permutation once, then lift it to the source and
+-  -- target subtypes instead of repeating transport-heavy coordinate rewrites downstream.
+-  exact e.subtype fun u ↦ by
+-    -- Swapping coordinates moves the last free coordinate into slot `0`.
+-    simpa [e, half_slice_boundary_coordinate_swap, projected_last_coordinate]
+-
+-/-- Helper for Theorem 5.51: projecting a Euclidean half-slice to its free coordinates and then
+-moving the constrained last coordinate into slot `0` identifies it with a subtype of `ℍ^k`. -/
+-private noncomputable def euclidean_half_slice_projection_homeomorph
+-    [NeZero k]
+-    (U : Set (EuclideanSpace ℝ (Fin n)))
+-    (hk : 0 < k) (hkn : k ≤ n) (c : Fin (n - k) → ℝ) :
+-    Set.euclideanHalfSlice U k hk hkn c ≃ₜ
+-      {z : EuclideanHalfSpace k |
+-        euclidean_slice_inclusion hkn c
+-          ((half_slice_last_coordinate_homeomorph (k := k) hk).symm z).1 ∈ U} := by
+-  let sourceAsSlice :
+-      Set.euclideanHalfSlice U k hk hkn c ≃ₜ
+-        {x : Set.euclideanSlice U k hkn c |
+-          0 ≤ x.1 (euclidean_half_slice_ambient_last_coordinate hk hkn)} := by
+-    -- The Euclidean half-slice is exactly the corresponding slice together with the nonnegativity
+-    -- condition on the distinguished last free coordinate.
+-    simpa [Set.euclideanHalfSlice, euclidean_half_slice_ambient_last_coordinate] using
+-      (subtype_patch_intersection_homeomorph
+-        (S := Set.euclideanSlice U k hkn c)
+-        (T := {y : EuclideanSpace ℝ (Fin n) |
+-          0 ≤ y (euclidean_half_slice_ambient_last_coordinate hk hkn)})).symm
+-  let projectedAsNested :
+-      {x : Set.euclideanSlice U k hkn c |
+-          0 ≤ x.1 (euclidean_half_slice_ambient_last_coordinate hk hkn)} ≃ₜ
+-        {u : {u : EuclideanSpace ℝ (Fin k) |
+-            euclidean_slice_inclusion hkn c u ∈ U} |
+-          0 ≤ u.1 (projected_last_coordinate hk)} :=
+-    (euclidean_slice_projection_homeomorph U hkn c).subtype fun x ↦ by
+-      -- After projection, the last free ambient coordinate becomes the last coordinate of `ℝ^k`.
+-      change
+-        0 ≤ x.1 (euclidean_half_slice_ambient_last_coordinate hk hkn) ↔
+-          0 ≤ (euclidean_slice_projection hkn x.1) (projected_last_coordinate hk)
+-      rw [euclidean_slice_projection_last_coordinate (hk := hk) (hkn := hkn) x.1]
+-  let reorderTarget :
+-      {u : {u : EuclideanSpace ℝ (Fin k) |
+-            euclidean_slice_inclusion hkn c u ∈ U} |
+-          0 ≤ u.1 (projected_last_coordinate hk)} ≃ₜ
+-        {u : {u : EuclideanSpace ℝ (Fin k) |
+-            0 ≤ u (projected_last_coordinate hk)} |
+-          euclidean_slice_inclusion hkn c u.1 ∈ U} := by
+-    let leftFlatten :
+-        {u : {u : EuclideanSpace ℝ (Fin k) |
+-              euclidean_slice_inclusion hkn c u ∈ U} |
+-            0 ≤ u.1 (projected_last_coordinate hk)} ≃ₜ
+-          ({u : EuclideanSpace ℝ (Fin k) |
+-              euclidean_slice_inclusion hkn c u ∈ U} ∩
+-            {u : EuclideanSpace ℝ (Fin k) |
+-              0 ≤ u (projected_last_coordinate hk)} : Set (EuclideanSpace ℝ (Fin k))) :=
+-      subtype_patch_intersection_homeomorph
+-        (S := {u : EuclideanSpace ℝ (Fin k) | euclidean_slice_inclusion hkn c u ∈ U})
+-        (T := {u : EuclideanSpace ℝ (Fin k) | 0 ≤ u (projected_last_coordinate hk)})
+-    let rightFlatten :
+-        {u : {u : EuclideanSpace ℝ (Fin k) |
+-              0 ≤ u (projected_last_coordinate hk)} |
+-            euclidean_slice_inclusion hkn c u.1 ∈ U} ≃ₜ
+-          ({u : EuclideanSpace ℝ (Fin k) |
+-              0 ≤ u (projected_last_coordinate hk)} ∩
+-            {u : EuclideanSpace ℝ (Fin k) |
+-              euclidean_slice_inclusion hkn c u ∈ U} : Set (EuclideanSpace ℝ (Fin k))) :=
+-      subtype_patch_intersection_homeomorph
+-        (S := {u : EuclideanSpace ℝ (Fin k) | 0 ≤ u (projected_last_coordinate hk)})
+-        (T := {u : EuclideanSpace ℝ (Fin k) | euclidean_slice_inclusion hkn c u ∈ U})
+-    -- The two nested target descriptions only differ by the order of the conjunction.
+-    exact leftFlatten.trans <|
+-      (Homeomorph.setCongr <| by
+-        ext u
+-        constructor <;> intro hu
+-        · exact ⟨hu.2, hu.1⟩
+-        · exact ⟨hu.2, hu.1⟩).trans rightFlatten.symm
+-  let halfSpaceAsNested :
+-      {u : {u : EuclideanSpace ℝ (Fin k) |
+-            0 ≤ u (projected_last_coordinate hk)} |
+-          euclidean_slice_inclusion hkn c u.1 ∈ U} ≃ₜ
+-        {z : EuclideanHalfSpace k |
+-          euclidean_slice_inclusion hkn c
+-            ((half_slice_last_coordinate_homeomorph (k := k) hk).symm z).1 ∈ U} :=
+-    (half_slice_last_coordinate_homeomorph (k := k) hk).subtype fun u ↦ by
+-      -- The target condition is phrased by pulling back along the explicit permutation
+-      -- homeomorphism, so it is tautologically preserved.
+-      have hu :
+-          ((half_slice_last_coordinate_homeomorph (k := k) hk).symm
+-            ((half_slice_last_coordinate_homeomorph (k := k) hk) u)) = u :=
+-        (half_slice_last_coordinate_homeomorph (k := k) hk).left_inv u
+-      change
+-        euclidean_slice_inclusion hkn c u.1 ∈ U ↔
+-          euclidean_slice_inclusion hkn c
+-            (((half_slice_last_coordinate_homeomorph (k := k) hk).symm
+-              ((half_slice_last_coordinate_homeomorph (k := k) hk) u)).1) ∈ U
+-      exact hu.symm ▸ Iff.rfl
+-  -- The full half-slice chart is the composition of the source identification, slice projection,
+-  -- target reordering, and the final coordinate permutation into `ℍ^k`.
+-  exact sourceAsSlice.trans <| projectedAsNested.trans <| reorderTarget.trans halfSpaceAsNested
+-
+-/-- Helper for Theorem 5.51: the target subset of `ℍ^k` cut out by the projected half-slice chart
+-is open. -/
+-private noncomputable def euclidean_half_slice_projection_partial_homeomorph
+-    (U : Set (EuclideanSpace ℝ (Fin n))) (hU : IsOpen U)
+-    (hk : 0 < k) (hkn : k ≤ n) (c : Fin (n - k) → ℝ)
+-    (x : Set.euclideanHalfSlice U k hk hkn c) :
+-    OpenPartialHomeomorph (Set.euclideanHalfSlice U k hk hkn c) (ℍ^{k}) := by
+-  cases k with
+-  | zero =>
+-      cases (Nat.not_lt_zero 0 hk)
+-  | succ k =>
+-      let targetOpen : TopologicalSpace.Opens (EuclideanHalfSpace (k + 1)) :=
+-        ⟨{z : EuclideanHalfSpace (k + 1) |
+-            euclidean_slice_inclusion hkn c
+-              ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 ∈ U}, by
+-          -- The projected target is an open subset of `ℍ^(k+1)` because it is the preimage of the
+-          -- ambient open set `U` under the explicit half-slice inclusion map.
+-          have hcoord :
+-              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
+-                ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 :=
+-            continuous_subtype_val.comp
+-              (half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm.continuous
+-          have hmap :
+-              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
+-                euclidean_slice_inclusion hkn c
+-                  (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1) :=
+-            (euclidean_slice_inclusion_continuous hkn c).comp hcoord
+-          simpa [Set.preimage, Function.comp] using hU.preimage hmap⟩
+-      let xProjected :
+-          {u : EuclideanSpace ℝ (Fin (k + 1)) |
+-            0 ≤ u (projected_last_coordinate (k := k + 1) hk)} :=
+-        ⟨euclidean_slice_projection hkn x.1, by
+-          -- The half-slice inequality becomes the last coordinate inequality after projection.
+-          simpa [euclidean_slice_projection_last_coordinate (k := k + 1) (hk := hk)
+-            (hkn := hkn) x.1] using x.2.2⟩
+-      let targetNonempty : Nonempty targetOpen := by
+-        refine ⟨⟨half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected, ?_⟩⟩
+-        -- The distinguished half-slice point projects to a point of the open target.
+-        have hxPerm :
+-            ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
+-              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)) = xProjected :=
+-          (half_slice_last_coordinate_homeomorph (k := k + 1) hk).left_inv xProjected
+-        have hxInU : euclidean_slice_inclusion hkn c xProjected.1 ∈ U := by
+-          simpa [xProjected, euclidean_slice_inclusion_projection hkn c x.2.1] using x.2.1.1
+-        change euclidean_slice_inclusion hkn c
+-          (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
+-              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)).1) ∈ U
+-        exact hxPerm.symm ▸ hxInU
+-      -- In the positive-dimensional branch, `ℍ^(k+1)` is definitionally `EuclideanHalfSpace
+-      -- (k + 1)`, so no further transport is needed.
+-      exact
+-        OpenPartialHomeomorph.trans'
+-          ((euclidean_half_slice_projection_homeomorph
+-            (k := k + 1) (U := U) (hk := hk) (hkn := hkn) c).toOpenPartialHomeomorph)
+-          (targetOpen.openPartialHomeomorphSubtypeCoe targetNonempty)
+-          rfl
+-
+-/-- Helper for Theorem 5.51: the distinguished center point used to build the Euclidean
+-half-slice chart lies in that chart's source. -/
+-private theorem euclidean_half_slice_projection_partial_homeomorph_center_mem_source
+-    (U : Set (EuclideanSpace ℝ (Fin n))) (hU : IsOpen U)
+-    (hk : 0 < k) (hkn : k ≤ n) (c : Fin (n - k) → ℝ)
+-    (x : Set.euclideanHalfSlice U k hk hkn c) :
+-    x ∈ (euclidean_half_slice_projection_partial_homeomorph U hU hk hkn c x).source := by
+-  cases k with
+-  | zero =>
+-      cases (Nat.not_lt_zero 0 hk)
+-  | succ k =>
+-      let targetOpen : TopologicalSpace.Opens (EuclideanHalfSpace (k + 1)) :=
+-        ⟨{z : EuclideanHalfSpace (k + 1) |
+-            euclidean_slice_inclusion hkn c
+-              ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 ∈ U}, by
+-          have hcoord :
+-              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
+-                ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1 :=
+-            continuous_subtype_val.comp
+-              (half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm.continuous
+-          have hmap :
+-              Continuous fun z : EuclideanHalfSpace (k + 1) ↦
+-                euclidean_slice_inclusion hkn c
+-                  (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm z).1) :=
+-            (euclidean_slice_inclusion_continuous hkn c).comp hcoord
+-          simpa [Set.preimage, Function.comp] using hU.preimage hmap⟩
+-      let xProjected :
+-          {u : EuclideanSpace ℝ (Fin (k + 1)) |
+-            0 ≤ u (projected_last_coordinate (k := k + 1) hk)} :=
+-        ⟨euclidean_slice_projection hkn x.1, by
+-          simpa [euclidean_slice_projection_last_coordinate (k := k + 1) (hk := hk)
+-            (hkn := hkn) x.1] using x.2.2⟩
+-      let targetNonempty : Nonempty targetOpen := by
+-        refine ⟨⟨half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected, ?_⟩⟩
+-        have hxPerm :
+-            ((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
+-              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)) = xProjected :=
+-          (half_slice_last_coordinate_homeomorph (k := k + 1) hk).left_inv xProjected
+-        have hxInU : euclidean_slice_inclusion hkn c xProjected.1 ∈ U := by
+-          simpa [xProjected, euclidean_slice_inclusion_projection hkn c x.2.1] using x.2.1.1
+-        change euclidean_slice_inclusion hkn c
+-          (((half_slice_last_coordinate_homeomorph (k := k + 1) hk).symm
+-              (half_slice_last_coordinate_homeomorph (k := k + 1) hk xProjected)).1) ∈ U
+-        exact hxPerm.symm ▸ hxInU
+-      -- In positive dimension the chart built in the definition is exactly this explicit
+-      -- `trans'` expression, whose source is all of the Euclidean half-slice.
+-      simpa [euclidean_half_slice_projection_partial_homeomorph, targetOpen, xProjected,
+-        targetNonempty]

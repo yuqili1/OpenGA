@@ -11,8 +11,8 @@
     "reviewedRepairOwners": 26,
     "semanticDesignBeforeProof": 3,
     "lowRiskCompleteCandidates": 6,
-    "lowRiskPartialCandidates": 4,
-    "verifiedLowRiskCandidates": 10,
+    "lowRiskPartialCandidates": 5,
+    "verifiedLowRiskCandidates": 11,
     "uncompiledLowRiskCandidates": 0,
     "byTier": {
       "A_low_risk_complete_candidate": 6,
@@ -506,8 +506,23 @@
         "semanticCoverageFinding": false,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "scope_proof_and_dependencies",
-      "lowRiskCandidate": null,
+      "firstAction": "prepare_verified_patch_for_source_branch",
+      "lowRiskCandidate": {
+        "taskId": "sml.ch5.sec36.theorem-5-51",
+        "sourceFiles": [
+          "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean",
+          "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean"
+        ],
+        "declarations": [
+          "euclidean_half_slice_projection_partial_homeomorph",
+          "euclidean_half_slice_projection_partial_homeomorph_center_mem_source"
+        ],
+        "scope": "two of five direct sorry tokens across the task's Lean files",
+        "proposal": "Move the existing private half-slice coordinate implementation into the public helper module, make the data owner a `noncomputable def`, import it from the main module, and remove the duplicate private block.",
+        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+      },
       "rank": 8
     },
     {

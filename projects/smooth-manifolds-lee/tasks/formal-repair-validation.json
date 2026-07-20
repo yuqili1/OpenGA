@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 11,
-    "sourceFiles": 11,
-    "directSorryTokensBefore": 31,
-    "directSorryTokensReplaced": 18,
-    "directSorryTokensAfter": 13,
-    "changedDeclarations": 19,
-    "declarationsWithoutSorryAx": 19
+    "validatedCandidates": 12,
+    "sourceFiles": 13,
+    "directSorryTokensBefore": 36,
+    "directSorryTokensReplaced": 20,
+    "directSorryTokensAfter": 16,
+    "changedDeclarations": 21,
+    "declarationsWithoutSorryAx": 21
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -31,6 +31,7 @@
     "Reject a candidate if any changed declaration's exact axioms list contains sorryAx.",
     "For proof-replacement candidates, require every candidate-scoped sorry to be replaced in the patched temporary source file and require the before/replaced/after counts to reconcile.",
     "Require zero residual direct sorry for a complete candidate; preserve and report residual direct sorry for a partial candidate.",
+    "For a tracked repair, preserve a replayable patch, verify its SHA-256, replay it with `git apply --unidiff-zero` against the pinned source, and verify the resulting source hashes and direct-sorry counts before checking compilation evidence.",
     "For a statement-addition candidate, require the new declaration to compile and pass its exact axioms check without changing a direct sorry count."
   ],
   "candidates": [
@@ -263,6 +264,54 @@
       ]
     },
     {
+      "taskId": "sml.ch5.sec36.theorem-5-51",
+      "sourceFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean",
+          "module": "SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_51.EuclideanHalfSlice",
+          "sourceSha256": "a50b2119569f1b7a57b0971bbb7af1c8349a224966391badbd7100fcc36f623d",
+          "patchedSourceSha256": "6d02e0b9bd16cc9970b683fb6d1f0f050123dece63376d6cbdbb38d965e21f46",
+          "directSorryTokens": {"before": 2, "replacedByCandidate": 2, "after": 0},
+          "moduleCompilation": {"status": "passed", "exitCode": 0}
+        },
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean",
+          "module": "SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_51",
+          "sourceSha256": "033afd09ced7452ae19a21ab9550fd172f23aee1994a637020421d4fe1fc62ff",
+          "patchedSourceSha256": "6be41b30b85e1df7cbaa5a8025d1d0577795f570c38e390e1b0ae9e4f6c4ce6b",
+          "directSorryTokens": {"before": 3, "replacedByCandidate": 0, "after": 3},
+          "moduleCompilation": {"status": "passed", "exitCode": 0}
+        }
+      ],
+      "candidateCoverage": "partial",
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch",
+      "patchSha256": "831ca758dabbff7737084e236b40a8942ad891309c7e117538e7bb8aaa957eea",
+      "directSorryTokens": {"before": 5, "replacedByCandidate": 2, "after": 3},
+      "integrationCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "modules": [
+          "SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_51.EuclideanHalfSlice",
+          "SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_51",
+          "SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_51.Index"
+        ]
+      },
+      "declarations": [
+        {
+          "name": "euclidean_half_slice_projection_partial_homeomorph",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "euclidean_half_slice_projection_partial_homeomorph_center_mem_source",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
       "taskId": "sml.ch1.sec5.theorem-1-37",
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_05/Theorem_1_37.lean",
       "module": "SmoothManifoldsLee.Chap01.Sec01_05.Theorem_1_37",
@@ -284,7 +333,8 @@
   "limitations": [
     "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
-    "Four validated candidates are partial: their patched temporary files retain thirteen direct sorry tokens outside the candidate scope.",
+    "Five validated candidates are partial: their patched temporary files retain sixteen direct sorry tokens outside the candidate scope.",
+    "The multi-file Theorem 5.51 helper repair has a tracked replayable patch; its main theorem still depends on the three remaining owner holes and therefore still reports sorryAx.",
     "The statement-addition candidate validates an explicit coverage repair for Theorem 1.37; the pinned source still has that coverage finding until the theorem is applied.",
     "The reported standard axioms vary by declaration; no changed declaration depends on sorryAx."
   ]

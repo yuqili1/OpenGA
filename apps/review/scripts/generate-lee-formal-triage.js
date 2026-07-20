@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -17,12 +18,16 @@ const metadataImportRef = 'origin/import/smooth-manifolds-lee';
 const importedProjectToolchainPath = 'staging/SmoothManifoldsLee/lean-toolchain';
 const configuredImportRef = process.env.SMOOTH_MANIFOLDS_LEE_IMPORT_REF?.trim() || undefined;
 
-function run(command, args) {
+function runAt(cwd, command, args) {
   return execFileSync(command, args, {
-    cwd: projectRoot,
+    cwd,
     encoding: 'utf-8',
     maxBuffer: 80 * 1024 * 1024
   });
+}
+
+function run(command, args) {
+  return runAt(projectRoot, command, args);
 }
 
 function gitRefExists(ref) {
@@ -52,6 +57,106 @@ function taskLeanFiles(task) {
       ? [task.source.lean_file]
       : [];
   return [...new Set(files)];
+}
+
+function patchCandidateLeanFiles(candidate) {
+  const hasMany = Array.isArray(candidate.sourceFiles) && candidate.sourceFiles.length > 0;
+  const hasOne = typeof candidate.sourceFile === 'string' && candidate.sourceFile.length > 0;
+  if (hasMany === hasOne) {
+    throw new Error(`Patch candidate ${candidate.taskId} must use exactly one source-file shape`);
+  }
+  const files = hasMany ? candidate.sourceFiles : [candidate.sourceFile];
+  if (new Set(files).size !== files.length) {
+    throw new Error(`Patch candidate ${candidate.taskId} repeats a source file`);
+  }
+  return files;
+}
+
+function validationSourceFileEntries(validation) {
+  if (Array.isArray(validation.sourceFiles) && validation.sourceFiles.length > 0) {
+    if (validation.sourceFile !== undefined) {
+      throw new Error(`Repair validation ${validation.taskId} mixes source-file shapes`);
+    }
+    return validation.sourceFiles;
+  }
+  if (typeof validation.sourceFile !== 'string') {
+    throw new Error(`Repair validation ${validation.taskId} has no source files`);
+  }
+  return [{
+    path: validation.sourceFile,
+    module: validation.module,
+    sourceSha256: validation.sourceSha256,
+    patchedSourceSha256: validation.patchedSourceSha256,
+    directSorryTokens: validation.directSorryTokens,
+    moduleCompilation: validation.moduleCompilation
+  }];
+}
+
+function leanFileToModule(sourceFile) {
+  return sourceFile
+    .replace(/^staging\/SmoothManifoldsLee\//, '')
+    .replace(/\.lean$/, '')
+    .split('/')
+    .join('.');
+}
+
+function importedProjectRelativePath(sourceFile) {
+  const prefix = 'staging/SmoothManifoldsLee/';
+  if (!sourceFile.startsWith(prefix)) {
+    throw new Error(`Source file is outside the imported SmoothManifoldsLee project: ${sourceFile}`);
+  }
+  return sourceFile.slice(prefix.length);
+}
+
+function validateReplayablePatch(patchPath, sourceEntries, sourceContents, taskId) {
+  const expectedPaths = sourceEntries.map((entry) => importedProjectRelativePath(entry.path));
+  const numstat = run('git', ['apply', '--numstat', patchPath]).trim();
+  const patchPaths = numstat === ''
+    ? []
+    : numstat.split(/\r?\n/).map((line) => {
+        const fields = line.split('\t');
+        if (fields.length !== 3 || fields[0] === '-' || fields[1] === '-') {
+          throw new Error(`Replayable patch has an unsupported entry for ${taskId}: ${line}`);
+        }
+        return fields[2];
+      });
+  if (
+    new Set(patchPaths).size !== patchPaths.length ||
+    patchPaths.length !== expectedPaths.length ||
+    expectedPaths.some((sourcePath) => !patchPaths.includes(sourcePath))
+  ) {
+    throw new Error(`Replayable patch paths do not match ${taskId}`);
+  }
+
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'openga-lee-patch-'));
+  try {
+    for (const entry of sourceEntries) {
+      const relativePath = importedProjectRelativePath(entry.path);
+      const temporaryPath = path.resolve(temporaryRoot, relativePath);
+      if (!temporaryPath.startsWith(`${temporaryRoot}${path.sep}`)) {
+        throw new Error(`Unsafe replayable-patch path for ${taskId}: ${relativePath}`);
+      }
+      fs.mkdirSync(path.dirname(temporaryPath), { recursive: true });
+      fs.writeFileSync(temporaryPath, sourceContents.get(entry.path), 'utf-8');
+    }
+    runAt(temporaryRoot, 'git', ['apply', '--unidiff-zero', '--check', patchPath]);
+    runAt(temporaryRoot, 'git', ['apply', '--unidiff-zero', patchPath]);
+    for (const entry of sourceEntries) {
+      const patchedSource = fs.readFileSync(
+        path.join(temporaryRoot, importedProjectRelativePath(entry.path)),
+        'utf-8'
+      );
+      const patchedSha256 = createHash('sha256').update(patchedSource).digest('hex');
+      if (entry.patchedSourceSha256 !== patchedSha256) {
+        throw new Error(`Replayable-patch output SHA-256 does not match ${entry.path}`);
+      }
+      if (analyzeLeanSource(patchedSource).sorryCount !== entry.directSorryTokens.after) {
+        throw new Error(`Replayable-patch sorry count does not match ${entry.path}`);
+      }
+    }
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
 }
 
 function stripLeanTrivia(source) {
@@ -272,7 +377,9 @@ const verifiedPatchCandidates = new Map();
 for (const candidate of humanReview.lowRiskPatchCandidates) {
   const task = pendingTasksById.get(candidate.taskId);
   if (!task) throw new Error(`Patch candidate references non-pending task ${candidate.taskId}`);
-  if (!taskLeanFiles(task).includes(candidate.sourceFile)) {
+  const pairedFiles = new Set(taskLeanFiles(task));
+  const candidateFiles = patchCandidateLeanFiles(candidate);
+  if (candidateFiles.some((sourceFile) => !pairedFiles.has(sourceFile))) {
     throw new Error(`Patch candidate source is not paired with ${candidate.taskId}`);
   }
   if (!supportedCandidateStatuses.has(candidate.status)) {
@@ -323,42 +430,79 @@ for (const validation of repairValidation.candidates) {
   if (!candidate) {
     throw new Error(`Repair validation references a non-verified candidate: ${validation.taskId}`);
   }
-  if (validation.sourceFile !== candidate.sourceFile) {
-    throw new Error(`Repair-validation source does not match ${validation.taskId}`);
-  }
-  if (validatedSourceFiles.has(validation.sourceFile)) {
-    throw new Error(`Repair-validation source is reused by multiple candidates: ${validation.sourceFile}`);
-  }
-  validatedSourceFiles.add(validation.sourceFile);
-  const expectedModule = validation.sourceFile
-    .replace(/^staging\/SmoothManifoldsLee\//, '')
-    .replace(/\.lean$/, '')
-    .split('/')
-    .join('.');
-  if (validation.module !== expectedModule) {
-    throw new Error(`Repair-validation module does not match ${validation.taskId}`);
-  }
-  const source = run('git', ['show', `${importReadRef}:${validation.sourceFile}`]);
-  const sourceSha256 = createHash('sha256').update(source).digest('hex');
-  if (validation.sourceSha256 !== sourceSha256) {
-    throw new Error(`Repair-validation source SHA-256 does not match ${validation.taskId}`);
-  }
+  const task = pendingTasksById.get(validation.taskId);
+  const taskFiles = taskLeanFiles(task);
+  const candidateFiles = patchCandidateLeanFiles(candidate);
+  const sourceEntries = validationSourceFileEntries(validation);
+  const validationFiles = sourceEntries.map((entry) => entry.path);
   if (
-    !/^[0-9a-f]{64}$/.test(validation.patchedSourceSha256) ||
-    validation.patchedSourceSha256 === validation.sourceSha256
+    new Set(validationFiles).size !== validationFiles.length ||
+    validationFiles.length !== candidateFiles.length ||
+    candidateFiles.some((sourceFile) => !validationFiles.includes(sourceFile))
   ) {
-    throw new Error(`Invalid patched-source SHA-256 for ${validation.taskId}`);
+    throw new Error(`Repair-validation sources do not match ${validation.taskId}`);
   }
-  const sourceAnalysis = analyzeLeanSource(source);
+  const sourceAnalyses = new Map();
+  const sourceContents = new Map();
+  let replacedInChangedFiles = 0;
+  for (const entry of sourceEntries) {
+    if (validatedSourceFiles.has(entry.path)) {
+      throw new Error(`Repair-validation source is reused by multiple candidates: ${entry.path}`);
+    }
+    validatedSourceFiles.add(entry.path);
+    const expectedModule = leanFileToModule(entry.path);
+    if (entry.module !== expectedModule) {
+      throw new Error(`Repair-validation module does not match ${validation.taskId}: ${entry.path}`);
+    }
+    const source = run('git', ['show', `${importReadRef}:${entry.path}`]);
+    const sourceSha256 = createHash('sha256').update(source).digest('hex');
+    if (entry.sourceSha256 !== sourceSha256) {
+      throw new Error(`Repair-validation source SHA-256 does not match ${entry.path}`);
+    }
+    if (
+      !/^[0-9a-f]{64}$/.test(entry.patchedSourceSha256) ||
+      entry.patchedSourceSha256 === entry.sourceSha256
+    ) {
+      throw new Error(`Invalid patched-source SHA-256 for ${entry.path}`);
+    }
+    const sourceAnalysis = analyzeLeanSource(source);
+    sourceAnalyses.set(entry.path, sourceAnalysis);
+    sourceContents.set(entry.path, source);
+    if (
+      entry.directSorryTokens?.before !== sourceAnalysis.sorryCount ||
+      !Number.isInteger(entry.directSorryTokens?.replacedByCandidate) ||
+      entry.directSorryTokens.replacedByCandidate < 0 ||
+      entry.directSorryTokens?.after !==
+        entry.directSorryTokens.before - entry.directSorryTokens.replacedByCandidate
+    ) {
+      throw new Error(`Repair-validation file-level sorry count does not match ${entry.path}`);
+    }
+    if (
+      entry.moduleCompilation?.status !== 'passed' ||
+      entry.moduleCompilation?.exitCode !== 0
+    ) {
+      throw new Error(`Repair-validation compilation did not pass for ${entry.path}`);
+    }
+    replacedInChangedFiles += entry.directSorryTokens.replacedByCandidate;
+  }
+  let taskSorryBefore = 0;
+  for (const taskFile of taskFiles) {
+    let analysis = sourceAnalyses.get(taskFile);
+    if (!analysis) {
+      analysis = analyzeLeanSource(run('git', ['show', `${importReadRef}:${taskFile}`]));
+    }
+    taskSorryBefore += analysis.sorryCount;
+  }
   const expectedCoverage = candidate.scope === 'all direct sorry tokens in the task'
     ? 'complete'
-    : sourceAnalysis.sorryCount === 0
+    : taskSorryBefore === 0
       ? 'statement_addition'
       : 'partial';
   if (
-    validation.directSorryTokens?.before !== sourceAnalysis.sorryCount ||
+    validation.directSorryTokens?.before !== taskSorryBefore ||
     validation.candidateCoverage !== expectedCoverage ||
     !Number.isInteger(validation.directSorryTokens?.replacedByCandidate) ||
+    validation.directSorryTokens.replacedByCandidate !== replacedInChangedFiles ||
     (expectedCoverage === 'statement_addition'
       ? validation.directSorryTokens.replacedByCandidate !== 0
       : validation.directSorryTokens.replacedByCandidate <= 0) ||
@@ -370,11 +514,38 @@ for (const validation of repairValidation.candidates) {
   ) {
     throw new Error(`Repair-validation sorry count does not match ${validation.taskId}`);
   }
-  if (
-    validation.moduleCompilation?.status !== 'passed' ||
-    validation.moduleCompilation?.exitCode !== 0
-  ) {
-    throw new Error(`Repair-validation compilation did not pass for ${validation.taskId}`);
+  const patchEvidence = validation.patchFile ?? null;
+  if ((candidate.patchEvidence ?? null) !== patchEvidence) {
+    throw new Error(`Repair-validation patch evidence does not match ${validation.taskId}`);
+  }
+  if (patchEvidence) {
+    const patchPath = path.resolve(projectRoot, patchEvidence);
+    if (!patchPath.startsWith(`${projectRoot}${path.sep}`) || !fs.existsSync(patchPath)) {
+      throw new Error(`Repair-validation patch path is invalid: ${patchEvidence}`);
+    }
+    const patchSha256 = createHash('sha256').update(fs.readFileSync(patchPath)).digest('hex');
+    if (validation.patchSha256 !== patchSha256) {
+      throw new Error(`Repair-validation patch SHA-256 does not match ${validation.taskId}`);
+    }
+    validateReplayablePatch(patchPath, sourceEntries, sourceContents, validation.taskId);
+  } else if (validation.patchSha256 !== undefined) {
+    throw new Error(`Repair validation ${validation.taskId} has a hash without a patch file`);
+  }
+  if (sourceEntries.length > 1) {
+    const integration = validation.integrationCompilation;
+    const expectedModules = taskFiles.map(leanFileToModule);
+    if (
+      integration?.status !== 'passed' ||
+      integration?.exitCode !== 0 ||
+      !Array.isArray(integration.modules) ||
+      new Set(integration.modules).size !== integration.modules.length ||
+      integration.modules.length !== expectedModules.length ||
+      expectedModules.some((moduleName) => !integration.modules.includes(moduleName))
+    ) {
+      throw new Error(`Invalid multi-file integration compilation for ${validation.taskId}`);
+    }
+  } else if (validation.integrationCompilation !== undefined) {
+    throw new Error(`Single-file repair validation has unexpected integration data: ${validation.taskId}`);
   }
   if (!Array.isArray(validation.declarations) || validation.declarations.length === 0) {
     throw new Error(`Repair validation has no declarations for ${validation.taskId}`);
@@ -389,10 +560,11 @@ for (const validation of repairValidation.candidates) {
     throw new Error(`Repair-validation declarations do not match ${validation.taskId}`);
   }
   for (const declaration of validation.declarations) {
+    const hasInlineProof = typeof declaration.proof === 'string' && declaration.proof.length > 0;
+    const hasPatchProof = declaration.proofEvidence === patchEvidence && patchEvidence !== null;
     if (
-      typeof declaration.proof !== 'string' ||
-      declaration.proof.length === 0 ||
-      analyzeLeanSource(declaration.proof).sorryCount !== 0 ||
+      (!hasInlineProof && !hasPatchProof) ||
+      (hasInlineProof && analyzeLeanSource(declaration.proof).sorryCount !== 0) ||
       !Array.isArray(declaration.axioms) ||
       declaration.containsSorryAx !== false ||
       declaration.axioms.includes('sorryAx')

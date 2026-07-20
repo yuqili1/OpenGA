@@ -79,9 +79,9 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All eleven low-risk patch candidates have
+a statement or coverage problem. All twelve low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Six cover every direct `sorry` in their file, four intentionally cover
+checks. Six cover every direct `sorry` in their file, five intentionally cover
 only selected declarations and retain explicit residual `sorry` counts, and
 one adds the missing half of a textbook statement. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
@@ -89,6 +89,16 @@ toolchain metadata, and axioms results are recorded at:
 ```text
 projects/smooth-manifolds-lee/tasks/formal-repair-validation.json
 ```
+
+The verified multi-file half-slice helper refactor for Theorem 5.51 is also
+preserved as a replayable patch at:
+
+```text
+projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
+```
+
+This artifact uses zero-context hunks. The validator replays it with
+`git apply --unidiff-zero` against source blobs from the pinned import commit.
 
 Validation was performed in an isolated temporary copy. The imported Lean
 source branch remains read-only during this review.

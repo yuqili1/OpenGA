@@ -17,8 +17,8 @@
     "semanticCoverageFindings": 37,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 11,
-    "compiledPatchCandidates": 11
+    "lowRiskPatchCandidates": 12,
+    "compiledPatchCandidates": 12
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -446,6 +446,22 @@
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
+      "taskId": "sml.ch5.sec36.theorem-5-51",
+      "sourceFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean",
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51.lean"
+      ],
+      "declarations": [
+        "euclidean_half_slice_projection_partial_homeomorph",
+        "euclidean_half_slice_projection_partial_homeomorph_center_mem_source"
+      ],
+      "scope": "two of five direct sorry tokens across the task's Lean files",
+      "proposal": "Move the existing private half-slice coordinate implementation into the public helper module, make the data owner a `noncomputable def`, import it from the main module, and remove the duplicate private block.",
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
       "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_3.lean",
       "declarations": [
@@ -505,7 +521,7 @@
     }
   ],
   "requiredCandidateValidation": [
-    "Compile the changed module under Lean 4.30.0 with the exact Lake-resolved dependency environment.",
+    "Compile every changed module, plus any recorded integration module, under Lean 4.30.0 with the exact Lake-resolved dependency environment.",
     "Run `#print axioms` for every changed declaration and reject any result containing sorryAx.",
     "Re-run the commit-pinned formal triage and the project review generator before changing formal_review status."
   ]
