@@ -290,6 +290,35 @@ for (const task of pendingTasks) {
   });
 }
 
+const triageTasksById = new Map(triageTasks.map((task) => [task.taskId, task]));
+const reviewedRepairOwnerIds = new Set();
+for (const owner of humanReview.reviewedRepairOwners ?? []) {
+  if (reviewedRepairOwnerIds.has(owner.ownerTaskId)) {
+    throw new Error(`Duplicate reviewed repair owner: ${owner.ownerTaskId}`);
+  }
+  if (triageTasksById.get(owner.ownerTaskId)?.category !== 'direct_sorry') {
+    throw new Error(`Reviewed repair owner is not direct-sorry: ${owner.ownerTaskId}`);
+  }
+  if (!Array.isArray(owner.downstreamTaskIds) || owner.downstreamTaskIds.length === 0) {
+    throw new Error(`Reviewed repair owner has no downstream tasks: ${owner.ownerTaskId}`);
+  }
+  if (new Set(owner.downstreamTaskIds).size !== owner.downstreamTaskIds.length) {
+    throw new Error(`Reviewed repair owner repeats a downstream task: ${owner.ownerTaskId}`);
+  }
+  for (const downstreamTaskId of owner.downstreamTaskIds) {
+    if (!pendingTasksById.has(downstreamTaskId) || downstreamTaskId === owner.ownerTaskId) {
+      throw new Error(`Invalid downstream task for ${owner.ownerTaskId}: ${downstreamTaskId}`);
+    }
+  }
+  if (typeof owner.evidence !== 'string' || owner.evidence.length === 0) {
+    throw new Error(`Reviewed repair owner has no evidence label: ${owner.ownerTaskId}`);
+  }
+  reviewedRepairOwnerIds.add(owner.ownerTaskId);
+}
+if (reviewedRepairOwnerIds.size !== humanReview.summary.reviewedRepairOwners) {
+  throw new Error('Reviewed repair-owner count does not match its summary');
+}
+
 const categories = [
   'textbook_only',
   'direct_sorry',
@@ -333,6 +362,7 @@ const report = {
     formalPendingTasksReviewed: humanReview.summary.formalPendingTasksReviewed,
     semanticCoverageFindings: semanticFindingIds.length,
     dependencyOrBuildFindings: dependencyFindingIds.length,
+    reviewedRepairOwners: reviewedRepairOwnerIds.size,
     lowRiskPatchCandidates: patchCandidateIds.length,
     compiledPatchCandidates: humanReview.summary.compiledPatchCandidates
   },

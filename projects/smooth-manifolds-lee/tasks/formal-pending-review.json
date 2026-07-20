@@ -16,6 +16,7 @@
     "formalPendingTasksReviewed": 201,
     "semanticCoverageFindings": 37,
     "dependencyOrBuildFindings": 39,
+    "reviewedRepairOwners": 26,
     "lowRiskPatchCandidates": 10,
     "compiledPatchCandidates": 0
   },
@@ -158,6 +159,234 @@
       }
     ]
   },
+  "reviewedRepairOwnerSemantics": {
+    "purpose": "Prioritize direct-sorry owners by reviewed downstream coverage.",
+    "notAxiomCertification": true,
+    "explanation": "Relations combine the reviewed textbook-reference graph, pinned source use or direct imports, and review notes. Only a relation explicitly citing the formal audit is a confirmed declaration path to sorryAx."
+  },
+  "reviewedRepairOwners": [
+    {
+      "ownerTaskId": "sml.ch1.sec4.example-1-28",
+      "downstreamTaskIds": [
+        "sml.ch1.sec4.example-1-36",
+        "sml.ch4.sec21.proposition-4-1"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch1.sec5.proposition-1-38",
+      "downstreamTaskIds": [
+        "sml.ch1.sec5.exercise-1-39",
+        "sml.ch5.sec29.theorem-5-11"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch1.sec5.proposition-1-40",
+      "downstreamTaskIds": [
+        "sml.ch1.sec1.proposition-1-16",
+        "sml.ch1.sec5.exercise-1-41"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch2.sec9.proposition-2-15",
+      "downstreamTaskIds": [
+        "sml.ch2.sec9.exercise-2-16",
+        "sml.ch2.sec9.theorem-2-18",
+        "sml.ch2.sec9.exercise-2-19"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch2.sec11.lemma-2-26",
+      "downstreamTaskIds": [
+        "sml.ch3.sec14.lemma-3-11",
+        "sml.ch3.sec20.problem-3-7",
+        "sml.ch5.sec37.problem-5-18"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch1.sec3.proposition-1-19",
+      "downstreamTaskIds": [
+        "sml.ch1.sec3.exercise-1-20",
+        "sml.ch2.sec10.theorem-2-23"
+      ],
+      "evidence": "review_notes_and_source_recall"
+    },
+    {
+      "ownerTaskId": "sml.ch1.sec1.definition-1-extra-1",
+      "downstreamTaskIds": [
+        "sml.ch1.sec1.theorem-1-2"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch1.sec6.definition-1-6-extra-1",
+      "downstreamTaskIds": [
+        "sml.ch2.sec8.exercise-2-2"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec23.theorem-4-12",
+      "downstreamTaskIds": [
+        "sml.ch4.sec23.corollary-4-13",
+        "sml.ch4.sec23.theorem-4-14",
+        "sml.ch4.sec23.theorem-4-15",
+        "sml.ch4.sec27.problem-4-3",
+        "sml.ch5.sec29.theorem-5-8"
+      ],
+      "evidence": "reviewed_reference_source_usage_and_formal_audit"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec25.theorem-4-26",
+      "downstreamTaskIds": [
+        "sml.ch4.sec25.proposition-4-28",
+        "sml.ch4.sec25.theorem-4-29"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec21.definition-4-21-extra-1",
+      "downstreamTaskIds": [
+        "sml.ch4.sec22.proposition-4-8",
+        "sml.ch4.sec24.example-4-18",
+        "sml.ch4.sec24.example-4-20",
+        "sml.ch4.sec27.problem-4-12"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec22.proposition-4-6",
+      "downstreamTaskIds": [
+        "sml.ch4.sec22.exercise-4-7",
+        "sml.ch4.sec26.exercise-4-38",
+        "sml.ch5.sec28.proposition-5-1"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec23.theorem-4-15",
+      "downstreamTaskIds": [
+        "sml.ch4.sec24.theorem-4-25",
+        "sml.ch4.sec27.problem-4-3",
+        "sml.ch5.sec36.proposition-5-46"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec25.theorem-4-29",
+      "downstreamTaskIds": [
+        "sml.ch4.sec25.theorem-4-30",
+        "sml.ch4.sec27.problem-4-7",
+        "sml.ch4.sec27.problem-4-8"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch3.sec13.proposition-3-2",
+      "downstreamTaskIds": [
+        "sml.ch3.sec13.corollary-3-3",
+        "sml.ch3.sec14.proposition-3-13",
+        "sml.ch3.sec20.problem-3-7"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch3.sec16.proposition-3-18",
+      "downstreamTaskIds": [
+        "sml.ch4.sec21.example-4-2"
+      ],
+      "evidence": "reviewed_reference_graph"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec36.definition-5-36-extra-3",
+      "downstreamTaskIds": [
+        "sml.ch5.sec30.corollary-5-14",
+        "sml.ch5.sec30.definition-5-30-extra-2",
+        "sml.ch5.sec37.problem-5-1",
+        "sml.ch5.sec37.problem-5-23"
+      ],
+      "evidence": "review_notes_and_direct_source_imports"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec30.definition-5-30-extra-3",
+      "downstreamTaskIds": [
+        "sml.ch5.sec30.example-5-17",
+        "sml.ch5.sec35.corollary-5-39",
+        "sml.ch5.sec37.problem-5-23"
+      ],
+      "evidence": "review_notes_and_direct_source_imports"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec31.definition-5-31-extra-2",
+      "downstreamTaskIds": [
+        "sml.ch5.sec31.example-5-25",
+        "sml.ch5.sec31.proposition-5-23"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec28.proposition-5-4",
+      "downstreamTaskIds": [
+        "sml.ch5.sec28.proposition-5-7",
+        "sml.ch5.sec31.example-5-25",
+        "sml.ch5.sec35.example-5-45"
+      ],
+      "evidence": "reviewed_reference_and_direct_source_imports"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec29.example-5-9",
+      "downstreamTaskIds": [
+        "sml.ch5.sec30.example-5-15"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec35.proposition-5-38",
+      "downstreamTaskIds": [
+        "sml.ch5.sec35.corollary-5-39",
+        "sml.ch5.sec35.exercise-5-40"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec28.proposition-5-2",
+      "downstreamTaskIds": [
+        "sml.ch5.sec31.proposition-5-18",
+        "sml.ch5.sec35.example-5-45",
+        "sml.ch5.sec36.proposition-5-49",
+        "sml.ch5.sec37.problem-5-1"
+      ],
+      "evidence": "reviewed_reference_and_direct_source_imports"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec30.theorem-5-12",
+      "downstreamTaskIds": [
+        "sml.ch5.sec30.corollary-5-13"
+      ],
+      "evidence": "review_notes_and_source_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec30.proposition-5-16",
+      "downstreamTaskIds": [
+        "sml.ch5.sec30.definition-5-30-extra-3"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec36.theorem-5-51",
+      "downstreamTaskIds": [
+        "sml.ch5.sec36.exercise-5-52",
+        "sml.ch5.sec36.theorem-5-53",
+        "sml.ch5.sec37.problem-5-8",
+        "sml.ch5.sec37.problem-5-23"
+      ],
+      "evidence": "reviewed_reference_and_direct_source_imports"
+    }
+  ],
   "lowRiskPatchCandidates": [
     {
       "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
