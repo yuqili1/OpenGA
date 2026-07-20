@@ -136,6 +136,19 @@ the available implicit-function machinery. The easy tangent-to-kernel
 inclusion does not prove the reverse inclusion; that direction still needs a
 regular-level-set theorem or equivalent dimension/local-normal-form result.
 
+Proposition 4.1 mixes two notions: its derivative-based submersion half is
+mathematically sound but still lacks clean openness and open-subtype derivative
+bridges, while its immersion half targets mathlib's stronger local-normal-form
+notion. For arbitrary corner models, injectivity of `mfderiv` alone is not an
+acceptable bridge to that target; the statement needs a derivative-based
+immersion notion or additional boundary compatibility.
+
+Theorem 4.25 and Exercise 4.16 are mathematically standard, but both expose
+unfinished local-normal-form infrastructure. Mathlib still marks the relevant
+smooth-embedding/immersion composition and local restriction bridges as
+`proof_wanted`; Exercise 4.16's remaining hole is specifically the construction
+of a local straightening on `Set.range K`, not a small tactic gap.
+
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
 the representative-independent form that the identity between any two candidate

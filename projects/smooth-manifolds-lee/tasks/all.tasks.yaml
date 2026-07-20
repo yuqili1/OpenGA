@@ -6475,7 +6475,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Proposition 4.1 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 2 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 在有限维实流形上用“微分逐点满射/单射”定义 submersion/immersion，满秩是开条件，原命题正确；Lean：第一半目标是项目的导数型 `IsSmoothSubmersion`，语义正确，但 clean 证明仍缺 `mfderiv` 满射邻域开放性及开子流形限制导数的规范识别。第二半却以 mathlib 的局部正规形 `IsImmersion` 为目标；对任意 corners，单射 `mfderiv` 不足以自动给保持角结构的正规形，现有 `is_immersion_iff_forall_injective_mfderiv` 桥本身也含 `sorryAx`，应改用对称的导数型 smooth immersion 或增加边界相容/无边界假设。两个 direct `sorry` 均保留；实际直接 importer 只有 Definition 5.30-extra-2，Corollary 5.14 是参考图而非源码调用，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section21.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Proposition_4_1.lean
@@ -7074,7 +7074,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Exercise 4.16 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 1 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：光滑嵌入的复合仍为光滑嵌入，Lee 的有限维命题正确，Lean 向一般 `n: ℕ∞ω` 与赋范模型的推广在补空间正规形框架下也合理；Lean：最终 `IsSmoothEmbedding.comp` 的拓扑嵌入部分已完成，唯一 direct `sorry` 位于 `ex416_exists_aligned_codomain_chart_for_g`，需要在 `Set.range K` 上构造局部 straightening 并证明其 `contDiffGroupoid` 成员。mathlib 的 immersion/smooth-embedding composition 仍为 `proof_wanted`，导入的 Exercise 4.4 同类路线也含 3 个 `sorryAx`，故不能作为干净替代。Proposition 5.49、Theorem 5.51、Problem 5.10、Problem 5.15 均实际 import 本文件，后两项显式调用 `IsImmersion.ex416_comp`；静态空 `depends_on`/`unlocks` 与源码图不一致，formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section24.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Exercise_4_16.lean
@@ -7348,7 +7348,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.25 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 1 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Local Embedding Theorem 正确；RHS 以开子类型限制 `F ∘ Subtype.val` 和现代 `IsSmoothEmbedding = IsImmersion + IsEmbedding` 表述，与 Lee 一致，有限维假设足以统一补空间；Lean：唯一 direct `sorry` 及其 `sorryAx` 保留。正向缺少把 immersion 的局部正规形封装为开限制 smooth embedding 的 bridge，反向缺少从逐邻域 immersion 统一全局 complement 的 bridge；mathlib 的 `IsSmoothEmbedding.contMDiff`/`comp` 与 `IsImmersion.comp` 仍为 `proof_wanted`，继续需大规模 charts、拓扑嵌入和补空间基础设施。到 Proposition 5.22 的关系只是教材/任务参考图，当前无源码 import 或调用，故 formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section24.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_24/Theorem_4_25.lean

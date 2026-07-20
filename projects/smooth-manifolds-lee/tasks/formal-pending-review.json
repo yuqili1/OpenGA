@@ -14,9 +14,9 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 47,
-    "dependencyOrBuildFindings": 41,
-    "reviewedRepairOwners": 29,
+    "semanticCoverageFindings": 48,
+    "dependencyOrBuildFindings": 44,
+    "reviewedRepairOwners": 32,
     "lowRiskPatchCandidates": 21,
     "compiledPatchCandidates": 21
   },
@@ -65,6 +65,7 @@
       {
         "chapter": 4,
         "taskIds": [
+          "sml.ch4.sec21.proposition-4-1",
           "sml.ch4.sec21.definition-4-21-extra-1",
           "sml.ch4.sec21.example-4-2",
           "sml.ch4.sec21.exercise-4-3",
@@ -130,11 +131,14 @@
       {
         "chapter": 4,
         "taskIds": [
+          "sml.ch4.sec21.proposition-4-1",
           "sml.ch4.sec22.exercise-4-7",
           "sml.ch4.sec22.proposition-4-8",
           "sml.ch4.sec22.exercise-4-9",
+          "sml.ch4.sec24.exercise-4-16",
           "sml.ch4.sec24.example-4-18",
           "sml.ch4.sec24.example-4-20",
+          "sml.ch4.sec24.theorem-4-25",
           "sml.ch4.sec25.proposition-4-28",
           "sml.ch4.sec25.exercise-4-32",
           "sml.ch4.sec26.exercise-4-34",
@@ -321,6 +325,31 @@
         "sml.ch5.sec30.example-5-17"
       ],
       "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec21.proposition-4-1",
+      "downstreamTaskIds": [
+        "sml.ch5.sec30.definition-5-30-extra-2",
+        "sml.ch5.sec30.corollary-5-14"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec24.exercise-4-16",
+      "downstreamTaskIds": [
+        "sml.ch5.sec36.proposition-5-49",
+        "sml.ch5.sec36.theorem-5-51",
+        "sml.ch5.sec37.problem-5-10",
+        "sml.ch5.sec37.problem-5-15"
+      ],
+      "evidence": "reviewed_source_imports_and_declaration_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec24.theorem-4-25",
+      "downstreamTaskIds": [
+        "sml.ch5.sec31.proposition-5-22"
+      ],
+      "evidence": "reviewed_reference_graph"
     },
     {
       "ownerTaskId": "sml.ch3.sec14.lemma-3-11",

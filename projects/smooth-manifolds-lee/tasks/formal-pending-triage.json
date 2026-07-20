@@ -82,9 +82,9 @@
   "humanReview": {
     "report": "projects/smooth-manifolds-lee/tasks/formal-pending-review.json",
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 47,
-    "dependencyOrBuildFindings": 41,
-    "reviewedRepairOwners": 29,
+    "semanticCoverageFindings": 48,
+    "dependencyOrBuildFindings": 44,
+    "reviewedRepairOwners": 32,
     "lowRiskPatchCandidates": 21,
     "compiledPatchCandidates": 21
   },
