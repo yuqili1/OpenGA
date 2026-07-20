@@ -92,13 +92,43 @@ function optionalProof(value: unknown, context: string): string | null | undefin
 
 function parsePatch(value: unknown, context: string): TextbookEntryPatch {
   const raw = asRecord(value, context);
-  assertKeys(raw, ['content', 'dependencies', 'proof'], context);
+  assertKeys(
+    raw,
+    ['content', 'content_replacements', 'append_content', 'dependencies', 'proof'],
+    context
+  );
   if (Object.keys(raw).length === 0) throw new Error(`${context} must not be empty`);
   if (raw.content !== undefined) text(raw.content, `${context}.content`);
+  let replacements: TextbookEntryPatch['content_replacements'];
+  if (raw.content_replacements !== undefined) {
+    if (!Array.isArray(raw.content_replacements) || raw.content_replacements.length === 0) {
+      throw new Error(`${context}.content_replacements must be a non-empty array`);
+    }
+    replacements = raw.content_replacements.map((value, index) => {
+      const replacementContext = `${context}.content_replacements[${index}]`;
+      const replacement = asRecord(value, replacementContext);
+      assertKeys(replacement, ['from', 'to', 'expected_matches'], replacementContext);
+      if (
+        !Number.isInteger(replacement.expected_matches) ||
+        (replacement.expected_matches as number) < 1
+      ) {
+        throw new Error(`${replacementContext}.expected_matches must be a positive integer`);
+      }
+      return {
+        from: text(replacement.from, `${replacementContext}.from`),
+        to: text(replacement.to, `${replacementContext}.to`),
+        expected_matches: replacement.expected_matches as number
+      };
+    });
+  }
+  if (raw.append_content !== undefined) {
+    text(raw.append_content, `${context}.append_content`);
+  }
   if (raw.dependencies !== undefined) textList(raw.dependencies, `${context}.dependencies`);
   optionalProof(raw.proof, `${context}.proof`);
   return {
     ...(raw as TextbookEntryPatch),
+    content_replacements: replacements,
     dependencies: raw.dependencies ? textList(raw.dependencies, `${context}.dependencies`) : undefined
   };
 }
@@ -205,6 +235,32 @@ export function parseTextbookOverlay(
   };
 }
 
+function applyEntryPatch(
+  entry: TextbookEntry,
+  patch: TextbookEntryPatch,
+  context: string
+): TextbookEntry {
+  const { content_replacements: replacements, append_content: appendContent, ...fields } = patch;
+  const result: TextbookEntry = {
+    ...entry,
+    ...fields,
+    dependencies: fields.dependencies ? [...fields.dependencies] : entry.dependencies
+  };
+  let content = result.content ?? '';
+  for (const replacement of replacements ?? []) {
+    const matches = content.split(replacement.from).length - 1;
+    if (matches !== replacement.expected_matches) {
+      throw new Error(
+        `${context} expected ${replacement.expected_matches} content matches but found ${matches}`
+      );
+    }
+    content = content.split(replacement.from).join(replacement.to);
+  }
+  if (appendContent !== undefined) content += appendContent;
+  if (replacements?.length || appendContent !== undefined) result.content = content;
+  return result;
+}
+
 /**
  * Apply validated overlays without mutating the base entries or overlay documents.
  * A merge must match exactly one label; an append must match none.
@@ -241,13 +297,11 @@ export function applyTextbookOverlays(
             `${operationName} must match exactly one base entry; found ${matches.length}`
           );
         }
-        entries[matches[0]] = {
-          ...entries[matches[0]],
-          ...operation.patch,
-          dependencies: operation.patch.dependencies
-            ? [...operation.patch.dependencies]
-            : entries[matches[0]].dependencies
-        };
+        entries[matches[0]] = applyEntryPatch(
+          entries[matches[0]],
+          operation.patch,
+          operationName
+        );
       } else {
         if (matches.length !== 0) {
           throw new Error(

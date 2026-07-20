@@ -1435,10 +1435,10 @@ tasks:
   description: Textbook source and Lean file review for Example 1.31.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：原书此处球面图过渡映射公式有官方勘误，按当前文本不能直接通过；Lean：只检查 mathlib 的规范球面 IsManifold 实例，未验证原文指定图册及有问题的过渡公式。
+  - 数学：已应用官方 2025-05-15 勘误；修正后的球面图册覆盖所有符号组合，异号同指标图域不交，非空交叠上的删坐标/带符号平方根过渡映射光滑，结论正确。Lean：代码只检查 mathlib 的规范球面 IsManifold 实例，未形式化这组指定图册，故形式化仍 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section04.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_31.lean
@@ -1580,10 +1580,10 @@ tasks:
   description: Textbook source and Lean file review for Example 1.36.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：原文把固定补空间图域的图表示错误泛化到任意 k 维子空间，缺少与补空间横截条件；Lean：虽加入横截图域，但图坐标若干逆性与维数步骤仍有六处 sorry。
+  - 数学：已应用官方两处勘误，将“任意子空间”补为“任意 k 维子空间”；结合 S∩Q={0}，投影到 P 才是等维单射从而为同构，Grassmann 图册论证随之正确。Lean：虽加入横截图域，但图坐标逆性与维数步骤仍有六处 sorry，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section04.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_36.lean
@@ -3685,10 +3685,10 @@ tasks:
   description: Textbook source and Lean file review for Definition 2.11-extra-2.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：对任意子集采用‘每点附近可光滑延拓’是 Lee 的特定约定，并非现代文献对一般子集唯一通行的 smooth-on 定义，需显式标注约定并与 `ContMDiffWithin` 区分；Lean：自定义 `Function.IsSmoothOn` 虽能编译并证明一种延拓表述等价，但未与 mathlib 的标准 within API 建立语义桥，暂不判通过。
+  - 数学：已应用官方 2017-04-25 勘误，分别给出目标无边界时的局部流形值延拓，以及目标有边界时经目标图转成欧氏值后的局部延拓；这是 Lee 对任意子集的明确约定，并不等同于一般 ContMDiffWithin，修正后定义自洽。Lean：自定义 Function.IsSmoothOn 尚未与 mathlib 的标准 within API 及有边界目标分支建立完整语义桥，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section11.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Definition_2_11_extra_2.lean
@@ -4155,10 +4155,10 @@ tasks:
   description: Textbook source and Lean file review for Problem 2-10.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：拉回保持光滑函数可判别映射光滑的主旨正确，但 (c) 的“isomorphism”未注明是 ℝ-代数同构还是仅线性同构，按现代表述需明确类别并说明开头的连续性假设贯穿 (b)(c)；Lean：线性、光滑判别及正逆方向四个定理全部仍为 `sorry`。
+  - 数学：已按官方 2022-02-13 勘误把 (c) 的“isomorphism”改成不依赖未声明代数类别的“bijection”；开头连续映射假设及 (c) 的同胚假设足以支撑各小题，结论正确。Lean：线性、光滑判别及正逆方向的四个定理仍含 sorry，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section12.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_12/Problem_2_10.lean
@@ -6213,10 +6213,10 @@ tasks:
   description: Textbook source and Lean file review for Problem 3-8.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：按常见约定结论应成立，但“从 p 出发的光滑曲线”未重申参数区间；带边界点必须明确允许 0 为端点并采用单侧/平滑延拓导数，否则双侧曲线不能表示横向切向量，故需补严谨限定；Lean：仅 recall 依赖含 `sorry` 的曲线类等价，且其 `SmoothCurveAt` 限于对称开区间，确实未覆盖边界横向速度。
+  - 数学：已应用官方 2015-03-05 勘误；边界点允许以 0 为端点的半区间曲线并采用单侧导数后，曲线等价类与完整切空间的双射表述正确。Lean：现有 SmoothCurveAt 仍限于对称开区间，所 recall 的曲线类等价也含 sorry，尚未覆盖勘误后的边界情形。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section20.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_20/Problem_3_8.lean
@@ -8055,10 +8055,10 @@ tasks:
   description: Textbook source and Lean file review for Problem 4-3.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：题面只要求读者自行“表述一个带边界秩定理”，没有给出唯一可核对的精确结论；边界点处正规形的目标、秩条件与图册约定都需先明确，故保持 pending；Lean：代码已给出相关定义/主声明，但主文件仍有 1 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：已应用官方 2013-05-04 勘误，补入 ker dF_p 不包含于 T_p∂M 的边界横截条件及经坐标投影、普通秩定理和常秩条件完成正规形的提示；作为要求读者表述并证明边界秩定理的练习，现已数学完整。Lean：当前主声明未体现该核条件且仍有一处 sorry，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section27.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_27/Problem_4_3.lean
@@ -8981,10 +8981,10 @@ tasks:
   description: Textbook source and Lean file review for Theorem 5.12.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：非空常秩纤维为余维 r 的闭嵌入子流形是标准结论，但原文称‘每个’层集且未说明空纤维的维数/余维约定；现代严谨表述应加非空条件或明确空流形可任选维数；Lean：流形结构与余维以及 proper 性两条核心定理均为 `sorry`。
+  - 数学：常秩 r 映射的每个纤维局部是余维 r 的坐标切片，且作为连续映射点原像为闭集，故 properly embedded；空纤维也不例外，因为本书在 Section 5.28 明定空集可视为任意维数的嵌入子流形。Lean：流形结构/余维与 proper 性两条核心定理仍含 sorry，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section30.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Theorem_5_12.lean
@@ -9010,10 +9010,10 @@ tasks:
   description: Textbook source and Lean file review for Corollary 5.13.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：非空 submersion 纤维余维等于靶维数且 properly embedded，正确；若纤维为空，余维表述仍依赖未明示的空流形维数约定；Lean：本文件虽无直接 `sorry`，两条结论完全调用含 `sorry` 的 Theorem 5.12，存在传递占位。
+  - 数学：submersion 的秩等于靶维数，故由常秩层集定理得到余维 dim N 的 properly embedded 纤维；空纤维按本书“空集可为任意维嵌入子流形”的明示约定处理，陈述正确。Lean：本文件虽无直接 sorry，但结论完全依赖仍含 sorry 的 Theorem 5.12，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section30.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Corollary_5_13.lean
@@ -9068,10 +9068,10 @@ tasks:
   description: Textbook source and Lean file review for Corollary 5.14.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：非空正则层集是余维等于靶维数的 properly embedded 子流形；空层集被真空视为正则时，原文仍需明确其余维约定；Lean：嵌入结构/余维与 proper 性两项结论均直接含 `sorry`。
+  - 数学：正则值附近微分满射，限制到满秩开集后应用 submersion 层集定理；空正则层集同样由本书对空嵌入子流形的任意维约定覆盖，陈述正确。Lean：嵌入结构/余维与 proper 性两项结论仍直接含 sorry，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section30.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_30/Corollary_5_14.lean
@@ -10998,10 +10998,10 @@ tasks:
   description: Textbook source and Lean file review for Problem 5-6.
   status: todo
   checks:
-    informal_review: pending
+    informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：当 m≥1 时单位切丛是余维一的正则水平集，维数为 2m−1；原题未排除 m=0，此时单位切丛为空且该维数表述需要另作约定；Lean：最终定理 `unitTangentBundle_exists_isSmoothEmbedding` 仍有一处直接 `sorry`，也未解决 m=0 的陈述问题。
+  - 数学：已应用官方 2019-09-15 勘误补上 m>0；此时单位切丛是切丛中平方范数函数的正则水平集，维数为 2m−1，结论正确。Lean：最终定理 unitTangentBundle_exists_isSmoothEmbedding 仍有一处直接 sorry，故形式化 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section37.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_6.lean

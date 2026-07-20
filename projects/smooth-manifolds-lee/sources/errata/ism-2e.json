@@ -7,6 +7,82 @@
   "operations": [
     {
       "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section04.json",
+      "label": "Example 1.31",
+      "erratum_date": "2025-05-15",
+      "patch": {
+        "content": "Example 1.31 (Spheres; corrected). Give $\\mathbb{S}^n$ the graph charts from Example 1.4. On every nonempty overlap with distinct deleted-coordinate indices, for every choice of signs, the transition map deletes one coordinate and inserts the appropriately signed value of $\\sqrt{1-|u|^2}$. Its domain keeps the radicand positive, so this map and its inverse are smooth. The positive and negative charts with the same deleted-coordinate index have disjoint domains. Hence these graph charts form the standard smooth atlas on $\\mathbb{S}^n$.\n\n_This is a faithful restatement of the official correction dated 2025-05-15._"
+      }
+    },
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section04.json",
+      "label": "Example 1.36",
+      "erratum_date": "2019-09-15",
+      "patch": {
+        "content_replacements": [
+          {
+            "from": "Conversely, any subspace \\( S \\subseteq  V \\) that intersects \\( Q \\) trivially",
+            "to": "Conversely, any \\( k \\) -dimensional subspace \\( S \\subseteq  V \\) that intersects \\( Q \\) trivially",
+            "expected_matches": 1
+          },
+          {
+            "from": "and any subspace \\( S \\) must have trivial intersection with \\( Q \\)",
+            "to": "and any \\( k \\) -dimensional subspace \\( S \\) must have trivial intersection with \\( Q \\)",
+            "expected_matches": 1
+          }
+        ],
+        "append_content": "\n\n_The two missing $k$-dimensional qualifiers are restored from the official corrections dated 2013-06-23 and 2019-09-15._"
+      }
+    },
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section11.json",
+      "label": "Definition 2.11-extra-2",
+      "erratum_date": "2017-04-25",
+      "patch": {
+        "content": "Let $A\\subseteq M$ and $F:A\\to N$. If $N$ has empty boundary, Lee calls $F$ smooth on $A$ when, near each point of $A$, it agrees on $A$ with a smooth $N$-valued map defined on an open neighborhood in $M$. If $N$ has boundary, require instead a target chart around $F(p)$ that contains the nearby image; in that chart, the Euclidean-valued coordinate representation of $F$ must admit such a local smooth extension. This is Lee's local-extension convention for an arbitrary subset, not the same definition as merely having within-set derivatives.\n\n_This is a faithful restatement of the official correction dated 2017-04-25._"
+      }
+    },
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section12.json",
+      "label": "Problem 2-10",
+      "erratum_date": "2022-02-13",
+      "patch": {
+        "content_replacements": [
+          {
+            "from": "restricts to an isomorphism",
+            "to": "restricts to a bijection",
+            "expected_matches": 1
+          }
+        ]
+      }
+    },
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section20.json",
+      "label": "Problem 3-8",
+      "erratum_date": "2015-03-05",
+      "patch": {
+        "append_content": "\n\n[Boundary convention from the official correction: when $p\\in\\partial M$, also allow curves parametrized on a one-sided interval with endpoint $0$, and take the derivative at $0$ from that side.]"
+      }
+    },
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section27.json",
+      "label": "Problem 4-3",
+      "erratum_date": "2013-05-04",
+      "patch": {
+        "append_content": "\n\n[Officially corrected hypothesis and hint: at the boundary point $p$, assume $\\ker dF_p\\not\\subseteq T_p\\partial M$. In half-space coordinates, extend $F$ to an ambient Euclidean map. Choose a coordinate projection whose composite with the extension is a submersion, apply the ordinary rank theorem to that composite, and then use constant rank to show that the remaining coordinate functions are independent of the kernel variables along the half-space.]",
+        "dependencies": [
+          "Theorem 4.12",
+          "Theorem 4.15"
+        ]
+      }
+    },
+    {
+      "operation": "merge",
       "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section29.json",
       "label": "Remark 5.29-extra-3",
       "erratum_date": "2019-07-08",
@@ -14,6 +90,21 @@
         "content": "We will see later that the smooth structure on $\\partial M$ is unique. The correct forward reference is Problem 5-24, not Theorem 5.31.\n\n**中文重述。** 后文将证明 $\\partial M$ 上的光滑结构是唯一的；正确的前向引用是 Problem 5-24，而不是 Theorem 5.31。\n\n_This is a faithful bilingual restatement of the official erratum dated 2019-07-08._",
         "dependencies": [
           "Problem 5-24"
+        ]
+      }
+    },
+    {
+      "operation": "merge",
+      "textbook_json": "sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section37.json",
+      "label": "Problem 5-6",
+      "erratum_date": "2019-09-15",
+      "patch": {
+        "content_replacements": [
+          {
+            "from": "is an embedded \\( m \\) -dimensional submanifold",
+            "to": "is an embedded \\( m \\) -dimensional submanifold with \\( m > 0 \\)",
+            "expected_matches": 1
+          }
         ]
       }
     },

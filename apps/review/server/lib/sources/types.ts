@@ -11,6 +11,12 @@ export type TextbookEntry = {
 
 export type TextbookEntryPatch = {
   content?: string;
+  content_replacements?: {
+    from: string;
+    to: string;
+    expected_matches: number;
+  }[];
+  append_content?: string;
   dependencies?: string[];
   proof?: string | null;
 };

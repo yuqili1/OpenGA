@@ -95,6 +95,38 @@ function loadTextbookOverlay() {
   return document.operations;
 }
 
+function applyTextbookEntryPatch(entry, patch, context) {
+  const { content_replacements: replacements, append_content: appendContent, ...fields } = patch;
+  const result = { ...entry, ...fields };
+  let content = result.content ?? '';
+  for (const replacement of replacements ?? []) {
+    if (
+      typeof replacement.from !== 'string' ||
+      replacement.from.length === 0 ||
+      typeof replacement.to !== 'string' ||
+      !Number.isInteger(replacement.expected_matches) ||
+      replacement.expected_matches < 1
+    ) {
+      throw new Error(`Invalid content replacement in ${context}`);
+    }
+    const matches = content.split(replacement.from).length - 1;
+    if (matches !== replacement.expected_matches) {
+      throw new Error(
+        `${context} expected ${replacement.expected_matches} content matches but found ${matches}`
+      );
+    }
+    content = content.split(replacement.from).join(replacement.to);
+  }
+  if (appendContent !== undefined) {
+    if (typeof appendContent !== 'string' || appendContent.length === 0) {
+      throw new Error(`Invalid appended content in ${context}`);
+    }
+    content += appendContent;
+  }
+  if (replacements?.length || appendContent !== undefined) result.content = content;
+  return result;
+}
+
 function applyTextbookOverlay(entries, entryPath, operations, appliedOperations) {
   const result = entries.map((entry) => ({ ...entry }));
   operations.forEach((operation, operationIndex) => {
@@ -103,7 +135,11 @@ function applyTextbookOverlay(entries, entryPath, operations, appliedOperations)
       .map((entry, index) => (entry.label === operation.label ? index : -1))
       .filter((index) => index !== -1);
     if (operation.operation === 'merge' && matches.length === 1) {
-      result[matches[0]] = { ...result[matches[0]], ...operation.patch };
+      result[matches[0]] = applyTextbookEntryPatch(
+        result[matches[0]],
+        operation.patch,
+        `${entryPath}#${operation.label}`
+      );
     } else if (operation.operation === 'append' && matches.length === 0) {
       if (operation.entry?.label !== operation.label) {
         throw new Error(`Overlay entry label mismatch for ${entryPath}#${operation.label}`);
