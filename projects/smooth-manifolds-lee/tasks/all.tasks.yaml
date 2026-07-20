@@ -3814,7 +3814,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：闭子集上的局部光滑延拓可借单位分解粘合并用 bump 控制支集，结论正确；Lean：`exists_supported_contMDiffMap_extension_of_isClosed` 的核心证明仍为 `sorry`。
+  - 数学：闭子集上的局部光滑延拓可借单位分解/光滑选择粘合并用较小开邻域控制支集，陈述正确，`Function.IsSmoothOn` 与 `tsupport` 的使用符合现代定义；Lean：隔离补丁以逐点凸约束构造全局光滑选择，在 `A` 上固定为 `f`、在闭包仍包含于 `U` 的较小开集外固定为零，完整闭合唯一 direct `sorry`；fresh compile 与精确 axioms 检查通过且无 `sorryAx`，固定导入源未改，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section11.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean

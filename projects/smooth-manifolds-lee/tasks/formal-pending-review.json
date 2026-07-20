@@ -17,8 +17,8 @@
     "semanticCoverageFindings": 44,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 16,
-    "compiledPatchCandidates": 16
+    "lowRiskPatchCandidates": 17,
+    "compiledPatchCandidates": 17
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -401,6 +401,16 @@
       "declarations": ["is_book_function_iff"],
       "scope": "all direct sorry tokens in the task",
       "proposal": "Use `by rfl`; the theorem restates the definition verbatim.",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch2.sec11.lemma-2-26",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean",
+      "declarations": ["exists_supported_contMDiffMap_extension_of_isClosed"],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Shrink the prescribed open neighborhood using normality, impose convex pointwise constraints that equal `f` on the closed set and zero outside the smaller neighborhood, and apply mathlib's global smooth-selection theorem.",
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },

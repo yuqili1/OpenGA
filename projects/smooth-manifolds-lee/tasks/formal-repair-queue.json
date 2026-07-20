@@ -10,13 +10,13 @@
     "directSorryTokens": 357,
     "reviewedRepairOwners": 26,
     "semanticDesignBeforeProof": 8,
-    "lowRiskCompleteCandidates": 8,
+    "lowRiskCompleteCandidates": 9,
     "lowRiskPartialCandidates": 7,
-    "verifiedLowRiskCandidates": 15,
+    "verifiedLowRiskCandidates": 16,
     "uncompiledLowRiskCandidates": 0,
     "byTier": {
-      "A_low_risk_complete_candidate": 8,
-      "B_high_leverage_owner": 25,
+      "A_low_risk_complete_candidate": 9,
+      "B_high_leverage_owner": 24,
       "C_low_risk_partial_candidate": 2,
       "D_single_dependency_owner": 24,
       "E_standalone_or_unmapped": 47
@@ -40,8 +40,8 @@
       "directSorryTasks": 10,
       "directSorryTokens": 28,
       "byTier": {
-        "A_low_risk_complete_candidate": 1,
-        "B_high_leverage_owner": 2,
+        "A_low_risk_complete_candidate": 2,
+        "B_high_leverage_owner": 1,
         "C_low_risk_partial_candidate": 0,
         "D_single_dependency_owner": 2,
         "E_standalone_or_unmapped": 5
@@ -293,6 +293,65 @@
       "rank": 3
     },
     {
+      "taskId": "sml.ch2.sec11.lemma-2-26",
+      "chapter": 2,
+      "title": "Lemma 2.26",
+      "tier": "A_low_risk_complete_candidate",
+      "directSorryCount": 1,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean",
+          "directSorryCount": 1
+        }
+      ],
+      "reviewedDownstreamTaskIds": [
+        "sml.ch3.sec14.lemma-3-11",
+        "sml.ch3.sec20.problem-3-7",
+        "sml.ch5.sec37.problem-5-18"
+      ],
+      "reviewedRepairOwnerEvidence": "reviewed_reference_and_source_usage",
+      "sourceModuleDirectImporterTaskIds": [
+        "sml.ch2.sec11.exercise-2-27",
+        "sml.ch3.sec20.problem-3-7",
+        "sml.ch5.sec37.problem-5-18"
+      ],
+      "formalPendingSourceModuleDirectImporterTaskIds": [
+        "sml.ch3.sec20.problem-3-7",
+        "sml.ch5.sec37.problem-5-18"
+      ],
+      "referenceGraph": {
+        "directUnlockTaskIds": [
+          "sml.ch3.sec14.lemma-3-11"
+        ],
+        "transitiveUnlockTaskIds": [
+          "sml.ch3.sec14.lemma-3-11",
+          "sml.ch3.sec14.proposition-3-12"
+        ],
+        "formalPendingTransitiveUnlockTaskIds": [
+          "sml.ch3.sec14.lemma-3-11",
+          "sml.ch3.sec14.proposition-3-12"
+        ]
+      },
+      "reviewFlags": {
+        "semanticCoverageFinding": false,
+        "dependencyOrBuildFinding": false
+      },
+      "firstAction": "prepare_verified_patch_for_source_branch",
+      "lowRiskCandidate": {
+        "taskId": "sml.ch2.sec11.lemma-2-26",
+        "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean",
+        "declarations": [
+          "exists_supported_contMDiffMap_extension_of_isClosed"
+        ],
+        "scope": "all direct sorry tokens in the task",
+        "proposal": "Shrink the prescribed open neighborhood using normality, impose convex pointwise constraints that equal `f` on the closed set and zero outside the smaller neighborhood, and apply mathlib's global smooth-selection theorem.",
+        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+      },
+      "rank": 4
+    },
+    {
       "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
       "chapter": 5,
       "title": "Definition 5.30-extra-3",
@@ -344,7 +403,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 4
+      "rank": 5
     },
     {
       "taskId": "sml.ch3.sec18.definition-3-18-extra-2",
@@ -387,7 +446,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 5
+      "rank": 6
     },
     {
       "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
@@ -426,7 +485,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 6
+      "rank": 7
     },
     {
       "taskId": "sml.ch1.sec4.example-1-22",
@@ -465,7 +524,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 7
+      "rank": 8
     },
     {
       "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
@@ -504,7 +563,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 8
+      "rank": 9
     },
     {
       "taskId": "sml.ch4.sec23.theorem-4-12",
@@ -589,7 +648,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 9
+      "rank": 10
     },
     {
       "taskId": "sml.ch5.sec36.theorem-5-51",
@@ -661,7 +720,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 10
+      "rank": 11
     },
     {
       "taskId": "sml.ch4.sec21.definition-4-21-extra-1",
@@ -715,7 +774,7 @@
       },
       "firstAction": "resolve_statement_or_coverage_before_proof",
       "lowRiskCandidate": null,
-      "rank": 11
+      "rank": 12
     },
     {
       "taskId": "sml.ch4.sec22.proposition-4-6",
@@ -789,7 +848,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 12
+      "rank": 13
     },
     {
       "taskId": "sml.ch4.sec25.theorem-4-29",
@@ -840,7 +899,7 @@
       },
       "firstAction": "resolve_statement_or_coverage_before_proof",
       "lowRiskCandidate": null,
-      "rank": 13
+      "rank": 14
     },
     {
       "taskId": "sml.ch3.sec13.proposition-3-2",
@@ -882,54 +941,6 @@
           "sml.ch3.sec13.corollary-3-3",
           "sml.ch3.sec14.proposition-3-13",
           "sml.ch3.sec15.definition-3-15-extra-1"
-        ]
-      },
-      "reviewFlags": {
-        "semanticCoverageFinding": false,
-        "dependencyOrBuildFinding": false
-      },
-      "firstAction": "scope_proof_and_dependencies",
-      "lowRiskCandidate": null,
-      "rank": 14
-    },
-    {
-      "taskId": "sml.ch2.sec11.lemma-2-26",
-      "chapter": 2,
-      "title": "Lemma 2.26",
-      "tier": "B_high_leverage_owner",
-      "directSorryCount": 1,
-      "directSorryFiles": [
-        {
-          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean",
-          "directSorryCount": 1
-        }
-      ],
-      "reviewedDownstreamTaskIds": [
-        "sml.ch3.sec14.lemma-3-11",
-        "sml.ch3.sec20.problem-3-7",
-        "sml.ch5.sec37.problem-5-18"
-      ],
-      "reviewedRepairOwnerEvidence": "reviewed_reference_and_source_usage",
-      "sourceModuleDirectImporterTaskIds": [
-        "sml.ch2.sec11.exercise-2-27",
-        "sml.ch3.sec20.problem-3-7",
-        "sml.ch5.sec37.problem-5-18"
-      ],
-      "formalPendingSourceModuleDirectImporterTaskIds": [
-        "sml.ch3.sec20.problem-3-7",
-        "sml.ch5.sec37.problem-5-18"
-      ],
-      "referenceGraph": {
-        "directUnlockTaskIds": [
-          "sml.ch3.sec14.lemma-3-11"
-        ],
-        "transitiveUnlockTaskIds": [
-          "sml.ch3.sec14.lemma-3-11",
-          "sml.ch3.sec14.proposition-3-12"
-        ],
-        "formalPendingTransitiveUnlockTaskIds": [
-          "sml.ch3.sec14.lemma-3-11",
-          "sml.ch3.sec14.proposition-3-12"
         ]
       },
       "reviewFlags": {

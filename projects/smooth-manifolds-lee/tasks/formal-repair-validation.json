@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 16,
-    "sourceFiles": 17,
-    "directSorryTokensBefore": 45,
-    "directSorryTokensReplaced": 29,
+    "validatedCandidates": 17,
+    "sourceFiles": 18,
+    "directSorryTokensBefore": 46,
+    "directSorryTokensReplaced": 30,
     "directSorryTokensAfter": 16,
-    "changedDeclarations": 31,
-    "declarationsWithoutSorryAx": 31
+    "changedDeclarations": 32,
+    "declarationsWithoutSorryAx": 32
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -85,6 +85,26 @@
         {
           "name": "is_book_function_iff",
           "proof": "by\n  rfl",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec11.lemma-2-26",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean",
+      "module": "SmoothManifoldsLee.Chap02.Sec02_11.Lemma_2_26",
+      "candidateCoverage": "complete",
+      "sourceSha256": "49fa05391382e5951574458bc1d8cb14bb34b670506bb02132ce8c20df13dba0",
+      "patchedSourceSha256": "9e0e0b267e06f35eb9544f84a711b28294008d9c05568adf6e7cc34134dc22c1",
+      "directSorryTokens": {"before": 1, "replacedByCandidate": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch",
+      "patchSha256": "84e6bb502128c2d7dc6d237cea611ceb3073f9662d847add55d9f4d5918111d8",
+      "declarations": [
+        {
+          "name": "exists_supported_contMDiffMap_extension_of_isClosed",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }

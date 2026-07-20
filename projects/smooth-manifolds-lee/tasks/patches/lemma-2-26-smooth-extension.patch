@@ -1,0 +1,55 @@
+--- a/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean
++++ b/SmoothManifoldsLee/Chap02/Sec02_11/Lemma_2_26.lean
+@@ -6 +6 @@
+-open scoped ContDiff Manifold
++open scoped ContDiff Manifold Topology
+@@ -26 +26,48 @@
+-      (∀ x : A, F x = f x) ∧ tsupport F ⊆ U := sorry
++      (∀ x : A, F x = f x) ∧ tsupport F ⊆ U := by
++  classical
++  letI : LocallyCompactSpace H := I.locallyCompactSpace
++  letI : LocallyCompactSpace M := ChartedSpace.locallyCompactSpace H M
++  haveI : NormalSpace M := inferInstance
++  obtain ⟨V, hVopen, hAV, hVU⟩ := normal_exists_closure_subset hA hU hAU
++  let t : M → Set (EuclideanSpace ℝ (Fin k)) := fun x =>
++    if hx : x ∈ A then {f ⟨x, hx⟩} else if x ∈ V then Set.univ else {0}
++  have ht : ∀ x, Convex ℝ (t x) := by
++    intro x
++    by_cases hxA : x ∈ A
++    · simp [t, hxA, convex_singleton]
++    · by_cases hxV : x ∈ V
++      · simp [t, hxA, hxV, convex_univ]
++      · simp [t, hxA, hxV, convex_singleton]
++  have hlocal :
++      ∀ x : M, ∃ W ∈ 𝓝 x, ∃ g : M → EuclideanSpace ℝ (Fin k),
++        ContMDiffOn I 𝓘(ℝ, EuclideanSpace ℝ (Fin k)) ∞ g W ∧
++          ∀ y ∈ W, g y ∈ t y := by
++    intro x
++    by_cases hxA : x ∈ A
++    · let px : A := ⟨x, hxA⟩
++      obtain ⟨W, hWopen, hxW, g, hg, hgf⟩ :=
++        (Function.isSmoothOn_iff_exists_local_extension.mp hf) px
++      refine ⟨W ∩ V,
++        Filter.inter_mem (hWopen.mem_nhds hxW) (hVopen.mem_nhds (hAV hxA)),
++        g, hg.mono Set.inter_subset_left, ?_⟩
++      intro y hy
++      by_cases hyA : y ∈ A
++      · simp only [t, dif_pos hyA, Set.mem_singleton_iff]
++        exact hgf ⟨y, hyA⟩ hy.1
++      · simp [t, hyA, hy.2]
++    · refine ⟨Aᶜ, hA.isOpen_compl.mem_nhds hxA, (fun _ => 0), contMDiffOn_const, ?_⟩
++      intro y hy
++      have hyA : y ∉ A := hy
++      by_cases hyV : y ∈ V
++      · simp [t, hyA, hyV]
++      · simp [t, hyA, hyV]
++  obtain ⟨F, hFt⟩ :=
++    exists_contMDiffMap_forall_mem_convex_of_local (n := (⊤ : ℕ∞)) I ht hlocal
++  refine ⟨F, ?_, ?_⟩
++  · intro x
++    simpa [t, x.property] using hFt x
++  · refine (closure_mono ?_).trans hVU
++    rw [Function.support_subset_iff']
++    intro x hxV
++    have hxA : x ∉ A := fun hx => hxV (hAV hx)
++    simpa [t, hxA, hxV] using hFt x
