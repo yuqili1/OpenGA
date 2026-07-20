@@ -14,11 +14,11 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 42,
+    "semanticCoverageFindings": 44,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 15,
-    "compiledPatchCandidates": 15
+    "lowRiskPatchCandidates": 16,
+    "compiledPatchCandidates": 16
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -71,6 +71,8 @@
           "sml.ch4.sec23.theorem-4-15",
           "sml.ch4.sec24.example-4-19",
           "sml.ch4.sec24.definition-4-24-extra-2",
+          "sml.ch4.sec25.theorem-4-26",
+          "sml.ch4.sec25.proposition-4-28",
           "sml.ch4.sec25.theorem-4-29",
           "sml.ch4.sec26.example-4-35",
           "sml.ch4.sec26.proposition-4-36",
@@ -484,6 +486,20 @@
         "finding": "The verified patch completes the current Lean statement under mathlib's local-normal-form definition of `Manifold.IsImmersion`. Lee instead assumes injectivity of the differential. The general bridge stated in `Definition_4_21_extra_1` is false for arbitrary manifolds with corners; this boundary-source, boundaryless-target theorem needs a correctly restricted specialized bridge before it covers Lee's original hypothesis."
       },
       "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch4.sec25.theorem-4-26",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_26.lean",
+      "declarations": ["IsSmoothLocalSection.apply_eq"],
+      "scope": "one of two direct sorry tokens in the task",
+      "proposal": "Project the defining right-inverse equation directly with `by exact hσ.2 x`; do not attempt the main local-section equivalence until its boundary assumptions are corrected.",
+      "semanticCoverage": {
+        "status": "unresolved",
+        "finding": "The verified patch closes only the definition-projection helper. The main equivalence is false for arbitrary models with corners: the inclusion of the closed half-line into the real line has surjective manifold derivative at its boundary point but cannot admit a local right inverse over any ambient open neighborhood of zero. Restore Lee's boundaryless source/target assumptions or formulate a boundary-compatible submersion notion before proving it."
+      },
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-26-local-section-apply.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },

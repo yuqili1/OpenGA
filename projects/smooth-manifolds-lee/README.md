@@ -79,10 +79,10 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All fifteen low-risk patch candidates have
+a statement or coverage problem. All sixteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Eight cover every direct `sorry` in their task, six intentionally cover
-only selected declarations and retain fifteen explicit residual `sorry` tokens, and
+checks. Eight cover every direct `sorry` in their task, seven intentionally cover
+only selected declarations and retain sixteen explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
@@ -111,6 +111,12 @@ boundary models (the half-space identity extends normally as `t ↦ max t 0`),
 and the open-submanifold restriction is still only represented by an
 `isLocalDiffeomorphOn` name check. Both issues remain explicit semantic findings.
 
+The Theorem 4.26 patch closes its elementary local-section equation helper, but
+the main equivalence is false for arbitrary models with corners: the closed
+half-line inclusion into the real line has surjective derivative at zero and no
+local right inverse on an ambient neighborhood. The same example invalidates
+Proposition 4.28's current open-map generalization.
+
 Theorem 4.29 also needs a statement correction before proof: Lee assumes its
 source and target manifolds have no boundary, while the Lean version permits
 arbitrary models with corners. Under that generalization a surjective map from
@@ -130,6 +136,7 @@ projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-local-normal-forms.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch
+projects/smooth-manifolds-lee/tasks/patches/theorem-4-26-local-section-apply.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
 ```
 

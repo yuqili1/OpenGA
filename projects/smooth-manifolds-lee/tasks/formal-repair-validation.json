@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 15,
-    "sourceFiles": 16,
-    "directSorryTokensBefore": 43,
-    "directSorryTokensReplaced": 28,
-    "directSorryTokensAfter": 15,
-    "changedDeclarations": 30,
-    "declarationsWithoutSorryAx": 30
+    "validatedCandidates": 16,
+    "sourceFiles": 17,
+    "directSorryTokensBefore": 45,
+    "directSorryTokensReplaced": 29,
+    "directSorryTokensAfter": 16,
+    "changedDeclarations": 31,
+    "declarationsWithoutSorryAx": 31
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -347,6 +347,27 @@
       ]
     },
     {
+      "taskId": "sml.ch4.sec25.theorem-4-26",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_26.lean",
+      "module": "SmoothManifoldsLee.Chap04.Sec04_25.Theorem_4_26",
+      "candidateCoverage": "partial",
+      "semanticCoverageStatus": "unresolved",
+      "sourceSha256": "d7ae9fbb113f4bebd58c6c8cf4726ed96df7eb22a898cb5103489a22cdd7a651",
+      "patchedSourceSha256": "9cc5fb6cff1f85a9790b8287c9c5209f39ad707f90724d8053852e791a2d5183",
+      "directSorryTokens": {"before": 2, "replacedByCandidate": 1, "after": 1},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/theorem-4-26-local-section-apply.patch",
+      "patchSha256": "f36dfe5d6f22ec1935ed8d27c871a8bf49ae97eec27825e0cae0321cfa73a7e9",
+      "declarations": [
+        {
+          "name": "IsSmoothLocalSection.apply_eq",
+          "proof": "by\n  exact hσ.2 x",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
       "taskId": "sml.ch5.sec28.proposition-5-2",
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
       "module": "SmoothManifoldsLee.Chap05.Sec05_28.Proposition_5_2",
@@ -477,8 +498,9 @@
   "limitations": [
     "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
-    "Six validated candidates are partial: their patched temporary files retain fifteen direct sorry tokens outside the candidate scope.",
+    "Seven validated candidates are partial: their patched temporary files retain sixteen direct sorry tokens outside the candidate scope.",
     "The Proposition 4.6 composition and finite-product local-diffeomorphism statements are verified; its ambient extended-chart equivalence remains unproved because it is false for boundary models, and the open-submanifold restriction remains semantically incomplete.",
+    "The Theorem 4.26 local-section equation helper is verified, but its main equivalence is false for arbitrary models with corners; the same boundary issue invalidates the current Proposition 4.28 open-map generalization.",
     "The Theorem 4.12 submersion and immersion normal forms are verified without using its remaining constant-rank owner hole; that one direct sorry token remains explicit.",
     "The Theorem 4.15 current Lean statement is fully proved, but coverage from Lee's differential-injectivity definition still needs a boundaryless-target bridge; the more general bridge currently stated in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv` is false for arbitrary targets with corners.",
     "The downstream Problem 4-3 module compiles with the Theorem 4.15 candidate but retains its own direct sorry in `constant_rank_boundary_local_coordinate_normal_form`.",

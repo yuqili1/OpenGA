@@ -7464,7 +7464,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.26 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 2 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 的局部截面定理对其约定下的无边界 `M,N` 正确；当前 Lean 将两者泛化到任意 `ModelWithCorners` 后主等价原样为假。反例是闭半轴到 `ℝ` 的包含：在边界的 `mfderiv` 为满射，但任何包含 0 的 `ℝ` 中开邻域都不可能有取值于闭半轴的右逆局部截面。隔离补丁已无 `sorryAx` 地闭合定义投影 `IsSmoothLocalSection.apply_eq`（2 个 direct `sorry` 中的 1 个）；主定理必须先恢复无边界/适当边界相容条件，不能直接补证明。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section25.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_26.lean
@@ -7551,7 +7551,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Proposition 4.28 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：开映射与商映射结论通过局部截面定理推出，而所导入 Theorem 4.26 的关键等价仍含 `sorry`；本文件虽无直接占位，证明依赖尚未闭合。
+  - 数学：Lee 对无边界流形的开映射/商映射结论正确；当前 Lean 以“`ContMDiff` 且 `mfderiv` 处处满射”定义任意带角模型间的光滑次浸入后，开映射结论为假：闭半轴到 `ℝ` 的包含满足该定义但不是开映射。现有 `toTopologicalSubmersion`、`isOpenMap` 和 `isQuotientMap` 通过含 `sorry` 且同样缺失边界限制的 Theorem 4.26 推出，因此既有 `sorryAx` 依赖也有 statement blocker；应先修正次浸入定义或限制源靶无边界。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section25.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Proposition_4_28.lean
