@@ -8729,7 +8729,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：光滑嵌入的像继承唯一光滑结构且原映射到像为微分同胚，是标准像子流形定理；Lean：像上诱导流形结构的存在性及相应微分同胚唯一性两处仍为 `sorry`。
+  - 数学：光滑嵌入的像继承唯一光滑结构且原映射到像为微分同胚，是标准像子流形定理；Lean：已验证补丁闭合现有两处 `sorry`，但第二条定理只证明固定像流形结构上的微分同胚唯一，并未比较两个候选光滑结构，因此教材所述的光滑结构唯一性仍缺少合适的最大图册或恒等微分同胚表述。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section28.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean

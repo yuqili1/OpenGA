@@ -9,14 +9,14 @@
     "directSorryTasks": 106,
     "directSorryTokens": 357,
     "reviewedRepairOwners": 26,
-    "semanticDesignBeforeProof": 3,
-    "lowRiskCompleteCandidates": 6,
+    "semanticDesignBeforeProof": 4,
+    "lowRiskCompleteCandidates": 7,
     "lowRiskPartialCandidates": 5,
-    "verifiedLowRiskCandidates": 11,
+    "verifiedLowRiskCandidates": 12,
     "uncompiledLowRiskCandidates": 0,
     "byTier": {
-      "A_low_risk_complete_candidate": 6,
-      "B_high_leverage_owner": 27,
+      "A_low_risk_complete_candidate": 7,
+      "B_high_leverage_owner": 26,
       "C_low_risk_partial_candidate": 2,
       "D_single_dependency_owner": 24,
       "E_standalone_or_unmapped": 47
@@ -76,8 +76,8 @@
       "directSorryTasks": 39,
       "directSorryTokens": 127,
       "byTier": {
-        "A_low_risk_complete_candidate": 2,
-        "B_high_leverage_owner": 6,
+        "A_low_risk_complete_candidate": 3,
+        "B_high_leverage_owner": 5,
         "C_low_risk_partial_candidate": 2,
         "D_single_dependency_owner": 10,
         "E_standalone_or_unmapped": 19
@@ -101,6 +101,70 @@
     "A low-risk patch is verified_compiled_no_sorryAx only after Lean 4.30.0 compilation and exact declaration-level axioms checks succeed; all others remain proposal_uncompiled."
   ],
   "queue": [
+    {
+      "taskId": "sml.ch5.sec28.proposition-5-2",
+      "chapter": 5,
+      "title": "Proposition 5.2",
+      "tier": "A_low_risk_complete_candidate",
+      "directSorryCount": 2,
+      "directSorryFiles": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
+          "directSorryCount": 2
+        }
+      ],
+      "reviewedDownstreamTaskIds": [
+        "sml.ch5.sec31.proposition-5-18",
+        "sml.ch5.sec35.example-5-45",
+        "sml.ch5.sec36.proposition-5-49",
+        "sml.ch5.sec37.problem-5-1"
+      ],
+      "reviewedRepairOwnerEvidence": "reviewed_reference_and_direct_source_imports",
+      "sourceModuleDirectImporterTaskIds": [
+        "sml.ch5.sec35.example-5-45",
+        "sml.ch5.sec36.proposition-5-49",
+        "sml.ch5.sec37.problem-5-1"
+      ],
+      "formalPendingSourceModuleDirectImporterTaskIds": [
+        "sml.ch5.sec35.example-5-45",
+        "sml.ch5.sec36.proposition-5-49",
+        "sml.ch5.sec37.problem-5-1"
+      ],
+      "referenceGraph": {
+        "directUnlockTaskIds": [
+          "sml.ch5.sec31.proposition-5-18"
+        ],
+        "transitiveUnlockTaskIds": [
+          "sml.ch5.sec31.proposition-5-18"
+        ],
+        "formalPendingTransitiveUnlockTaskIds": [
+          "sml.ch5.sec31.proposition-5-18"
+        ]
+      },
+      "reviewFlags": {
+        "semanticCoverageFinding": true,
+        "dependencyOrBuildFinding": false
+      },
+      "firstAction": "resolve_statement_or_coverage_before_proof",
+      "lowRiskCandidate": {
+        "taskId": "sml.ch5.sec28.proposition-5-2",
+        "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
+        "declarations": [
+          "smooth_embedding_range_has_induced_manifold_structure",
+          "image_diffeomorph_eq_of_comp_subtype_val"
+        ],
+        "scope": "all direct sorry tokens in the task",
+        "proposal": "Transport the domain charts and smooth groupoid across the range homeomorphism, transfer the immersion witnesses to the subtype inclusion, and prove fixed-structure diffeomorphism equality by extensionality.",
+        "semanticCoverage": {
+          "status": "unresolved",
+          "finding": "The textbook asserts uniqueness of the smooth structure on the image, while the second Lean theorem only proves uniqueness of two diffeomorphisms after one image manifold structure has already been fixed. A faithful uniqueness statement should compare maximal atlases or make the identity between two candidate structures a diffeomorphism."
+        },
+        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+      },
+      "rank": 1
+    },
     {
       "taskId": "sml.ch5.sec36.definition-5-36-extra-3",
       "chapter": 5,
@@ -155,7 +219,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 1
+      "rank": 2
     },
     {
       "taskId": "sml.ch5.sec30.definition-5-30-extra-3",
@@ -209,7 +273,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 2
+      "rank": 3
     },
     {
       "taskId": "sml.ch3.sec18.definition-3-18-extra-2",
@@ -252,7 +316,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 3
+      "rank": 4
     },
     {
       "taskId": "sml.ch1.sec2.definition-1-2-extra-5",
@@ -291,7 +355,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 4
+      "rank": 5
     },
     {
       "taskId": "sml.ch1.sec4.example-1-22",
@@ -330,7 +394,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 5
+      "rank": 6
     },
     {
       "taskId": "sml.ch2.sec8.remark-2-8-extra-1",
@@ -369,7 +433,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 6
+      "rank": 7
     },
     {
       "taskId": "sml.ch4.sec23.theorem-4-12",
@@ -451,7 +515,7 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 7
+      "rank": 8
     },
     {
       "taskId": "sml.ch5.sec36.theorem-5-51",
@@ -523,54 +587,6 @@
         "status": "verified_compiled_no_sorryAx",
         "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
       },
-      "rank": 8
-    },
-    {
-      "taskId": "sml.ch5.sec28.proposition-5-2",
-      "chapter": 5,
-      "title": "Proposition 5.2",
-      "tier": "B_high_leverage_owner",
-      "directSorryCount": 2,
-      "directSorryFiles": [
-        {
-          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
-          "directSorryCount": 2
-        }
-      ],
-      "reviewedDownstreamTaskIds": [
-        "sml.ch5.sec31.proposition-5-18",
-        "sml.ch5.sec35.example-5-45",
-        "sml.ch5.sec36.proposition-5-49",
-        "sml.ch5.sec37.problem-5-1"
-      ],
-      "reviewedRepairOwnerEvidence": "reviewed_reference_and_direct_source_imports",
-      "sourceModuleDirectImporterTaskIds": [
-        "sml.ch5.sec35.example-5-45",
-        "sml.ch5.sec36.proposition-5-49",
-        "sml.ch5.sec37.problem-5-1"
-      ],
-      "formalPendingSourceModuleDirectImporterTaskIds": [
-        "sml.ch5.sec35.example-5-45",
-        "sml.ch5.sec36.proposition-5-49",
-        "sml.ch5.sec37.problem-5-1"
-      ],
-      "referenceGraph": {
-        "directUnlockTaskIds": [
-          "sml.ch5.sec31.proposition-5-18"
-        ],
-        "transitiveUnlockTaskIds": [
-          "sml.ch5.sec31.proposition-5-18"
-        ],
-        "formalPendingTransitiveUnlockTaskIds": [
-          "sml.ch5.sec31.proposition-5-18"
-        ]
-      },
-      "reviewFlags": {
-        "semanticCoverageFinding": false,
-        "dependencyOrBuildFinding": false
-      },
-      "firstAction": "scope_proof_and_dependencies",
-      "lowRiskCandidate": null,
       "rank": 9
     },
     {

@@ -1,0 +1,129 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean
+@@ -8,0 +9,75 @@
++@[implicit_reducible]
++private def pullbackChartedSpace {H X Y : Type*} [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] [ChartedSpace H Y]
++    (e : X ≃ₜ Y) : ChartedSpace H X where
++  atlas := e.transOpenPartialHomeomorph '' atlas H Y
++  chartAt x := e.transOpenPartialHomeomorph (chartAt H (e x))
++  mem_chart_source x := by simp
++  chart_mem_atlas x := ⟨chartAt H (e x), chart_mem_atlas H (e x), rfl⟩
++
++@[simp]
++private theorem pullbackChartedSpace_chartAt {H X Y : Type*} [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] [ChartedSpace H Y]
++    (e : X ≃ₜ Y) (x : X) :
++    @chartAt H _ X _ (pullbackChartedSpace e) x =
++      e.transOpenPartialHomeomorph (chartAt H (e x)) := rfl
++
++private theorem pullback_transition {H X Y : Type*} [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] (e : X ≃ₜ Y)
++    (a b : OpenPartialHomeomorph Y H) :
++    (e.transOpenPartialHomeomorph a).symm ≫ₕ e.transOpenPartialHomeomorph b =
++      a.symm ≫ₕ b := by
++  apply OpenPartialHomeomorph.ext <;> simp [Function.comp_def, Set.ext_iff]
++
++@[implicit_reducible]
++private def pullbackHasGroupoid {H X Y : Type*} [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] [ChartedSpace H Y]
++    (e : X ≃ₜ Y) (G : StructureGroupoid H) [HasGroupoid Y G] :
++    @HasGroupoid H _ X _ (pullbackChartedSpace e) G := by
++  letI : ChartedSpace H X := pullbackChartedSpace e
++  exact ⟨by
++    rintro _ _ ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
++    rw [pullback_transition e a b]
++    exact G.compatible ha hb⟩
++
++private theorem pullback_mem_maximalAtlas {H X Y : Type*} [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] [ChartedSpace H Y]
++    (e : X ≃ₜ Y) (G : StructureGroupoid H)
++    {a : OpenPartialHomeomorph Y H} (ha : a ∈ G.maximalAtlas Y) :
++    let _ : ChartedSpace H X := pullbackChartedSpace e
++    e.transOpenPartialHomeomorph a ∈ G.maximalAtlas X := by
++  letI : ChartedSpace H X := pullbackChartedSpace e
++  change e.transOpenPartialHomeomorph a ∈ G.maximalAtlas X
++  rintro _ ⟨b, hb, rfl⟩
++  simpa only [pullback_transition e a b, pullback_transition e b a] using ha b hb
++
++private theorem contMDiff_pullbackHomeomorph
++    {𝕜 E H X Y : Type*} [NontriviallyNormedField 𝕜]
++    [NormedAddCommGroup E] [NormedSpace 𝕜 E] [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] [ChartedSpace H Y]
++    {I : ModelWithCorners 𝕜 E H} {n : ℕ∞ω} (e : X ≃ₜ Y) :
++    let _ : ChartedSpace H X := pullbackChartedSpace e
++    ContMDiff I I n e := by
++  letI : ChartedSpace H X := pullbackChartedSpace e
++  change ContMDiff I I n e
++  intro x
++  rw [contMDiffAt_iff_target]
++  refine ⟨e.continuous.continuousAt, ?_⟩
++  simpa [extChartAt, OpenPartialHomeomorph.extend, pullbackChartedSpace,
++    Function.comp_def] using (contMDiffAt_extChartAt (I := I) (x := x))
++
++private theorem contMDiff_pullbackHomeomorph_symm
++    {𝕜 E H X Y : Type*} [NontriviallyNormedField 𝕜]
++    [NormedAddCommGroup E] [NormedSpace 𝕜 E] [TopologicalSpace H]
++    [TopologicalSpace X] [TopologicalSpace Y] [ChartedSpace H Y]
++    {I : ModelWithCorners 𝕜 E H} {n : ℕ∞ω} (e : X ≃ₜ Y) :
++    let _ : ChartedSpace H X := pullbackChartedSpace e
++    ContMDiff I I n e.symm := by
++  letI : ChartedSpace H X := pullbackChartedSpace e
++  change ContMDiff I I n e.symm
++  intro y
++  rw [contMDiffAt_iff_target]
++  refine ⟨e.symm.continuous.continuousAt, ?_⟩
++  simpa [extChartAt, OpenPartialHomeomorph.extend, pullbackChartedSpace,
++    Function.comp_def] using (contMDiffAt_extChartAt (I := I) (x := y))
++
+@@ -44 +119,44 @@
+-      @IsInducedImageManifoldStructure 𝕜 _ E _ _ H _ M _ _ I E' _ _ H' _ J N _ _ F cs := sorry
++      @IsInducedImageManifoldStructure 𝕜 _ E _ _ H _ M _ _ I E' _ _ H' _ J N _ _ F cs := by
++  let h : N ≃ₜ Set.range F := hF.isEmbedding.toHomeomorph
++  let e : Set.range F ≃ₜ N := h.symm
++  let cs : ChartedSpace H' (Set.range F) := pullbackChartedSpace e
++  refine ⟨cs, ?_⟩
++  letI : ChartedSpace H' (Set.range F) := cs
++  letI : HasGroupoid (Set.range F) (contDiffGroupoid (∞ : ℕ∞ω) J) :=
++    pullbackHasGroupoid e (contDiffGroupoid (∞ : ℕ∞ω) J)
++  letI : IsManifold J (∞ : ℕ∞ω) (Set.range F) :=
++    IsManifold.mk' J (∞ : ℕ∞ω) (Set.range F)
++  unfold IsInducedImageManifoldStructure
++  dsimp only
++  refine ⟨inferInstance, ?_⟩
++  dsimp only
++  change Manifold.IsSmoothEmbedding J I (∞ : ℕ∞ω)
++      (Subtype.val : Set.range F → M) ∧
++    ∃ Φ : N ≃ₘ⟮J, J⟯ Set.range F, ∀ x, (Φ x : M) = F x
++  let Φ : N ≃ₘ⟮J, J⟯ Set.range F :=
++    Diffeomorph.mk e.symm.toEquiv
++      (contMDiff_pullbackHomeomorph_symm (I := J) (n := (∞ : ℕ∞ω)) e)
++      (contMDiff_pullbackHomeomorph (I := J) (n := (∞ : ℕ∞ω)) e)
++  refine ⟨?_, Φ, ?_⟩
++  · refine ⟨?_, Topology.IsEmbedding.subtypeVal⟩
++    obtain ⟨C, hC₁, hC₂, himm⟩ := hF.isImmersion
++    letI : NormedAddCommGroup C := hC₁
++    letI : NormedSpace 𝕜 C := hC₂
++    refine ⟨C, hC₁, hC₂, ?_⟩
++    intro p
++    let hp := himm (e p)
++    apply Manifold.IsImmersionAtOfComplement.mk_of_continuousAt
++      continuous_subtype_val.continuousAt hp.equiv
++      (e.transOpenPartialHomeomorph hp.domChart) hp.codChart
++    · simpa using hp.mem_domChart_source
++    · have hep : h (e p) = p := by
++        change h (h.symm p) = p
++        exact h.apply_symm_apply p
++      have heq : F (e p) = (p : M) := congrArg Subtype.val hep
++      simpa only [heq] using hp.mem_codChart_source
++    · exact pullback_mem_maximalAtlas e (contDiffGroupoid (∞ : ℕ∞ω) J)
++        hp.domChart_mem_maximalAtlas
++    · exact hp.codChart_mem_maximalAtlas
++    · simpa [e, h, OpenPartialHomeomorph.extend, Function.comp_def] using hp.writtenInCharts
++  · intro x
++    rfl
+@@ -55 +173,3 @@
+-    Φ = Ψ := sorry
++    Φ = Ψ := by
++  ext x
++  exact (hΦ x).trans (hΨ x).symm

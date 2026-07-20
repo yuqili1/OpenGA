@@ -14,11 +14,11 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 37,
+    "semanticCoverageFindings": 38,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 12,
-    "compiledPatchCandidates": 12
+    "lowRiskPatchCandidates": 13,
+    "compiledPatchCandidates": 13
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -77,6 +77,7 @@
       {
         "chapter": 5,
         "taskIds": [
+          "sml.ch5.sec28.proposition-5-2",
           "sml.ch5.sec29.remark-5-29-extra-3",
           "sml.ch5.sec30.example-5-15",
           "sml.ch5.sec31.example-5-19",
@@ -446,6 +447,23 @@
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },
     {
+      "taskId": "sml.ch5.sec28.proposition-5-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Proposition_5_2.lean",
+      "declarations": [
+        "smooth_embedding_range_has_induced_manifold_structure",
+        "image_diffeomorph_eq_of_comp_subtype_val"
+      ],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Transport the domain charts and smooth groupoid across the range homeomorphism, transfer the immersion witnesses to the subtype inclusion, and prove fixed-structure diffeomorphism equality by extensionality.",
+      "semanticCoverage": {
+        "status": "unresolved",
+        "finding": "The textbook asserts uniqueness of the smooth structure on the image, while the second Lean theorem only proves uniqueness of two diffeomorphisms after one image manifold structure has already been fixed. A faithful uniqueness statement should compare maximal atlases or make the identity between two candidate structures a diffeomorphism."
+      },
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
       "taskId": "sml.ch5.sec36.theorem-5-51",
       "sourceFiles": [
         "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_51/EuclideanHalfSlice.lean",
@@ -523,6 +541,7 @@
   "requiredCandidateValidation": [
     "Compile every changed module, plus any recorded integration module, under Lean 4.30.0 with the exact Lake-resolved dependency environment.",
     "Run `#print axioms` for every changed declaration and reject any result containing sorryAx.",
+    "Keep complete direct-sorry coverage separate from textbook semantic coverage; a compiled proof candidate does not resolve a recorded statement-design gap.",
     "Re-run the commit-pinned formal triage and the project review generator before changing formal_review status."
   ]
 }

@@ -271,6 +271,9 @@ const pendingTasks = dataset.tasks.filter(
   (task) => task.kind === 'leaf' && task.checks?.formal_review === 'pending'
 );
 const pendingTasksById = new Map(pendingTasks.map((task) => [task.id, task]));
+const taskModules = new Set(
+  dataset.tasks.flatMap((task) => taskLeanFiles(task).map(leanFileToModule))
+);
 
 if (humanReview.schema !== 'openga-review.formal-pending-human-review.v1') {
   throw new Error(`Unsupported human-review schema: ${humanReview.schema}`);
@@ -385,6 +388,16 @@ for (const candidate of humanReview.lowRiskPatchCandidates) {
   if (!supportedCandidateStatuses.has(candidate.status)) {
     throw new Error(`Patch candidate ${candidate.taskId} has an unsupported status`);
   }
+  if (candidate.semanticCoverage !== undefined) {
+    if (
+      candidate.semanticCoverage?.status !== 'unresolved' ||
+      typeof candidate.semanticCoverage?.finding !== 'string' ||
+      candidate.semanticCoverage.finding.length === 0 ||
+      !semanticFindingIds.includes(candidate.taskId)
+    ) {
+      throw new Error(`Patch candidate ${candidate.taskId} has invalid semantic-coverage data`);
+    }
+  }
   if (candidate.status === 'verified_compiled_no_sorryAx') {
     if (candidate.validationEvidence !== expectedRepairValidationPath) {
       throw new Error(`Verified patch candidate ${candidate.taskId} has no matching evidence path`);
@@ -431,6 +444,12 @@ for (const validation of repairValidation.candidates) {
     throw new Error(`Repair validation references a non-verified candidate: ${validation.taskId}`);
   }
   const task = pendingTasksById.get(validation.taskId);
+  const expectedSemanticCoverageStatus = candidate.semanticCoverage?.status;
+  if (
+    (validation.semanticCoverageStatus ?? undefined) !== expectedSemanticCoverageStatus
+  ) {
+    throw new Error(`Repair-validation semantic coverage does not match ${validation.taskId}`);
+  }
   const taskFiles = taskLeanFiles(task);
   const candidateFiles = patchCandidateLeanFiles(candidate);
   const sourceEntries = validationSourceFileEntries(validation);
@@ -546,6 +565,54 @@ for (const validation of repairValidation.candidates) {
     }
   } else if (validation.integrationCompilation !== undefined) {
     throw new Error(`Single-file repair validation has unexpected integration data: ${validation.taskId}`);
+  }
+  if (validation.downstreamCompilation !== undefined) {
+    const passed = validation.downstreamCompilation.passed;
+    const knownBaselineFailures = validation.downstreamCompilation.knownBaselineFailures;
+    if (
+      !Array.isArray(passed) ||
+      !Array.isArray(knownBaselineFailures) ||
+      passed.length + knownBaselineFailures.length === 0
+    ) {
+      throw new Error(`Invalid downstream-compilation evidence for ${validation.taskId}`);
+    }
+    const downstreamModules = new Set();
+    const sourceModules = new Set(sourceEntries.map((entry) => entry.module));
+    for (const result of passed) {
+      if (
+        typeof result.module !== 'string' ||
+        !taskModules.has(result.module) ||
+        sourceModules.has(result.module) ||
+        downstreamModules.has(result.module) ||
+        result.status !== 'passed' ||
+        result.exitCode !== 0 ||
+        typeof result.containsTransitiveSorryAx !== 'boolean' ||
+        (result.containsTransitiveSorryAx &&
+          (!Array.isArray(result.attributedTo) ||
+            result.attributedTo.length === 0 ||
+            new Set(result.attributedTo).size !== result.attributedTo.length ||
+            result.attributedTo.some((owner) => typeof owner !== 'string' || owner.length === 0))) ||
+        (!result.containsTransitiveSorryAx && result.attributedTo !== undefined)
+      ) {
+        throw new Error(`Invalid passing downstream module for ${validation.taskId}`);
+      }
+      downstreamModules.add(result.module);
+    }
+    for (const result of knownBaselineFailures) {
+      if (
+        typeof result.module !== 'string' ||
+        !taskModules.has(result.module) ||
+        sourceModules.has(result.module) ||
+        downstreamModules.has(result.module) ||
+        !['failed', 'blocked'].includes(result.status) ||
+        result.baselineReproduced !== true ||
+        typeof result.evidence !== 'string' ||
+        result.evidence.length === 0
+      ) {
+        throw new Error(`Invalid known baseline failure for ${validation.taskId}`);
+      }
+      downstreamModules.add(result.module);
+    }
   }
   if (!Array.isArray(validation.declarations) || validation.declarations.length === 0) {
     throw new Error(`Repair validation has no declarations for ${validation.taskId}`);
