@@ -6684,7 +6684,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Proposition 4.6 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 3 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 的复合、有限积、局部同胚/开映射及双射升级等条款是标准且正确的现代结论；Lean：隔离补丁已无 `sorryAx` 地闭合复合与有限积两条（3 个 direct `sorry` 中的 2 个）。但开子流形限制条款目前只有集合上的 `isLocalDiffeomorphOn` 名称检查，未构造限制映射，语义覆盖不完整；坐标判别 `isLocalDiffeomorph_iff_writtenInExtChartAt` 对带边界模型原样为假：半空间恒等映射在边界的扩展坐标法向分量是 `t ↦ max t 0`，在环境空间中非局部单射。应改用相对 model range 的局部微分同胚，或限制为 range 为全空间的无边界模型并补流形兼容性；故 formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section22.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean
@@ -7584,7 +7584,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.29 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 1 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 原定理中 `M,N` 按本书约定为无边界光滑流形，仅 `P` 明确允许带或不带边界；当前 Lean 将 `M,N` 泛化到任意 `ModelWithCorners` 后陈述为假。反例取两个闭半轴的离散并，分别以 `t ↦ t`、`t ↦ -t` 满射到 `ℝ`；各点微分满射，而 `F(t)=|t|` 不光滑但复合在两支上都等于光滑的 `t`。直译证明虽可编译，却通过仍含 `sorry` 的 Theorem 4.26 局部截面定理而带有 `sorryAx`；应先恢复 `M,N` 无边界限制并修复 Theorem 4.26，不能把当前 direct `sorry` 直接标为完成。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section25.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_29.lean

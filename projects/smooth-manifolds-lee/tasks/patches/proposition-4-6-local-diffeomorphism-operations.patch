@@ -1,0 +1,93 @@
+--- a/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean
++++ b/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean
+@@ -28,0 +29,9 @@
++private def partialDiffeomorphTrans
++    (Φ : PartialDiffeomorph I J M N n) (Ψ : PartialDiffeomorph J K N P n) :
++    PartialDiffeomorph I K M P n where
++  toPartialEquiv := Φ.toPartialEquiv.trans Ψ.toPartialEquiv
++  open_source := (Φ.toOpenPartialHomeomorph.trans Ψ.toOpenPartialHomeomorph).open_source
++  open_target := (Φ.toOpenPartialHomeomorph.trans Ψ.toOpenPartialHomeomorph).open_target
++  contMDiffOn_toFun := Ψ.contMDiffOn_toFun.comp' Φ.contMDiffOn_toFun
++  contMDiffOn_invFun := Φ.contMDiffOn_invFun.comp' Ψ.contMDiffOn_invFun
++
+@@ -34 +43,14 @@
+-    (hf : IsLocalDiffeomorph I J n f) : IsLocalDiffeomorph I K n (g ∘ f) := sorry
++    (hf : IsLocalDiffeomorph I J n f) : IsLocalDiffeomorph I K n (g ∘ f) := by
++  intro x
++  obtain ⟨Φ, hxΦ, hΦ⟩ := hf x
++  obtain ⟨Ψ, hfxΨ, hΨ⟩ := hg (f x)
++  refine ⟨partialDiffeomorphTrans Φ Ψ, ⟨hxΦ, ?_⟩, ?_⟩
++  · simp only [Set.mem_preimage, PartialEquiv.symm_symm]
++    rwa [← hΦ hxΦ]
++  · rintro y ⟨hyΦ, hyΨ⟩
++    have hyΨ' : f y ∈ Ψ.source := by
++      rw [hΦ hyΦ]
++      simpa only [PartialEquiv.symm_symm] using hyΨ
++    change g (f y) = Ψ (PartialEquiv.symm (PartialEquiv.symm Φ.toPartialEquiv) y)
++    rw [hΨ hyΨ', hΦ hyΦ]
++    simp only [PartialEquiv.symm_symm]
+@@ -53,0 +76,53 @@
++private lemma writtenInExtChartAt_pi_apply (x : ∀ i, M i) (y : ∀ i, E i) (i : ι) :
++    writtenInExtChartAt (ModelWithCorners.pi I) (ModelWithCorners.pi J) x
++        (fun z : ∀ i, M i ↦ fun i ↦ f i (z i)) y i =
++      writtenInExtChartAt (I i) (J i) (x i) (f i) (y i) := by
++  rfl
++
++private lemma contMDiffAt_pi_map (x : ∀ i, M i)
++    (hf : ∀ i, ContMDiffAt (I i) (J i) n (f i) (x i)) :
++    ContMDiffAt (ModelWithCorners.pi I) (ModelWithCorners.pi J) n
++      (fun z : ∀ i, M i ↦ fun i ↦ f i (z i)) x := by
++  rw [contMDiffAt_iff]
++  constructor
++  · rw [continuousAt_pi]
++    intro i
++    exact (hf i).continuousAt.comp (continuous_apply i).continuousAt
++  · rw [contDiffWithinAt_pi]
++    intro i
++    change ContDiffWithinAt 𝕜 n
++      (fun y ↦ writtenInExtChartAt (I i) (J i) (x i) (f i) (y i))
++      (Set.range (ModelWithCorners.pi I)) (extChartAt (ModelWithCorners.pi I) x x)
++    let w : E i → F i := writtenInExtChartAt (I i) (J i) (x i) (f i)
++    let pr : (∀ i, E i) →L[𝕜] E i := ContinuousLinearMap.proj i
++    have hi : ContDiffWithinAt 𝕜 n w (Set.range (I i)) (extChartAt (I i) (x i) (x i)) :=
++      (contMDiffAt_iff.mp (hf i)).2
++    have hpr : ContDiffWithinAt 𝕜 n pr (Set.range (ModelWithCorners.pi I))
++        (extChartAt (ModelWithCorners.pi I) x x) := pr.contDiff.contDiffWithinAt
++    have hmaps : Set.MapsTo pr (Set.range (ModelWithCorners.pi I)) (Set.range (I i)) := by
++      intro y hy
++      obtain ⟨z, rfl⟩ := hy
++      exact ⟨z i, rfl⟩
++    simpa only [Function.comp_apply, w, pr] using
++      hi.comp (extChartAt (ModelWithCorners.pi I) x x) hpr hmaps
++
++private def partialDiffeomorphPi
++    (Φ : ∀ i, PartialDiffeomorph (I i) (J i) (M i) (N i) n) :
++    PartialDiffeomorph (ModelWithCorners.pi I) (ModelWithCorners.pi J)
++      (∀ i, M i) (∀ i, N i) n where
++  toPartialEquiv := PartialEquiv.pi fun i ↦ (Φ i).toPartialEquiv
++  open_source := (OpenPartialHomeomorph.pi fun i ↦ (Φ i).toOpenPartialHomeomorph).open_source
++  open_target := (OpenPartialHomeomorph.pi fun i ↦ (Φ i).toOpenPartialHomeomorph).open_target
++  contMDiffOn_toFun := by
++    intro x hx
++    apply (contMDiffAt_pi_map (I := I) (J := J) (f := fun i ↦ Φ i) x ?_).contMDiffWithinAt
++    intro i
++    exact (Φ i).contMDiffOn_toFun.contMDiffAt
++      ((Φ i).open_source.mem_nhds (hx i (Set.mem_univ i)))
++  contMDiffOn_invFun := by
++    intro y hy
++    apply (contMDiffAt_pi_map (I := J) (J := I) (f := fun i ↦ (Φ i).symm) y ?_).contMDiffWithinAt
++    intro i
++    exact (Φ i).contMDiffOn_invFun.contMDiffAt
++      ((Φ i).open_target.mem_nhds (hy i (Set.mem_univ i)))
++
+@@ -60 +135,9 @@
+-      (fun x : ∀ i, M i ↦ fun i ↦ f i (x i)) := sorry
++      (fun x : ∀ i, M i ↦ fun i ↦ f i (x i)) := by
++  intro x
++  choose Φ hxΦ hΦ using fun i ↦ hf i (x i)
++  refine ⟨partialDiffeomorphPi Φ, ?_, ?_⟩
++  · intro i _
++    exact hxΦ i
++  · intro y hy
++    funext i
++    exact hΦ i (hy i (Set.mem_univ i))

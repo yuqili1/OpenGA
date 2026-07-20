@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 14,
-    "sourceFiles": 15,
-    "directSorryTokensBefore": 40,
-    "directSorryTokensReplaced": 26,
-    "directSorryTokensAfter": 14,
-    "changedDeclarations": 28,
-    "declarationsWithoutSorryAx": 28
+    "validatedCandidates": 15,
+    "sourceFiles": 16,
+    "directSorryTokensBefore": 43,
+    "directSorryTokensReplaced": 28,
+    "directSorryTokensAfter": 15,
+    "changedDeclarations": 30,
+    "declarationsWithoutSorryAx": 30
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -241,6 +241,33 @@
       ]
     },
     {
+      "taskId": "sml.ch4.sec22.proposition-4-6",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+      "module": "SmoothManifoldsLee.Chap04.Sec04_22.Proposition_4_6",
+      "candidateCoverage": "partial",
+      "semanticCoverageStatus": "unresolved",
+      "sourceSha256": "eccf79cbf51a84ad71ca462036aac69fcac9ea2b2bcff9db7f527fbc0f020088",
+      "patchedSourceSha256": "003d03e78f3ce284f18a9ada95dfa1004a5ff301035de0eb04a3fe6d49a14a53",
+      "directSorryTokens": {"before": 3, "replacedByCandidate": 2, "after": 1},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch",
+      "patchSha256": "e2cddf434f28d302f1c37f97866cce760ca3c13f1cfcd583e3ec20d78bb923f4",
+      "declarations": [
+        {
+          "name": "isLocalDiffeomorph_comp",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "isLocalDiffeomorph_pi",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
       "taskId": "sml.ch4.sec23.theorem-4-12",
       "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_23/Theorem_4_12.lean",
       "module": "SmoothManifoldsLee.Chap04.Sec04_23.Theorem_4_12",
@@ -450,7 +477,8 @@
   "limitations": [
     "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
-    "Five validated candidates are partial: their patched temporary files retain fourteen direct sorry tokens outside the candidate scope.",
+    "Six validated candidates are partial: their patched temporary files retain fifteen direct sorry tokens outside the candidate scope.",
+    "The Proposition 4.6 composition and finite-product local-diffeomorphism statements are verified; its ambient extended-chart equivalence remains unproved because it is false for boundary models, and the open-submanifold restriction remains semantically incomplete.",
     "The Theorem 4.12 submersion and immersion normal forms are verified without using its remaining constant-rank owner hole; that one direct sorry token remains explicit.",
     "The Theorem 4.15 current Lean statement is fully proved, but coverage from Lee's differential-injectivity definition still needs a boundaryless-target bridge; the more general bridge currently stated in `Definition_4_21_extra_1.is_immersion_iff_forall_injective_mfderiv` is false for arbitrary targets with corners.",
     "The downstream Problem 4-3 module compiles with the Theorem 4.15 candidate but retains its own direct sorry in `constant_rank_boundary_local_coordinate_normal_form`.",

@@ -14,11 +14,11 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 40,
+    "semanticCoverageFindings": 42,
     "dependencyOrBuildFindings": 39,
     "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 14,
-    "compiledPatchCandidates": 14
+    "lowRiskPatchCandidates": 15,
+    "compiledPatchCandidates": 15
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -67,9 +67,11 @@
         "taskIds": [
           "sml.ch4.sec21.definition-4-21-extra-1",
           "sml.ch4.sec21.exercise-4-3",
+          "sml.ch4.sec22.proposition-4-6",
           "sml.ch4.sec23.theorem-4-15",
           "sml.ch4.sec24.example-4-19",
           "sml.ch4.sec24.definition-4-24-extra-2",
+          "sml.ch4.sec25.theorem-4-29",
           "sml.ch4.sec26.example-4-35",
           "sml.ch4.sec26.proposition-4-36",
           "sml.ch4.sec26.proposition-4-40",
@@ -433,6 +435,23 @@
       "declarations": ["smooth_germ_derivation_at_map_mul"],
       "scope": "all direct sorry tokens in the task",
       "proposal": "Use `by exact v.leibniz f g`, matching the existing Derivation.leibniz API directly.",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch4.sec22.proposition-4-6",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+      "declarations": [
+        "isLocalDiffeomorph_comp",
+        "isLocalDiffeomorph_pi"
+      ],
+      "scope": "two of three direct sorry tokens in the task",
+      "proposal": "Compose the witnessing partial diffeomorphisms pointwise, and build the finite product witness from coordinatewise partial diffeomorphisms with explicit product smoothness proofs.",
+      "semanticCoverage": {
+        "status": "unresolved",
+        "finding": "The verified patch closes the composition and finite-product holes. The open-submanifold restriction remains only a name check without the restricted map, while the ambient extended-chart equivalence is false for boundary models: the identity of the one-dimensional half-space has normal coordinate extension `t ↦ max t 0` at the boundary, which is not locally injective. Use a local-diffeomorphism notion relative to model ranges, or impose boundaryless full-range models plus manifold compatibility."
+      },
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },

@@ -9,10 +9,10 @@
     "directSorryTasks": 106,
     "directSorryTokens": 357,
     "reviewedRepairOwners": 26,
-    "semanticDesignBeforeProof": 5,
+    "semanticDesignBeforeProof": 7,
     "lowRiskCompleteCandidates": 8,
-    "lowRiskPartialCandidates": 5,
-    "verifiedLowRiskCandidates": 13,
+    "lowRiskPartialCandidates": 6,
+    "verifiedLowRiskCandidates": 14,
     "uncompiledLowRiskCandidates": 0,
     "byTier": {
       "A_low_risk_complete_candidate": 8,
@@ -768,11 +768,27 @@
         ]
       },
       "reviewFlags": {
-        "semanticCoverageFinding": false,
+        "semanticCoverageFinding": true,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "scope_proof_and_dependencies",
-      "lowRiskCandidate": null,
+      "firstAction": "resolve_statement_or_coverage_before_proof",
+      "lowRiskCandidate": {
+        "taskId": "sml.ch4.sec22.proposition-4-6",
+        "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_22/Proposition_4_6.lean",
+        "declarations": [
+          "isLocalDiffeomorph_comp",
+          "isLocalDiffeomorph_pi"
+        ],
+        "scope": "two of three direct sorry tokens in the task",
+        "proposal": "Compose the witnessing partial diffeomorphisms pointwise, and build the finite product witness from coordinatewise partial diffeomorphisms with explicit product smoothness proofs.",
+        "semanticCoverage": {
+          "status": "unresolved",
+          "finding": "The verified patch closes the composition and finite-product holes. The open-submanifold restriction remains only a name check without the restricted map, while the ambient extended-chart equivalence is false for boundary models: the identity of the one-dimensional half-space has normal coordinate extension `t ↦ max t 0` at the boundary, which is not locally injective. Use a local-diffeomorphism notion relative to model ranges, or impose boundaryless full-range models plus manifold compatibility."
+        },
+        "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch",
+        "status": "verified_compiled_no_sorryAx",
+        "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+      },
       "rank": 12
     },
     {
@@ -819,10 +835,10 @@
         ]
       },
       "reviewFlags": {
-        "semanticCoverageFinding": false,
+        "semanticCoverageFinding": true,
         "dependencyOrBuildFinding": false
       },
-      "firstAction": "scope_proof_and_dependencies",
+      "firstAction": "resolve_statement_or_coverage_before_proof",
       "lowRiskCandidate": null,
       "rank": 13
     },
