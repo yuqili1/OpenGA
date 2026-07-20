@@ -79,9 +79,9 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All eighteen low-risk patch candidates have
+a statement or coverage problem. All nineteen low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Nine cover every direct `sorry` in their task, eight intentionally cover
+checks. Ten cover every direct `sorry` in their task, eight intentionally cover
 only selected declarations and retain eighteen explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
@@ -102,6 +102,11 @@ Euclidean space. The remaining right-inverse direction requires a smooth
 Hadamard decomposition of an arbitrary smooth function; the dependent
 linear-equivalence application is therefore also retained until that result is
 available without `sorryAx`.
+
+The Proposition 3.18 patch completes the smoothness proof for the tangent-bundle
+projection by reusing mathlib's canonical vector-bundle projection theorem. The
+`2n`-dimensional model remains represented structurally by `I.tangent`; this
+task does not introduce a separate finrank theorem.
 
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
@@ -145,6 +150,7 @@ The larger verified repairs are also preserved as replayable patches at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
+projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch

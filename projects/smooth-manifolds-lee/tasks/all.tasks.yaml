@@ -5391,7 +5391,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：切丛自然成为 2n 维光滑流形且投影光滑，图卡过渡函数证明正确；Lean：拓扑、图册与流形实例已核对，但投影光滑定理 `tangentBundle_contMDiff_proj` 仍含 `sorry`，2n 维也仅由模型类型隐含。
+  - 数学：切丛自然成为 2n 维光滑流形且投影光滑，陈述和图卡过渡函数论证符合现代定义；Lean：拓扑、图册与流形实例已核对，隔离补丁直接复用 `Bundle.contMDiff_proj (TangentSpace I)` 完整闭合 `tangentBundle_contMDiff_proj` 的唯一 direct `sorry`，fresh compile 与精确 axioms 检查通过且无 `sorryAx`；2n 维仍由模型 `I.tangent` 的乘积类型隐含，未另立 finrank 定理，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section16.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_18.lean

@@ -1,0 +1,6 @@
+--- a/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_18.lean
++++ b/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_18.lean
+@@ -28 +28,2 @@
+-    ContMDiff I.tangent I (∞ : ℕ∞ω) (TotalSpace.proj : TangentBundle I M → M) := sorry
++    ContMDiff I.tangent I (∞ : ℕ∞ω) (TotalSpace.proj : TangentBundle I M → M) := by
++  exact Bundle.contMDiff_proj (TangentSpace I)

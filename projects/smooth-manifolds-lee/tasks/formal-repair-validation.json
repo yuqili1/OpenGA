@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 18,
-    "sourceFiles": 19,
-    "directSorryTokensBefore": 61,
-    "directSorryTokensReplaced": 43,
+    "validatedCandidates": 19,
+    "sourceFiles": 20,
+    "directSorryTokensBefore": 62,
+    "directSorryTokensReplaced": 44,
     "directSorryTokensAfter": 18,
-    "changedDeclarations": 45,
-    "declarationsWithoutSorryAx": 45
+    "changedDeclarations": 46,
+    "declarationsWithoutSorryAx": 46
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -197,6 +197,26 @@
         {
           "name": "geometric_to_point_derivation_left_inv",
           "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec16.proposition-3-18",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Proposition_3_18.lean",
+      "module": "SmoothManifoldsLee.Chap03.Sec03_16.Proposition_3_18",
+      "candidateCoverage": "complete",
+      "sourceSha256": "f60d2bee624442d787cb18d0c5a0f3416d0ff69215110538050a4de0f939167c",
+      "patchedSourceSha256": "b55d1e638b20e600936909a0efff404cd84f2380c1f9eedaa9d981f4576cf824",
+      "directSorryTokens": {"before": 1, "replacedByCandidate": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch",
+      "patchSha256": "125626d9a5c6c709284b30ab15ba9e4b3e04ad387795e76b628f763331a63334",
+      "declarations": [
+        {
+          "name": "tangentBundle_contMDiff_proj",
+          "proof": "by\n  exact Bundle.contMDiff_proj (TangentSpace I)",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }
