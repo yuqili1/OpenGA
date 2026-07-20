@@ -1,0 +1,15 @@
+--- a/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean
++++ b/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean
+@@ -17 +17,11 @@
+-      (fun x : EuclideanHalfSpace n ↦ x.1) a).IsInvertible := sorry
++      (fun x : EuclideanHalfSpace n ↦ x.1) a).IsInvertible := by
++  have hmf :
++      mfderiv (𝓡∂ n) (𝓡 n) (fun x : EuclideanHalfSpace n ↦ x.1) a =
++        ContinuousLinearMap.id ℝ (TangentSpace (𝓡∂ n) a) := by
++    simpa using ((𝓡∂ n).hasMFDerivAt (x := a)).mfderiv
++  rw [hmf]
++  simpa using
++    (ContinuousLinearMap.isInvertible_equiv :
++      ((ContinuousLinearEquiv.refl ℝ (TangentSpace (𝓡∂ n) a) :
++          TangentSpace (𝓡∂ n) a ≃L[ℝ] TangentSpace (𝓡∂ n) a) :
++        TangentSpace (𝓡∂ n) a →L[ℝ] TangentSpace (𝓡∂ n) a).IsInvertible)

@@ -79,9 +79,9 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All twenty low-risk patch candidates have
+a statement or coverage problem. All twenty-one low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Ten cover every direct `sorry` in their task, nine intentionally cover
+checks. Eleven cover every direct `sorry` in their task, nine intentionally cover
 only selected declarations and retain twenty-two explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
@@ -115,6 +115,11 @@ remain. The curve declaration is mathematically correct but covers only the
 pointwise linear-algebra core of Lee's immersion criterion, not a complete
 `Manifold.IsImmersion` statement for an interval manifold, so that coverage gap
 remains explicit.
+
+The Lemma 3.11 patch completes the half-space inclusion derivative result. The
+model-map derivative is the identity continuous linear map at every half-space
+point, so the theorem's boundary equation is an unused but harmless stronger
+hypothesis; the exact axioms check is free of `sorryAx`.
 
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
@@ -159,6 +164,7 @@ The larger verified repairs are also preserved as replayable patches at:
 ```text
 projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch
 projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
+projects/smooth-manifolds-lee/tasks/patches/lemma-3-11-boundary-tangent-model.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch

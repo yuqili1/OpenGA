@@ -4923,7 +4923,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：半空间包含到 ℝⁿ 在边界点的微分仍是切空间同构，使用平滑延拓可证，结论正确；Lean：对应 `mfderiv_half_space_inclusion_isInvertible_of_boundary_eq_zero` 的唯一证明仍为 `sorry`。
+  - 数学：半空间模型包含到 ℝⁿ 的微分在每一点都是恒等连续线性同构，故边界点结论正确且实际不需要假设 `ha`；Lean：隔离补丁用 `ModelWithCorners.hasMFDerivAt` 将微分化为 `ContinuousLinearMap.id`，再由恒等连续线性等价证明可逆，完整闭合唯一 direct `sorry`；fresh compile 与精确 axioms 检查通过且无 `sorryAx`。任务图到 Proposition 3.12 的关系是教材引用边，后者当前既不 import 也不调用本声明，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section14.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean

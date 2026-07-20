@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 20,
-    "sourceFiles": 21,
-    "directSorryTokensBefore": 71,
-    "directSorryTokensReplaced": 49,
+    "validatedCandidates": 21,
+    "sourceFiles": 22,
+    "directSorryTokensBefore": 72,
+    "directSorryTokensReplaced": 50,
     "directSorryTokensAfter": 22,
-    "changedDeclarations": 51,
-    "declarationsWithoutSorryAx": 51
+    "changedDeclarations": 52,
+    "declarationsWithoutSorryAx": 52
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -197,6 +197,26 @@
         {
           "name": "geometric_to_point_derivation_left_inv",
           "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec14.lemma-3-11",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean",
+      "module": "SmoothManifoldsLee.Chap03.Sec03_14.Lemma_3_11",
+      "candidateCoverage": "complete",
+      "sourceSha256": "537068f334a92beb1043f8b464e85925b430916a058a32d7271d51de84e3c44e",
+      "patchedSourceSha256": "71092acbf5164e08fde613a7b6e2cc7c9b785701cdb6d4776a7702573efc01e1",
+      "directSorryTokens": {"before": 1, "replacedByCandidate": 1, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/lemma-3-11-boundary-tangent-model.patch",
+      "patchSha256": "92bae4749d8a2bed3722b0860b5ea27ac310d565a07923d2feba778f2c963366",
+      "declarations": [
+        {
+          "name": "mfderiv_half_space_inclusion_isInvertible_of_boundary_eq_zero",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/lemma-3-11-boundary-tangent-model.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }

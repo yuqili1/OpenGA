@@ -16,9 +16,9 @@
     "formalPendingTasksReviewed": 201,
     "semanticCoverageFindings": 45,
     "dependencyOrBuildFindings": 39,
-    "reviewedRepairOwners": 27,
-    "lowRiskPatchCandidates": 20,
-    "compiledPatchCandidates": 20
+    "reviewedRepairOwners": 28,
+    "lowRiskPatchCandidates": 21,
+    "compiledPatchCandidates": 21
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -319,6 +319,13 @@
       "evidence": "reviewed_reference_and_source_usage"
     },
     {
+      "ownerTaskId": "sml.ch3.sec14.lemma-3-11",
+      "downstreamTaskIds": [
+        "sml.ch3.sec14.proposition-3-12"
+      ],
+      "evidence": "reviewed_reference_graph"
+    },
+    {
       "ownerTaskId": "sml.ch5.sec36.definition-5-36-extra-3",
       "downstreamTaskIds": [
         "sml.ch5.sec30.corollary-5-14",
@@ -445,6 +452,16 @@
       "scope": "thirteen of fifteen direct sorry tokens in the task",
       "proposal": "Accept the thirteen axiom-clean directional-derivative, linearity, coordinate-recovery, and left-inverse proofs. Retain the right inverse and dependent linear-equivalence application until a smooth Hadamard decomposition is formalized.",
       "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch3.sec14.lemma-3-11",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_14/Lemma_3_11.lean",
+      "declarations": ["mfderiv_half_space_inclusion_isInvertible_of_boundary_eq_zero"],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Identify the model-map derivative with the identity continuous linear map using `ModelWithCorners.hasMFDerivAt`, then transfer invertibility from the identity continuous linear equivalence.",
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/lemma-3-11-boundary-tangent-model.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },

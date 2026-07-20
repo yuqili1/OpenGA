@@ -84,9 +84,9 @@
     "formalPendingTasksReviewed": 201,
     "semanticCoverageFindings": 45,
     "dependencyOrBuildFindings": 39,
-    "reviewedRepairOwners": 27,
-    "lowRiskPatchCandidates": 20,
-    "compiledPatchCandidates": 20
+    "reviewedRepairOwners": 28,
+    "lowRiskPatchCandidates": 21,
+    "compiledPatchCandidates": 21
   },
   "tasks": [
     {
