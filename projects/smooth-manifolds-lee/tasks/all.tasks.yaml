@@ -6508,7 +6508,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Example 4.2 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 9 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：有限乘积与欧氏坐标投影、曲线速度判据、切丛投影及标准旋转环面的结论均正确，术语符合现代定义；Lean：隔离补丁闭合 9 个 direct `sorry` 中的 5 个，包括欧氏投影的显式满射微分、曲线的一维线性判据及两个定义展开，fresh compile 与精确 axioms 检查通过且无 `sorryAx`；有限乘积投影、切丛投影的浸没性、环面 immersion 与像集仍待证。语义覆盖上，现有曲线声明只给 `mfderivWithin` 单射与速度非零的点态等价，`hJ`/`hγ` 未参与证明，并未形成区间流形上的完整 `Manifold.IsImmersion` 等价；Proposition 3.18 只是教材引用依赖，当前 Lean 文件既不 import 也不使用其声明，故 formal review 仍保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section21.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean

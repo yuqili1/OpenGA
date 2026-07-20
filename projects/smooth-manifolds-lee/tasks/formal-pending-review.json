@@ -14,11 +14,11 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 44,
+    "semanticCoverageFindings": 45,
     "dependencyOrBuildFindings": 39,
-    "reviewedRepairOwners": 26,
-    "lowRiskPatchCandidates": 19,
-    "compiledPatchCandidates": 19
+    "reviewedRepairOwners": 27,
+    "lowRiskPatchCandidates": 20,
+    "compiledPatchCandidates": 20
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -63,10 +63,11 @@
         ]
       },
       {
-        "chapter": 4,
-        "taskIds": [
-          "sml.ch4.sec21.definition-4-21-extra-1",
-          "sml.ch4.sec21.exercise-4-3",
+      "chapter": 4,
+      "taskIds": [
+        "sml.ch4.sec21.definition-4-21-extra-1",
+        "sml.ch4.sec21.example-4-2",
+        "sml.ch4.sec21.exercise-4-3",
           "sml.ch4.sec22.proposition-4-6",
           "sml.ch4.sec23.theorem-4-15",
           "sml.ch4.sec24.example-4-19",
@@ -309,6 +310,15 @@
       "evidence": "reviewed_reference_graph"
     },
     {
+      "ownerTaskId": "sml.ch4.sec21.example-4-2",
+      "downstreamTaskIds": [
+        "sml.ch4.sec24.example-4-17",
+        "sml.ch4.sec27.problem-4-12",
+        "sml.ch5.sec30.example-5-17"
+      ],
+      "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
       "ownerTaskId": "sml.ch5.sec36.definition-5-36-extra-3",
       "downstreamTaskIds": [
         "sml.ch5.sec30.corollary-5-14",
@@ -445,6 +455,26 @@
       "scope": "all direct sorry tokens in the task",
       "proposal": "Reuse the canonical smooth vector-bundle projection theorem with `by exact Bundle.contMDiff_proj (TangentSpace I)`.",
       "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch4.sec21.example-4-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean",
+      "declarations": [
+        "euclidean_first_projection_apply",
+        "euclidean_first_projection_isSmoothSubmersion",
+        "smooth_curve_injective_mfderivWithin_iff_forall_velocityWithin_ne_zero",
+        "torus_revolution_map_apply",
+        "mem_torus_revolution_surface_iff"
+      ],
+      "scope": "five of nine direct sorry tokens in the task",
+      "proposal": "Use definitional reduction for the three coordinate/formula lemmas, realize the Euclidean head projection as an explicitly surjective continuous linear map, and prove the curve criterion as the injectivity test for a real-linear map on the vector `1`.",
+      "semanticCoverage": {
+        "status": "unresolved",
+        "finding": "The repaired curve declaration proves only the pointwise linear-algebra equivalence between injectivity of `mfderivWithin` and nonzero velocity. Its interval smoothness and unique-differentiability hypotheses are unused, and it does not state the textbook's full `Manifold.IsImmersion` equivalence for an interval manifold or subtype. Add that bridge before treating the curve portion as semantically complete."
+      },
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     },

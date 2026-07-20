@@ -79,10 +79,10 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All nineteen low-risk patch candidates have
+a statement or coverage problem. All twenty low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Ten cover every direct `sorry` in their task, eight intentionally cover
-only selected declarations and retain eighteen explicit residual `sorry` tokens, and
+checks. Ten cover every direct `sorry` in their task, nine intentionally cover
+only selected declarations and retain twenty-two explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
 toolchain metadata, and axioms results are recorded at:
@@ -107,6 +107,14 @@ The Proposition 3.18 patch completes the smoothness proof for the tangent-bundle
 projection by reusing mathlib's canonical vector-bundle projection theorem. The
 `2n`-dimensional model remains represented structurally by `I.tangent`; this
 task does not introduce a separate finrank theorem.
+
+The Example 4.2 patch closes five of nine direct holes: the Euclidean head
+projection and its submersion proof, the one-dimensional velocity criterion,
+and two definitional torus formulas. Four larger projection/torus arguments
+remain. The curve declaration is mathematically correct but covers only the
+pointwise linear-algebra core of Lee's immersion criterion, not a complete
+`Manifold.IsImmersion` statement for an interval manifold, so that coverage gap
+remains explicit.
 
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
@@ -149,6 +157,7 @@ the boundaryless target used by Theorem 4.15, is still required.
 The larger verified repairs are also preserved as replayable patches at:
 
 ```text
+projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch
 projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch

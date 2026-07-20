@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 19,
-    "sourceFiles": 20,
-    "directSorryTokensBefore": 62,
-    "directSorryTokensReplaced": 44,
-    "directSorryTokensAfter": 18,
-    "changedDeclarations": 46,
-    "declarationsWithoutSorryAx": 46
+    "validatedCandidates": 20,
+    "sourceFiles": 21,
+    "directSorryTokensBefore": 71,
+    "directSorryTokensReplaced": 49,
+    "directSorryTokensAfter": 22,
+    "changedDeclarations": 51,
+    "declarationsWithoutSorryAx": 51
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -217,6 +217,51 @@
         {
           "name": "tangentBundle_contMDiff_proj",
           "proof": "by\n  exact Bundle.contMDiff_proj (TangentSpace I)",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch4.sec21.example-4-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean",
+      "module": "SmoothManifoldsLee.Chap04.Sec04_21.Example_4_2",
+      "candidateCoverage": "partial",
+      "semanticCoverageStatus": "unresolved",
+      "sourceSha256": "59b07ca84915c750c64d8ad30251437b87c40bc917ff21be45e4badfbe9020d6",
+      "patchedSourceSha256": "a408816cfb4a2214896c9d224e48e2263464e62edc1cd17585457623896a55ac",
+      "directSorryTokens": {"before": 9, "replacedByCandidate": 5, "after": 4},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
+      "patchSha256": "2e19876ad85d40778e074d3ffabc3effdff2d4e9dddb65ea2c2ec3e79f3c26d5",
+      "declarations": [
+        {
+          "name": "euclidean_first_projection_apply",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "euclidean_first_projection_isSmoothSubmersion",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "smooth_curve_injective_mfderivWithin_iff_forall_velocityWithin_ne_zero",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "torus_revolution_map_apply",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "mem_torus_revolution_surface_iff",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }

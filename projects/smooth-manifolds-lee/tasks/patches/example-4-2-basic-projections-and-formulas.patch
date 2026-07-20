@@ -1,0 +1,80 @@
+--- a/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean
++++ b/SmoothManifoldsLee/Chap04/Sec04_21/Example_4_2.lean
+@@ -44 +44 @@
+-    euclidean_first_projection n k x i = x (Fin.castLE (Nat.le_add_right n k) i) := sorry
++    euclidean_first_projection n k x i = x (Fin.castLE (Nat.le_add_right n k) i) := rfl
+@@ -49 +49,36 @@
+-    Manifold.IsSmoothSubmersion (𝓡 (n + k)) (𝓡 n) (euclidean_first_projection n k) := sorry
++    Manifold.IsSmoothSubmersion (𝓡 (n + k)) (𝓡 n) (euclidean_first_projection n k) := by
++  let L : EuclideanSpace ℝ (Fin (n + k)) →L[ℝ] EuclideanSpace ℝ (Fin n) :=
++    { toFun := euclidean_first_projection n k
++      map_add' := by
++        intro x y
++        ext i
++        simp [euclidean_first_projection]
++      map_smul' := by
++        intro c x
++        ext i
++        simp [euclidean_first_projection]
++      cont := by
++        have hcoord :
++            Continuous fun x : EuclideanSpace ℝ (Fin (n + k)) =>
++              fun i : Fin n ↦ x (Fin.castLE (Nat.le_add_right n k) i) :=
++          continuous_pi fun i ↦
++            PiLp.continuous_apply (p := 2) (β := fun _ : Fin (n + k) ↦ ℝ)
++              (Fin.castLE (Nat.le_add_right n k) i)
++        simpa [euclidean_first_projection] using
++          (PiLp.continuous_toLp 2 (fun _ : Fin n ↦ ℝ)).comp hcoord }
++  refine ⟨?_, ?_⟩
++  · simpa [L] using
++      (L.contMDiff : ContMDiff (𝓡 (n + k)) (𝓡 n) ∞ L)
++  · intro x
++    rw [mfderiv_eq_fderiv]
++    have hderiv : fderiv ℝ (euclidean_first_projection n k) x = L := by
++      simpa [L, euclidean_first_projection] using (L.hasFDerivAt (x := x)).fderiv
++    rw [hderiv]
++    intro y
++    change EuclideanSpace ℝ (Fin n) at y
++    let z : EuclideanSpace ℝ (Fin (n + k)) :=
++      WithLp.toLp 2 (Fin.append y (fun _ : Fin k ↦ (0 : ℝ)))
++    refine ⟨z, ?_⟩
++    change L z = y
++    ext i
++    simp [L, euclidean_first_projection, z]
+@@ -66 +101,29 @@
+-      ∀ t ∈ J, curve_velocityWithin I γ J t ≠ 0 := sorry
++      ∀ t ∈ J, curve_velocityWithin I γ J t ≠ 0 := by
++  constructor
++  · intro hinj t ht hzero
++    change (mfderivWithin 𝓘(ℝ) I γ J t) 1 = 0 at hzero
++    have heq :
++        (mfderivWithin 𝓘(ℝ) I γ J t) 1 =
++          (mfderivWithin 𝓘(ℝ) I γ J t) 0 :=
++      hzero.trans (map_zero _).symm
++    have hone : (1 : ℝ) = 0 :=
++      hinj t ht heq
++    exact one_ne_zero hone
++  · intro hvelocity t ht x y hxy
++    change ℝ at x y
++    let L := mfderivWithin 𝓘(ℝ) I γ J t
++    have hLone : L 1 ≠ 0 := by
++      have hvelocity' := hvelocity t ht
++      change L 1 ≠ 0 at hvelocity'
++      exact hvelocity'
++    have hdiff : L (x - y) = 0 := by
++      calc
++        L (x - y) = L x - L y := map_sub L x y
++        _ = 0 := sub_eq_zero.mpr hxy
++    have hsmul : (x - y) • L 1 = 0 := by
++      calc
++        (x - y) • L 1 = L ((x - y) • (1 : ℝ)) := (map_smul L (x - y) 1).symm
++        _ = L (x - y) := by rw [smul_eq_mul, mul_one]
++        _ = 0 := hdiff
++    have hxyzero : x - y = 0 := (smul_eq_zero.mp hsmul).resolve_right hLone
++    exact sub_eq_zero.mp hxyzero
+@@ -100 +163 @@
+-          Real.sin (2 * Real.pi * p 0)] := sorry
++          Real.sin (2 * Real.pi * p 0)] := rfl
+@@ -111 +174 @@
+-      (Real.sqrt (x 0 ^ 2 + x 1 ^ 2) - 2) ^ 2 + x 2 ^ 2 = 1 := sorry
++      (Real.sqrt (x 0 ^ 2 + x 1 ^ 2) - 2) ^ 2 + x 2 ^ 2 = 1 := Iff.rfl
