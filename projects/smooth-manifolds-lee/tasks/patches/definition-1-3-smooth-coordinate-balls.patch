@@ -1,0 +1,20 @@
+--- a/SmoothManifoldsLee/Chap01/Sec01_03/Definition_1_3_extra_1.lean
++++ b/SmoothManifoldsLee/Chap01/Sec01_03/Definition_1_3_extra_1.lean
+@@ -10 +10 @@
+-open scoped Manifold Topology
++open scoped ContDiff Manifold Topology
+@@ -16 +16 @@
+-variable [IsManifold (modelWithCornersSelf ℝ E) (⊤ : WithTop ℕ∞) M]
++variable [IsManifold (modelWithCornersSelf ℝ E) ∞ M]
+@@ -22 +22 @@
+-    [IsManifold (modelWithCornersSelf ℝ E) (⊤ : WithTop ℕ∞) M] (B : Set M) : Prop :=
++    [IsManifold (modelWithCornersSelf ℝ E) ∞ M] (B : Set M) : Prop :=
+@@ -24 +24 @@
+-    φ ∈ IsManifold.maximalAtlas (modelWithCornersSelf ℝ E) (⊤ : WithTop ℕ∞) M ∧
++    φ ∈ IsManifold.maximalAtlas (modelWithCornersSelf ℝ E) ∞ M ∧
+@@ -32 +32 @@
+-    [IsManifold (modelWithCornersSelf ℝ E) (⊤ : WithTop ℕ∞) M] (B : Set M) : Prop :=
++    [IsManifold (modelWithCornersSelf ℝ E) ∞ M] (B : Set M) : Prop :=
+@@ -34 +34 @@
+-    chart ∈ IsManifold.maximalAtlas (modelWithCornersSelf ℝ E) (⊤ : WithTop ℕ∞) M ∧
++    chart ∈ IsManifold.maximalAtlas (modelWithCornersSelf ℝ E) ∞ M ∧

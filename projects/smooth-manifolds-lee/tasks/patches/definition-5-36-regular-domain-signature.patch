@@ -1,0 +1,8 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_2.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_2.lean
+@@ -25 +25,4 @@
+-class Set.IsRegularDomain (S : Set M) [SmoothManifoldWithBoundary dimM S] : Prop where
++class Set.IsRegularDomain (S : Set M)
++    [FiniteDimensional ℝ E]
++    [IsManifold I ∞ M]
++    [SmoothManifoldWithBoundary dimM S] : Prop where

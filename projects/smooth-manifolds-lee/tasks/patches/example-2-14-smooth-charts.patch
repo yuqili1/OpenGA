@@ -1,0 +1,77 @@
+--- a/SmoothManifoldsLee/Chap02/Sec02_09/Example_2_14.lean
++++ b/SmoothManifoldsLee/Chap02/Sec02_09/Example_2_14.lean
+@@ -112,3 +112,4 @@
+-/-- A smooth chart in the maximal atlas is smooth as a map from its source subtype to its target
+-subtype. -/
+-theorem smoothChart_contMDiff_toHomeomorphSourceTarget
++/-- A chart in a `C^n` maximal atlas, with `∞ ≤ n`, is smooth as a map from its source subtype to
++its target subtype. -/
++theorem smoothChart_contMDiff_toHomeomorphSourceTarget_of_le
++    {n : ℕ∞ω}
+@@ -118,2 +119,3 @@
+-    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I (⊤ : ℕ∞ω) M]
+-    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I (⊤ : ℕ∞ω) M) :
++    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I n M]
++    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I n M)
++    (hn : ∞ ≤ n) :
+@@ -138 +140 @@
+-      (I := I) (n := (ω : ℕ∞ω)) (e := e) he x.2).of_le (by simp)
++      (I := I) (n := n) (e := e) he x.2).of_le hn
+@@ -140,5 +142,2 @@
+--- Proof sketch: apply the symmetric maximal-atlas smoothness theorem to `e`, then transfer it to
+--- the inverse homeomorphism on the target and source subtypes.
+-/-- The inverse of a smooth chart in the maximal atlas is smooth between the target and source
+-subtypes. -/
+-theorem smoothChart_symm_contMDiff_toHomeomorphSourceTarget
++/-- Compatibility wrapper for an analytic chart in the maximal atlas. -/
++theorem smoothChart_contMDiff_toHomeomorphSourceTarget
+@@ -150,0 +150,18 @@
++      (fun x : (⟨e.source, e.open_source⟩ : TopologicalSpace.Opens M) ↦
++        show (⟨e.target, e.open_target⟩ : TopologicalSpace.Opens H) from
++          e.toHomeomorphSourceTarget x) :=
++  smoothChart_contMDiff_toHomeomorphSourceTarget_of_le e he (by simp)
++
++-- Proof sketch: apply the symmetric maximal-atlas smoothness theorem to `e`, then transfer it to
++-- the inverse homeomorphism on the target and source subtypes.
++/-- The inverse of a chart in a `C^n` maximal atlas, with `∞ ≤ n`, is smooth between the target and
++source subtypes. -/
++theorem smoothChart_symm_contMDiff_toHomeomorphSourceTarget_of_le
++    {n : ℕ∞ω}
++    {H : Type uH} [TopologicalSpace H]
++    {E : Type uE} [NormedAddCommGroup E] [NormedSpace ℝ E]
++    {I : ModelWithCorners ℝ E H}
++    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I n M]
++    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I n M)
++    (hn : ∞ ≤ n) :
++    ContMDiff I I ∞
+@@ -168 +185,14 @@
+-      (I := I) (n := (ω : ℕ∞ω)) (e := e) he y.2).of_le (by simp)
++      (I := I) (n := n) (e := e) he y.2).of_le hn
++
++/-- Compatibility wrapper for the inverse of an analytic chart in the maximal atlas. -/
++theorem smoothChart_symm_contMDiff_toHomeomorphSourceTarget
++    {H : Type uH} [TopologicalSpace H]
++    {E : Type uE} [NormedAddCommGroup E] [NormedSpace ℝ E]
++    {I : ModelWithCorners ℝ E H}
++    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I (⊤ : ℕ∞ω) M]
++    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I (⊤ : ℕ∞ω) M) :
++    ContMDiff I I ∞
++      (fun y : (⟨e.target, e.open_target⟩ : TopologicalSpace.Opens H) ↦
++        show (⟨e.source, e.open_source⟩ : TopologicalSpace.Opens M) from
++          e.toHomeomorphSourceTarget.symm y) :=
++  smoothChart_symm_contMDiff_toHomeomorphSourceTarget_of_le e he (by simp)
+@@ -176,2 +206,2 @@
+-    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I (⊤ : ℕ∞ω) M]
+-    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I (⊤ : ℕ∞ω) M) :
++    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
++    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I ∞ M) :
+@@ -181,2 +211,2 @@
+-  contMDiff_toFun := smoothChart_contMDiff_toHomeomorphSourceTarget e he
+-  contMDiff_invFun := smoothChart_symm_contMDiff_toHomeomorphSourceTarget e he
++  contMDiff_toFun := smoothChart_contMDiff_toHomeomorphSourceTarget_of_le e he le_rfl
++  contMDiff_invFun := smoothChart_symm_contMDiff_toHomeomorphSourceTarget_of_le e he le_rfl
+@@ -191,2 +221,2 @@
+-    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I (⊤ : ℕ∞ω) M]
+-    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I (⊤ : ℕ∞ω) M)
++    {M : Type uM} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
++    (e : OpenPartialHomeomorph M H) (he : e ∈ IsManifold.maximalAtlas I ∞ M)

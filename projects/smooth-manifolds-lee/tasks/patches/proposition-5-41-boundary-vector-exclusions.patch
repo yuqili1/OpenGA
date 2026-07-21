@@ -1,0 +1,12 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_41.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_41.lean
+@@ -86 +86,3 @@
+-    ¬ (IsBoundaryTangentVector p v ∧ IsInwardPointing p v) := sorry
++    ¬ (IsBoundaryTangentVector p v ∧ IsInwardPointing p v) := by
++  rintro ⟨hv, hin⟩
++  exact hin.not_isBoundaryTangentVector hv
+@@ -96 +98,3 @@
+-    ¬ (IsBoundaryTangentVector p v ∧ IsOutwardPointing p v) := sorry
++    ¬ (IsBoundaryTangentVector p v ∧ IsOutwardPointing p v) := by
++  rintro ⟨hv, hout⟩
++  exact hout.not_isBoundaryTangentVector hv

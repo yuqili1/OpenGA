@@ -1,0 +1,9 @@
+--- a/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_9.lean
++++ b/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_9.lean
+@@ -629,0 +630,6 @@
++/-- Problem 1-9 (3): compactness and the standard affine atlas give `ℂPⁿ` the
++second-countability required of a topological manifold. -/
++instance complexProjectiveSpaceSecondCountableTopology (n : ℕ) :
++    SecondCountableTopology (ℂP[n]) :=
++  ChartedSpace.secondCountable_of_sigmaCompact (EuclideanSpace ℂ (Fin n)) (ℂP[n])
++

@@ -1,0 +1,53 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_4.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_4.lean
+@@ -8 +8 @@
+-open scoped Manifold
++open scoped ContDiff Manifold
+@@ -75 +75 @@
+-    {M : Type*} [TopologicalSpace M] [ChartedSpace ℝ M] [IsManifold 𝓘(ℝ) ⊤ M]
++    {M : Type*} [TopologicalSpace M] [ChartedSpace ℝ M] [IsManifold 𝓘(ℝ) ∞ M]
+@@ -139 +139 @@
+-    {M : Type*} [TopologicalSpace M] [ChartedSpace ℝ M] [IsManifold 𝓘(ℝ) ⊤ M]
++    {M : Type*} [TopologicalSpace M] [ChartedSpace ℝ M] [IsManifold 𝓘(ℝ) ∞ M]
+@@ -147,8 +147,9 @@
+-/-- Problem 5-4: the image of the figure-eight curve from Example 4.19 is not an embedded curve,
+-so in particular it is not an embedded submanifold of `ℝ²`. This is a statement about the image
+-subset itself, not merely about whether the parametrization `figureEightCurve` is an embedding. -/
+-theorem figureEightCurve_image_not_embedded_curve :
+-    ¬ (Set.range figureEightCurve).AdmitsEmbeddedCurveStructure := by
+-  intro hEmbeddedCurve
+-  rcases hEmbeddedCurve with ⟨_, _, hEmbedded⟩
+-  let _ : IsEmbeddedSubmanifold 𝓘(ℝ, Plane) 𝓘(ℝ) (Set.range figureEightCurve) := hEmbedded
++/-- Problem 5-4: the image of the figure-eight curve cannot carry a smooth `1`-manifold structure
++with its subspace topology. -/
++theorem figureEightCurve_image_not_smooth_curve_manifold :
++    ¬ ∃ _ : ChartedSpace ℝ (Set.range figureEightCurve),
++        IsManifold 𝓘(ℝ) ∞ (Set.range figureEightCurve) := by
++  intro hSmoothCurve
++  rcases hSmoothCurve with ⟨curveCharts, curveManifold⟩
++  let _ : ChartedSpace ℝ (Set.range figureEightCurve) := curveCharts
++  let _ : IsManifold 𝓘(ℝ) ∞ (Set.range figureEightCurve) := curveManifold
+@@ -158,3 +159,3 @@
+-    -- The embedded-submanifold structure equips the subtype with the induced subspace topology.
+-    refine hEmbedded.isSmoothEmbedding_subtype_val.isEmbedding.isInducing.continuous_iff.2 ?_
+-    simpa [liftedCurve, Function.comp] using figureEightCurve_continuous
++    -- The range subtype has the induced topology, so codomain restriction preserves continuity.
++    simpa [liftedCurve] using
++      figureEightCurve_continuous.subtype_mk (fun t ↦ Set.mem_range_self t)
+@@ -172 +173 @@
+-      hEmbedded.isSmoothEmbedding_subtype_val.isEmbedding.comp hLiftedEmbedding
++      Topology.IsEmbedding.subtypeVal.comp hLiftedEmbedding
+@@ -173,0 +175,13 @@
++
++/-- Problem 5-4: the image of the figure-eight curve from Example 4.19 is not an embedded curve,
++so in particular it is not an embedded submanifold of `ℝ²`. This is a statement about the image
++subset itself, not merely about whether the parametrization `figureEightCurve` is an embedding. -/
++theorem figureEightCurve_image_not_embedded_curve :
++    ¬ (Set.range figureEightCurve).AdmitsEmbeddedCurveStructure := by
++  intro hEmbeddedCurve
++  rcases hEmbeddedCurve with ⟨curveCharts, curveManifold, _⟩
++  let _ : ChartedSpace ℝ (Set.range figureEightCurve) := curveCharts
++  let _ : IsManifold 𝓘(ℝ) (⊤ : ℕ∞ω) (Set.range figureEightCurve) := curveManifold
++  let _ : IsManifold 𝓘(ℝ) ∞ (Set.range figureEightCurve) :=
++    IsManifold.of_le (m := ∞) (n := (⊤ : ℕ∞ω)) le_top
++  exact figureEightCurve_image_not_smooth_curve_manifold ⟨inferInstance, inferInstance⟩

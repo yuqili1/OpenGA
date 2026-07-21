@@ -1,0 +1,11 @@
+--- a/SmoothManifoldsLee/Chap03/Sec03_16/Exercise_3_19.lean
++++ b/SmoothManifoldsLee/Chap03/Sec03_16/Exercise_3_19.lean
+@@ -5 +5 @@
+-open scoped Manifold
++open scoped ContDiff Manifold
+@@ -13 +13 @@
+-  [IsManifold (𝓡∂ n) ⊤ M]
++  [IsManifold (𝓡∂ n) ∞ M]
+@@ -19 +19 @@
+-#synth IsManifold (𝓡∂ n).tangent ⊤ (TangentBundle (𝓡∂ n) M)
++#synth IsManifold (𝓡∂ n).tangent ∞ (TangentBundle (𝓡∂ n) M)

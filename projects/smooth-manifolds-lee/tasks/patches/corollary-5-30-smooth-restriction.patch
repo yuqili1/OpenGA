@@ -1,0 +1,48 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_32/Corollary_5_30.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_32/Corollary_5_30.lean
+@@ -6 +6 @@
+-open scoped Manifold Topology
++open scoped ContDiff Manifold Topology
+@@ -11,0 +12 @@
++variable {n : ℕ∞ω}
+@@ -27,0 +29 @@
++omit [IsManifold I ⊤ M] [IsManifold J ⊤ S] [IsManifold K ⊤ N] in
+@@ -31,2 +33,2 @@
+-    (hS : IsSmoothEmbedding J I ⊤ (Subtype.val : S → M))
+-    {F : N → M} (hF : ContMDiff K I ⊤ F) (hFS : ∀ x, F x ∈ S) :
++    (hS : IsSmoothEmbedding J I n (Subtype.val : S → M))
++    {F : N → M} (hF : ContMDiff K I n F) (hFS : ∀ x, F x ∈ S) :
+@@ -38,0 +41 @@
++omit [IsManifold I ⊤ M] [IsManifold J ⊤ S] [TopologicalSpace N] in
+@@ -43 +46 @@
+-    (hImm : IsImmersionAt J I ⊤ (Subtype.val : S → M) y) :
++    (hImm : IsImmersionAt J I n (Subtype.val : S → M) y) :
+@@ -60,3 +63,3 @@
+-    (hS : IsSmoothEmbedding J I ⊤ (Subtype.val : S → M))
+-    {F : N → M} (hF : ContMDiff K I ⊤ F) (hFS : ∀ x, F x ∈ S) (x : N) :
+-    ContMDiffAt K J ⊤ (Set.codRestrict F S hFS) x := by
++    (hS : IsSmoothEmbedding J I n (Subtype.val : S → M))
++    {F : N → M} (hF : ContMDiff K I n F) (hFS : ∀ x, F x ∈ S) (x : N) :
++    ContMDiffAt K J n (Set.codRestrict F S hFS) x := by
+@@ -65 +68 @@
+-  let hImm : IsImmersionAt J I ⊤ (Subtype.val : S → M) y := hS.isImmersion.isImmersionAt y
++  let hImm : IsImmersionAt J I n (Subtype.val : S → M) y := hS.isImmersion.isImmersionAt y
+@@ -78 +81 @@
+-      ContDiffWithinAt 𝕜 ⊤ ((hImm.codChart.extend I) ∘ F ∘ (e.extend K).symm) (Set.range K) x' := by
++      ContDiffWithinAt 𝕜 n ((hImm.codChart.extend I) ∘ F ∘ (e.extend K).symm) (Set.range K) x' := by
+@@ -85 +88 @@
+-      ContDiff 𝕜 ⊤ (fun v ↦ (hImm.equiv.symm v).1) := by
++      ContDiff 𝕜 n (fun v ↦ (hImm.equiv.symm v).1) := by
+@@ -88 +91 @@
+-      ContDiffWithinAt 𝕜 ⊤ (fun v ↦ (hImm.equiv.symm v).1) Set.univ
++      ContDiffWithinAt 𝕜 n (fun v ↦ (hImm.equiv.symm v).1) Set.univ
+@@ -92 +95 @@
+-      ContDiffWithinAt 𝕜 ⊤
++      ContDiffWithinAt 𝕜 n
+@@ -131,3 +134,3 @@
+-    (hS : IsSmoothEmbedding J I ⊤ (Subtype.val : S → M))
+-    {F : N → M} (hF : ContMDiff K I ⊤ F) (hFS : ∀ x, F x ∈ S) :
+-    ContMDiff K J ⊤ (Set.codRestrict F S hFS) := by
++    (hS : IsSmoothEmbedding J I n (Subtype.val : S → M))
++    {F : N → M} (hF : ContMDiff K I n F) (hFS : ∀ x, F x ∈ S) :
++    ContMDiff K J n (Set.codRestrict F S hFS) := by

@@ -5,48 +5,48 @@
   "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
   "reviewDate": "2026-07-20",
   "summary": {
-    "formalPendingTasks": 201,
+    "formalPendingTasks": 218,
     "categories": {
       "textbook_only": 22,
       "direct_sorry": 106,
       "confirmed_transitive_sorryAx": 1,
       "reference_only": 25,
-      "semantic_or_dependency_review": 47
+      "semantic_or_dependency_review": 64
     },
     "directSorryTokens": 357
   },
   "byChapter": [
     {
       "chapter": 1,
-      "formalPendingTasks": 33,
+      "formalPendingTasks": 36,
       "categories": {
         "textbook_only": 0,
         "direct_sorry": 17,
         "confirmed_transitive_sorryAx": 0,
         "reference_only": 7,
-        "semantic_or_dependency_review": 9
+        "semantic_or_dependency_review": 12
       }
     },
     {
       "chapter": 2,
-      "formalPendingTasks": 20,
+      "formalPendingTasks": 21,
       "categories": {
         "textbook_only": 3,
         "direct_sorry": 10,
         "confirmed_transitive_sorryAx": 0,
         "reference_only": 3,
-        "semantic_or_dependency_review": 4
+        "semantic_or_dependency_review": 5
       }
     },
     {
       "chapter": 3,
-      "formalPendingTasks": 20,
+      "formalPendingTasks": 21,
       "categories": {
         "textbook_only": 2,
         "direct_sorry": 13,
         "confirmed_transitive_sorryAx": 0,
         "reference_only": 2,
-        "semantic_or_dependency_review": 3
+        "semantic_or_dependency_review": 4
       }
     },
     {
@@ -62,13 +62,13 @@
     },
     {
       "chapter": 5,
-      "formalPendingTasks": 79,
+      "formalPendingTasks": 91,
       "categories": {
         "textbook_only": 15,
         "direct_sorry": 39,
         "confirmed_transitive_sorryAx": 1,
         "reference_only": 8,
-        "semantic_or_dependency_review": 16
+        "semantic_or_dependency_review": 28
       }
     }
   ],
@@ -81,12 +81,12 @@
   },
   "humanReview": {
     "report": "projects/smooth-manifolds-lee/tasks/formal-pending-review.json",
-    "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 51,
-    "dependencyOrBuildFindings": 49,
-    "reviewedRepairOwners": 35,
-    "lowRiskPatchCandidates": 21,
-    "compiledPatchCandidates": 21
+    "formalPendingTasksReviewed": 218,
+    "semanticCoverageFindings": 71,
+    "dependencyOrBuildFindings": 59,
+    "reviewedRepairOwners": 36,
+    "lowRiskPatchCandidates": 34,
+    "compiledPatchCandidates": 34
   },
   "tasks": [
     {
@@ -232,6 +232,18 @@
           "target": "IsManifold"
         }
       ]
+    },
+    {
+      "taskId": "sml.ch1.sec3.definition-1-3-extra-1",
+      "chapter": 1,
+      "title": "Definition 1.3-extra-1",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Definition_1_3_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
     },
     {
       "taskId": "sml.ch1.sec3.proposition-1-19",
@@ -636,6 +648,18 @@
       ]
     },
     {
+      "taskId": "sml.ch1.sec6.definition-1-6-extra-2",
+      "chapter": 1,
+      "title": "Definition 1.6-extra-2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_06/Definition_1_6_extra_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
       "taskId": "sml.ch1.sec6.definition-1-6-extra-3",
       "chapter": 1,
       "title": "Definition 1.6-extra-3",
@@ -715,6 +739,18 @@
           "directSorryCount": 24
         }
       ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-9",
+      "chapter": 1,
+      "title": "Problem 1-9",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_9.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
       "referenceCommands": []
     },
     {
@@ -851,6 +887,18 @@
       "title": "Example 2.13",
       "category": "textbook_only",
       "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch2.sec9.example-2-14",
+      "chapter": 2,
+      "title": "Example 2.14",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Example_2_14.lean"
+      ],
       "directSorryCount": 0,
       "directSorryFiles": [],
       "referenceCommands": []
@@ -1323,6 +1371,18 @@
           "directSorryCount": 1
         }
       ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch3.sec16.exercise-3-19",
+      "chapter": 3,
+      "title": "Exercise 3.19",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Exercise_3_19.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
       "referenceCommands": []
     },
     {
@@ -2419,6 +2479,18 @@
       "referenceCommands": []
     },
     {
+      "taskId": "sml.ch5.sec28.definition-5-28-extra-1",
+      "chapter": 5,
+      "title": "Definition 5.28-extra-1",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_28/Definition_5_28_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
       "taskId": "sml.ch5.sec28.proposition-5-1",
       "chapter": 5,
       "title": "Proposition 5.1",
@@ -2504,6 +2576,18 @@
       "referenceCommands": []
     },
     {
+      "taskId": "sml.ch5.sec29.definition-5-29-extra-1",
+      "chapter": 5,
+      "title": "Definition 5.29-extra-1",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Definition_5_29_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
       "taskId": "sml.ch5.sec29.theorem-5-8",
       "chapter": 5,
       "title": "Theorem 5.8",
@@ -2559,6 +2643,18 @@
           "directSorryCount": 1
         }
       ],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec29.exercise-5-10",
+      "chapter": 5,
+      "title": "Exercise 5.10",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_29/Exercise_5_10.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
       "referenceCommands": []
     },
     {
@@ -2730,6 +2826,18 @@
       "referenceCommands": []
     },
     {
+      "taskId": "sml.ch5.sec31.definition-5-31-extra-1",
+      "chapter": 5,
+      "title": "Definition 5.31-extra-1",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Definition_5_31_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
       "taskId": "sml.ch5.sec31.proposition-5-18",
       "chapter": 5,
       "title": "Proposition 5.18",
@@ -2753,6 +2861,18 @@
       "category": "semantic_or_dependency_review",
       "leanFiles": [
         "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Example_5_19.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec31.exercise-5-20",
+      "chapter": 5,
+      "title": "Exercise 5.20",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_31/Exercise_5_20.lean"
       ],
       "directSorryCount": 0,
       "directSorryFiles": [],
@@ -2918,6 +3038,25 @@
       "referenceCommands": []
     },
     {
+      "taskId": "sml.ch5.sec32.theorem-5-27",
+      "chapter": 5,
+      "title": "Theorem 5.27",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_27.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": [
+        {
+          "path": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_27.lean",
+          "line": 29,
+          "command": "recall",
+          "target": "ContMDiff.comp"
+        }
+      ]
+    },
+    {
       "taskId": "sml.ch5.sec32.example-5-28",
       "chapter": 5,
       "title": "Example 5.28",
@@ -2958,6 +3097,30 @@
       "category": "semantic_or_dependency_review",
       "leanFiles": [
         "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Remark_5_32_extra_1.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec32.corollary-5-30",
+      "chapter": 5,
+      "title": "Corollary 5.30",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Corollary_5_30.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec32.definition-5-32-extra-2",
+      "chapter": 5,
+      "title": "Definition 5.32-extra-2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Definition_5_32_extra_2.lean"
       ],
       "directSorryCount": 0,
       "directSorryFiles": [],
@@ -3267,6 +3430,18 @@
       ]
     },
     {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-2",
+      "chapter": 5,
+      "title": "Definition 5.36-extra-2",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_2.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
       "taskId": "sml.ch5.sec36.proposition-5-46",
       "chapter": 5,
       "title": "Proposition 5.46",
@@ -3381,6 +3556,18 @@
           "target": "immersed_submanifold_has_embedded_neighborhood"
         }
       ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-4",
+      "chapter": 5,
+      "title": "Definition 5.36-extra-4",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_4.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
     },
     {
       "taskId": "sml.ch5.sec36.theorem-5-51",
@@ -3507,6 +3694,30 @@
       "title": "Problem 5-3",
       "category": "textbook_only",
       "leanFiles": [],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-4",
+      "chapter": 5,
+      "title": "Problem 5-4",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_4.lean"
+      ],
+      "directSorryCount": 0,
+      "directSorryFiles": [],
+      "referenceCommands": []
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-5",
+      "chapter": 5,
+      "title": "Problem 5-5",
+      "category": "semantic_or_dependency_review",
+      "leanFiles": [
+        "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_5.lean"
+      ],
       "directSorryCount": 0,
       "directSorryFiles": [],
       "referenceCommands": []

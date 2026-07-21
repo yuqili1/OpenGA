@@ -1125,6 +1125,7 @@ function loadAndValidateFormalAudit(dataset) {
     typeof audit.importCommit !== 'string' ||
     !isIsoCalendarDate(audit.reviewDate) ||
     !Array.isArray(audit.confirmedFalsePositives) ||
+    !Array.isArray(audit.semanticDowngrades) ||
     !Array.isArray(audit.importOnlyCandidatesNotDowngraded)
   ) {
     throw new Error(`Invalid formal review audit: ${formalAuditPath}`);
@@ -1139,12 +1140,19 @@ function loadAndValidateFormalAudit(dataset) {
   const leafTasks = dataset.tasks.filter((task) => task.kind === 'leaf');
   const taskById = new Map(leafTasks.map((task) => [task.id, task]));
   const confirmedIds = audit.confirmedFalsePositives.map((item) => item.taskId);
+  const semanticDowngradeIds = audit.semanticDowngrades.map((item) => item.taskId);
   const candidateIds = audit.importOnlyCandidatesNotDowngraded;
   if (new Set(confirmedIds).size !== confirmedIds.length) {
     throw new Error('Formal review audit contains duplicate confirmed task IDs');
   }
   if (new Set(candidateIds).size !== candidateIds.length) {
     throw new Error('Formal review audit contains duplicate import-only candidate IDs');
+  }
+  if (new Set(semanticDowngradeIds).size !== semanticDowngradeIds.length) {
+    throw new Error('Formal review audit contains duplicate semantic-downgrade task IDs');
+  }
+  if (semanticDowngradeIds.some((taskId) => confirmedIds.includes(taskId))) {
+    throw new Error('Formal review audit overlaps transitive-sorry and semantic downgrades');
   }
   for (const taskId of confirmedIds) {
     const task = taskById.get(taskId);
@@ -1156,6 +1164,12 @@ function loadAndValidateFormalAudit(dataset) {
     const task = taskById.get(taskId);
     if (!task || task.checks?.formal_review !== 'done') {
       throw new Error(`Import-only formal audit candidate is not done: ${taskId}`);
+    }
+  }
+  for (const taskId of semanticDowngradeIds) {
+    const task = taskById.get(taskId);
+    if (!task || task.checks?.formal_review !== 'pending') {
+      throw new Error(`Semantic formal-audit finding must remain pending: ${taskId}`);
     }
   }
 
@@ -1175,6 +1189,7 @@ function loadAndValidateFormalAudit(dataset) {
     reviewDate: audit.reviewDate,
     importCommit: audit.importCommit,
     confirmedFalsePositiveCount: confirmedIds.length,
+    semanticDowngradeCount: semanticDowngradeIds.length,
     importOnlyCandidateCount: candidateIds.length,
     exactGetAxiomsStatus: audit.exactGetAxiomsFollowUp?.status ?? 'unknown'
   };

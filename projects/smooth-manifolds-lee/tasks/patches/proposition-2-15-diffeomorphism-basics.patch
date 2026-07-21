@@ -1,0 +1,69 @@
+--- a/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean
++++ b/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean
+@@ -54 +54,9 @@
+-    Function.Bijective (fun x : ∀ i, M i ↦ fun i ↦ Φ i (x i)) := sorry
++    Function.Bijective (fun x : ∀ i, M i ↦ fun i ↦ Φ i (x i)) := by
++  constructor
++  · intro x y hxy
++    funext i
++    exact (Φ i).injective (congrFun hxy i)
++  · intro y
++    refine ⟨fun i ↦ (Φ i).symm (y i), ?_⟩
++    funext i
++    exact (Φ i).apply_symm_apply (y i)
+@@ -84 +92,3 @@
+-    IsOpen (Set.range fun x : U ↦ Φ x) := sorry
++    IsOpen (Set.range fun x : U ↦ Φ x) := by
++  rw [show Set.range (fun x : U ↦ Φ x) = Φ '' U by ext y; simp]
++  exact Φ.toHomeomorph.isOpenMap U U.isOpen
+@@ -100 +110,3 @@
+-    Function.Bijective (restrictOpenMap Φ U) := sorry
++    Function.Bijective (restrictOpenMap Φ U) := by
++  change Function.Bijective (Set.rangeFactorization fun x : U ↦ Φ x)
++  exact Set.rangeFactorization_bijective.mpr (Φ.injective.comp Subtype.val_injective)
+@@ -106 +118,25 @@
+-    IsLocalDiffeomorph I J n (restrictOpenMap Φ U) := sorry
++    IsLocalDiffeomorph I J n (restrictOpenMap Φ U) := by
++  let e : U ≃ restrictOpenImage Φ U :=
++    { toFun := restrictOpenMap Φ U
++      invFun := fun y ↦ ⟨Φ.symm y, by
++        rcases y.property with ⟨x, hx⟩
++        rw [← hx, Φ.symm_apply_apply]
++        exact x.property⟩
++      left_inv := fun x ↦ Subtype.ext (Φ.symm_apply_apply x)
++      right_inv := fun y ↦ Subtype.ext (Φ.apply_symm_apply y) }
++  let Ψ : U ≃ₘ^n⟮I, J⟯ restrictOpenImage Φ U :=
++    { toEquiv := e
++      contMDiff_toFun := by
++        intro x
++        change ChartedSpace.LiftPropWithinAt (ContDiffWithinAtProp I J n)
++          (restrictOpenMap Φ U) Set.univ x
++        rw [← ChartedSpace.liftPropWithinAt_subtypeVal_comp_iff]
++        simpa [restrictOpenMap, Function.comp_def] using
++          (Φ.contMDiff.comp contMDiff_subtype_val).contMDiffAt.contMDiffWithinAt
++      contMDiff_invFun := by
++        intro y
++        change ChartedSpace.LiftPropWithinAt (ContDiffWithinAtProp J I n) e.symm Set.univ y
++        rw [← ChartedSpace.liftPropWithinAt_subtypeVal_comp_iff]
++        simpa [e, Function.comp_def] using
++          (Φ.symm.contMDiff.comp contMDiff_subtype_val).contMDiffAt.contMDiffWithinAt }
++  exact Ψ.isLocalDiffeomorph
+@@ -144 +180,2 @@
+-theorem diffeomorph_isOpenMap (Φ : M ≃ₘ⟮I, J⟯ N) : IsOpenMap Φ := sorry
++theorem diffeomorph_isOpenMap (Φ : M ≃ₘ⟮I, J⟯ N) : IsOpenMap Φ :=
++  Φ.toHomeomorph.isOpenMap
+@@ -166 +203,2 @@
+-theorem diffeomorphic_refl : Nonempty (M ≃ₘ⟮I, I⟯ M) := sorry
++theorem diffeomorphic_refl : Nonempty (M ≃ₘ⟮I, I⟯ M) :=
++  ⟨Diffeomorph.refl I M ∞⟩
+@@ -172 +210,3 @@
+-    Nonempty (N ≃ₘ⟮J, I⟯ M) := sorry
++    Nonempty (N ≃ₘ⟮J, I⟯ M) := by
++  rcases h with ⟨Φ⟩
++  exact ⟨Φ.symm⟩
+@@ -177 +217,4 @@
+-    (hNP : Nonempty (N ≃ₘ⟮J, K⟯ P)) : Nonempty (M ≃ₘ⟮I, K⟯ P) := sorry
++    (hNP : Nonempty (N ≃ₘ⟮J, K⟯ P)) : Nonempty (M ≃ₘ⟮I, K⟯ P) := by
++  rcases hMN with ⟨Φ⟩
++  rcases hNP with ⟨Ψ⟩
++  exact ⟨Φ.trans Ψ⟩

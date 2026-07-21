@@ -1,0 +1,31 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_5.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_5.lean
+@@ -124,5 +124,3 @@
+-/-- Problem 5-5: for irrational `α`, the image of the torus curve from Example 4.20 is not an
+-embedded curve, hence not an embedded submanifold, of `𝕋²`. As in Problem 5-4, this is a
+-statement about the image subset `Set.range (denseTorusCurve α)`, not merely about whether the
+-parametrization `denseTorusCurve α` is an embedding. -/
+-theorem denseTorusCurve_image_not_embedded_curve (α : ℝ) (hα : Irrational α) :
++/-- Problem 5-5: for irrational `α`, the image of the dense torus curve cannot carry a smooth
++`1`-manifold structure with its subspace topology. -/
++theorem denseTorusCurve_image_not_smooth_curve_manifold (α : ℝ) (hα : Irrational α) :
+@@ -130,2 +128 @@
+-        ∃ _ : IsManifold 𝓘(ℝ) ∞ (Set.range (denseTorusCurve α)),
+-          IsEmbeddedSubmanifold T2Model 𝓘(ℝ) (Set.range (denseTorusCurve α)) := by
++        IsManifold 𝓘(ℝ) ∞ (Set.range (denseTorusCurve α)) := by
+@@ -133 +130 @@
+-  rcases hRange with ⟨cs, _, _⟩
++  rcases hRange with ⟨cs, _⟩
+@@ -147,0 +145,12 @@
++
++/-- Problem 5-5: for irrational `α`, the image of the torus curve from Example 4.20 is not an
++embedded curve, hence not an embedded submanifold, of `𝕋²`. As in Problem 5-4, this is a
++statement about the image subset `Set.range (denseTorusCurve α)`, not merely about whether the
++parametrization `denseTorusCurve α` is an embedding. -/
++theorem denseTorusCurve_image_not_embedded_curve (α : ℝ) (hα : Irrational α) :
++    ¬ ∃ _ : ChartedSpace ℝ (Set.range (denseTorusCurve α)),
++        ∃ _ : IsManifold 𝓘(ℝ) ∞ (Set.range (denseTorusCurve α)),
++          IsEmbeddedSubmanifold T2Model 𝓘(ℝ) (Set.range (denseTorusCurve α)) := by
++  intro hRange
++  rcases hRange with ⟨cs, hManifold, _⟩
++  exact denseTorusCurve_image_not_smooth_curve_manifold α hα ⟨cs, hManifold⟩

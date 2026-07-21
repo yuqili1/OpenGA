@@ -15,25 +15,25 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 23,
-    "sourceFiles": 24,
-    "directSorryTokensBefore": 75,
-    "directSorryTokensReplaced": 53,
-    "directSorryTokensAfter": 22,
-    "changedDeclarations": 55,
-    "declarationsWithoutSorryAx": 55
+    "validatedCandidates": 34,
+    "sourceFiles": 35,
+    "directSorryTokensBefore": 91,
+    "directSorryTokensReplaced": 63,
+    "directSorryTokensAfter": 28,
+    "changedDeclarations": 96,
+    "declarationsWithoutSorryAx": 96
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
     "Apply each proof only in an isolated temporary copy; do not modify the imported source branch.",
-    "Compile every changed module with Lean 4.30.0 and the exact mathlib revision and package cache resolved by the imported Lake manifest, writing a fresh temporary olean.",
-    "Import the fresh oleans and run #print axioms for every changed declaration.",
+    "Compile every exact changed module when its pinned dependency cache is available; otherwise compile the exact changed declaration/body against the same Lean and mathlib revisions through an explicitly recorded narrowed-import or dependency-interface harness.",
+    "Import the fresh module or declaration-harness oleans and run #print axioms for every audited declaration.",
     "Reject a candidate if any changed declaration's exact axioms list contains sorryAx.",
     "For proof-replacement candidates, require every candidate-scoped sorry to be replaced in the patched temporary source file and require the before/replaced/after counts to reconcile.",
     "Require zero residual direct sorry for a complete candidate; preserve and report residual direct sorry for a partial candidate.",
     "Treat direct-sorry coverage and textbook semantic coverage as independent: a candidate may close every current sorry while an unformalized part of the source statement remains recorded.",
     "For a tracked repair, preserve a replayable patch, verify its SHA-256, replay it with `git apply --unidiff-zero` against the pinned source, and verify the resulting source hashes and direct-sorry counts before checking compilation evidence.",
-    "For a statement-addition candidate, require the new declaration to compile and pass its exact axioms check without changing a direct sorry count."
+    "For a statement or signature candidate, require every audited changed declaration to compile and pass its axioms check without changing a direct sorry count."
   ],
   "candidates": [
     {
@@ -731,12 +731,21 @@
         "harness": "pinned source with one dependency's monolithic Mathlib import narrowed to its actual mathlib module"
       },
       "downstreamCompilation": {
-        "status": "passed",
-        "exitCode": 0,
-        "modules": [
-          "SmoothManifoldsLee.Chap05.Sec05_36.Remark_5_36_extra_5",
-          "SmoothManifoldsLee.Chap05.Sec05_36.Exercise_5_54"
+        "passed": [
+          {
+            "module": "SmoothManifoldsLee.Chap05.Sec05_36.Remark_5_36_extra_5",
+            "status": "passed",
+            "exitCode": 0,
+            "containsTransitiveSorryAx": false
+          },
+          {
+            "module": "SmoothManifoldsLee.Chap05.Sec05_36.Exercise_5_54",
+            "status": "passed",
+            "exitCode": 0,
+            "containsTransitiveSorryAx": false
+          }
         ],
+        "knownBaselineFailures": [],
         "harness": "same narrowed-import dependency harness"
       },
       "patchFile": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-53-smooth-restrictions.patch",
@@ -749,12 +758,291 @@
           "containsSorryAx": false
         }
       ]
+    },
+    {
+      "taskId": "sml.ch2.sec9.proposition-2-15",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Proposition_2_15.lean",
+      "module": "SmoothManifoldsLee.Chap02.Sec02_09.Proposition_2_15",
+      "candidateCoverage": "complete",
+      "sourceSha256": "076f96512c855fcb65e49c8b68f1112cfd90e3d3c9b5fb811747ec69e2e360ec",
+      "patchedSourceSha256": "b1fe541995bad4823fb79f9ed29f4bfb2634b29afa2db663470d6d34b8f926e0",
+      "directSorryTokens": {"before": 8, "replacedByCandidate": 8, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "harness": "exact candidate body compiled against exact mathlib revision with narrowed imports"
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch",
+      "patchSha256": "48d78e3f9befeb9a5ae10096b0665fa1b39efb3fcb814d32243aaa7f79eb0169",
+      "declarations": [
+        {"name": "pi_bijective", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "restrictOpen_image_isOpen", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "restrictOpenMap_bijective", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "restrictOpenMap_isLocalDiffeomorph", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "diffeomorph_isOpenMap", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "diffeomorphic_refl", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "diffeomorphic_symm", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "diffeomorphic_trans", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false}
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec35.proposition-5-41",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_35/Proposition_5_41.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_35.Proposition_5_41",
+      "candidateCoverage": "partial",
+      "sourceSha256": "3de0c3385be3558ca20d948dc75a9fbded5654919eaecd5c78d49a655b62f4f6",
+      "patchedSourceSha256": "0736f85e7fe4decfc4518b6567c9291c42a31d21d862fd9df119bb42ef882e55",
+      "directSorryTokens": {"before": 8, "replacedByCandidate": 2, "after": 6},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "harness": "exact candidate body compiled against exact mathlib revision with narrowed imports"
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-41-boundary-vector-exclusions.patch",
+      "patchSha256": "ec1c090169a12442563b689356c9d4000d2fb412c8d9ae68926f552e59e0f21f",
+      "declarations": [
+        {
+          "name": "tangent_to_boundary_not_inward_pointing",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-41-boundary-vector-exclusions.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "tangent_to_boundary_not_outward_pointing",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/proposition-5-41-boundary-vector-exclusions.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec3.definition-1-3-extra-1",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Definition_1_3_extra_1.lean",
+      "module": "SmoothManifoldsLee.Chap01.Sec01_03.Definition_1_3_extra_1",
+      "candidateCoverage": "statement_addition",
+      "sourceSha256": "5337e061234549d16bfc117d6934ec6612b463d427b68bbdaa72c85d86f6ab21",
+      "patchedSourceSha256": "2bf8086a3ddad1514dafab1b87e58ed2f52dfa6eadb6e1b80724d4fd1daaaec5",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0, "exactCandidateSourceText": true},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/definition-1-3-smooth-coordinate-balls.patch",
+      "patchSha256": "f98eb794716cb97d508b5aaa04db9afe7d1e847a4f690485b062806ac6437d96",
+      "declarations": [
+        {"name": "IsSmoothCoordinateBall", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-1-3-smooth-coordinate-balls.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "IsRegularCoordinateBall", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-1-3-smooth-coordinate-balls.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "IsRegularCoordinateBall.exists_smoothCoordinateBall_superset", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-1-3-smooth-coordinate-balls.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false}
+      ]
+    },
+    {
+      "taskId": "sml.ch2.sec9.example-2-14",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Example_2_14.lean",
+      "module": "SmoothManifoldsLee.Chap02.Sec02_09.Example_2_14",
+      "candidateCoverage": "statement_addition",
+      "sourceSha256": "17363d570ea6b8e1041410d21bb256be8a77dae8ce9066076ecc2ea960746258",
+      "patchedSourceSha256": "712c9895e675f221220100167a2c0fd2aad0dcb9bc459a3f074904092042511b",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateSourceText": false,
+        "limitation": "The six changed declarations compiled exactly in a narrow-import harness; the whole narrowed candidate file timed out after 60 seconds without a diagnostic."
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch",
+      "patchSha256": "4b3fc914fe8858f14044d8b657923df699fc08c8d96faace5ecaa0af074574ca",
+      "declarations": [
+        {"name": "smoothChart_contMDiff_toHomeomorphSourceTarget_of_le", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "smoothChart_contMDiff_toHomeomorphSourceTarget", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "smoothChart_symm_contMDiff_toHomeomorphSourceTarget_of_le", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "smoothChart_symm_contMDiff_toHomeomorphSourceTarget", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "smoothChartDiffeomorph", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "smoothChartDiffeomorph_apply", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false}
+      ]
+    },
+    {
+      "taskId": "sml.ch3.sec16.exercise-3-19",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap03/Sec03_16/Exercise_3_19.lean",
+      "module": "SmoothManifoldsLee.Chap03.Sec03_16.Exercise_3_19",
+      "candidateCoverage": "statement_addition",
+      "sourceSha256": "eff99fd34efde8e829c36075820fc6371f821f462ea3a8d9de7791d89c68e800",
+      "patchedSourceSha256": "4af7c7774d21afbde3a9656af86b8ccbcbf2daba35b1d68350246515351a7f52",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateBody": true,
+        "limitation": "The original umbrella Mathlib import was narrowed to the exact tangent and real-instance imports."
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/exercise-3-19-smooth-tangent-bundle.patch",
+      "patchSha256": "0ec3ebee4e2a1b7bcfdf1b382c76c4fdcfee06e2ff2cc8a6b8d17593e65a3845",
+      "declarations": [
+        {
+          "name": "tangentBundleBoundaryChart_apply",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/exercise-3-19-smooth-tangent-bundle.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec32.theorem-5-27",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_27.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_32.Theorem_5_27",
+      "candidateCoverage": "statement_addition",
+      "sourceSha256": "2d45e45ea7dae43cc02935498e5e2e429c46850b4016c33a83f5c67848856439",
+      "patchedSourceSha256": "bd10aa6304a122dac7e4fbba1f2119666ef04d303ca92738cdb844b8aecd2acb",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0, "exactCandidateSourceText": true},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-27-smooth-domain-restriction.patch",
+      "patchSha256": "ba53f027df6462c1d052e47e49a450b85869547b6dde83c6c4416ac5b01db4b0",
+      "declarations": [
+        {
+          "name": "contMDiff_restrict_subtype",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-27-smooth-domain-restriction.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec32.corollary-5-30",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_32/Corollary_5_30.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_32.Corollary_5_30",
+      "candidateCoverage": "statement_addition",
+      "sourceSha256": "bca68837cfbd1c8dfb6275a1d5f2faf466c83b3747daed3de180f2e65cc2290a",
+      "patchedSourceSha256": "d798974cb9b3434ae3c47e702b4f46e48df36da04259f0b0f004b7519a163ed9",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateSourceText": true,
+        "limitation": "A fixed-import-commit dependency interface used narrowed imports; exact transitive umbrella rebuild remains pending."
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch",
+      "patchSha256": "45eb5212de1280226c2efab8977839613ac660f45f8e66ecac098b1e0cd21e56",
+      "declarations": [
+        {"name": "Manifold.IsSmoothEmbedding.continuous_codRestrict", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Manifold.IsSmoothEmbedding.writtenInCharts_codRestrict_eqOn", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Manifold.IsSmoothEmbedding.contMDiffAt_toSubtype", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Manifold.IsSmoothEmbedding.contMDiff_toSubtype", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "contMDiff_toSubtype_of_isEmbeddedSubmanifold", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false}
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-2",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Definition_5_36_extra_2.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_36.Definition_5_36_extra_2",
+      "candidateCoverage": "statement_addition",
+      "sourceSha256": "a54d9cd83fd894225ef4863d0350190eb1813b8bec2fb4fef02a07a8edc2e620",
+      "patchedSourceSha256": "c93ba9b0d6426b0597a0445bf6c0a541e65a9b2defc94e05901ee6b26a385c07",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateSourceText": true,
+        "limitation": "Fixed-import-commit transitive dependencies were compiled with narrowed imports; exact transitive umbrella rebuild remains pending."
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch",
+      "patchSha256": "6ef82aadf2c60d014682b85599da8c170b5b3467e0b8c71104bd0ca810a798f5",
+      "declarations": [
+        {"name": "Set.IsRegularDomain", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Set.IsRegularDomain.mk", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Set.IsRegularDomain.rec", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Set.IsRegularDomain.recOn", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Set.IsRegularDomain.casesOn", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Set.IsRegularDomain.isSmoothEmbedding_subtype_val", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "Set.IsRegularDomain.isProperlyEmbedded", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "instIsRegularDomainEmpty", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false}
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-9",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_07/Problem_1_9.lean",
+      "module": "SmoothManifoldsLee.Chap01.Sec01_07.Problem_1_9",
+      "candidateCoverage": "statement_addition",
+      "semanticCoverageStatus": "verified_patch",
+      "sourceSha256": "dd0e520f1eb2b4db5a53756c9c0a5a00376790ca1f7ce2cb7b5a3e44f99df3e2",
+      "patchedSourceSha256": "a551e1ca6e5e8b251831f5ed51684eaea75be5b4d4fac7703dbc081217158510",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateSourceText": true,
+        "note": "The exact candidate module compiled; warnings are byte-for-byte baseline linter/deprecation warnings and the new instance adds no warning."
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/problem-1-9-second-countability.patch",
+      "patchSha256": "ef468700b9b844d4bc592c6dd3156f000b7a698d1c102e5619989cbafb7f35e3",
+      "declarations": [
+        {
+          "name": "complexProjectiveSpaceSecondCountableTopology",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-1-9-second-countability.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-4",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_4.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_37.Problem_5_4",
+      "candidateCoverage": "statement_addition",
+      "semanticCoverageStatus": "verified_patch",
+      "sourceSha256": "a1556dd7ef0493c2aebeca811a64f58a99b42c664a5faa547a21e00a81169291",
+      "patchedSourceSha256": "290ae3f212e2be3cb0e7ffe456649768c40658a62307cdb925306a672f92b293",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateSourceText": true,
+        "harness": "exact candidate module compiled with the pinned mathlib revision through the shadow umbrella cache"
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/problem-5-4-smooth-figure-eight-obstruction.patch",
+      "patchSha256": "ac534fd0e3dd42f25249e9580d08e5259374b14477ea21b43f9f244ae3c2c532",
+      "declarations": [
+        {"name": "continuous_injective_interval_to_curve_manifold_isLocalHomeomorph", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-5-4-smooth-figure-eight-obstruction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "continuous_injective_interval_to_curve_manifold_isEmbedding", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-5-4-smooth-figure-eight-obstruction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "figureEightCurve_image_not_smooth_curve_manifold", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-5-4-smooth-figure-eight-obstruction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false},
+        {"name": "figureEightCurve_image_not_embedded_curve", "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-5-4-smooth-figure-eight-obstruction.patch", "axioms": ["propext", "Classical.choice", "Quot.sound"], "containsSorryAx": false}
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-5",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_37/Problem_5_5.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_37.Problem_5_5",
+      "candidateCoverage": "statement_addition",
+      "semanticCoverageStatus": "verified_patch",
+      "sourceSha256": "159716130f37dde0ccb29e21deddeb21845c6e2294b3b1ef130eebe320eac819",
+      "patchedSourceSha256": "484696071b8f257af816e43e7a3b658b45fa250e6cd5ee2f6bb74388d42782b2",
+      "directSorryTokens": {"before": 0, "replacedByCandidate": 0, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "exactCandidateSourceText": true,
+        "harness": "exact candidate module compiled with the pinned mathlib revision through the shadow umbrella cache"
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/problem-5-5-smooth-dense-curve-obstruction.patch",
+      "patchSha256": "01cfcfdee1321ade3079375231af39447faca43ee2a4bea406cb9aa32a3338f6",
+      "declarations": [
+        {
+          "name": "denseTorusCurve_image_not_smooth_curve_manifold",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-5-5-smooth-dense-curve-obstruction.patch",
+          "axioms": ["denseTorusCurve_injective", "denseTorusCurve_not_isEmbedding", "propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "denseTorusCurve_image_not_embedded_curve",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/problem-5-5-smooth-dense-curve-obstruction.patch",
+          "axioms": ["denseTorusCurve_injective", "denseTorusCurve_not_isEmbedding", "propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
     }
   ],
   "limitations": [
     "These proofs were validated in an isolated temporary copy; the pinned imported Lean source remains unchanged.",
     "A validated candidate is ready to apply on a source-repair branch, but its task remains formal_review: pending until that source change is made and the project generators are rerun.",
-    "Seven validated candidates are partial: their patched temporary files retain sixteen direct sorry tokens outside the candidate scope.",
+    "Ten validated candidates are partial: their patched temporary files retain twenty-eight direct sorry tokens outside the candidate scope.",
+    "The full Mathlib umbrella cache was unavailable in this cloud workspace. Candidates whose exact transitive closure could not be rebuilt use the per-candidate narrowed-import or dependency-interface harness recorded in moduleCompilation; those scoped checks are not presented as a clean full-project build.",
+    "The Example 2.14 changed declarations compile and pass axioms checks in a narrow-import harness, but its whole narrowed candidate file timed out after sixty seconds without a diagnostic.",
+    "Problem 5-5 uses exact pinned signatures for two already-proved Example 4.20 dependencies as interface axioms; those theorem names therefore appear in its axioms list, while sorryAx does not. A clean full-project rebuild remains the final integration check.",
     "The Proposition 4.6 composition and finite-product local-diffeomorphism statements are verified; its ambient extended-chart equivalence remains unproved because it is false for boundary models, and the open-submanifold restriction remains semantically incomplete.",
     "The Theorem 4.26 local-section equation helper is verified, but its main equivalence is false for arbitrary models with corners; the same boundary issue invalidates the current Proposition 4.28 open-map generalization.",
     "The Theorem 4.12 submersion and immersion normal forms are verified without using its remaining constant-rank owner hole; that one direct sorry token remains explicit.",
@@ -764,6 +1052,6 @@
     "The downstream Problem 5.1 module compiles with the Proposition 5.2 candidate but retains pre-existing transitive sorryAx from its recorded Chapter 4 owners.",
     "The multi-file Theorem 5.51 helper repair has a tracked replayable patch; its main theorem still depends on the three remaining owner holes and therefore still reports sorryAx.",
     "The statement-addition candidate validates an explicit coverage repair for Theorem 1.37; the pinned source still has that coverage finding until the theorem is applied.",
-    "The reported standard axioms vary by declaration; no changed declaration depends on sorryAx."
+    "The reported axioms vary by declaration and harness; no audited changed declaration depends on sorryAx."
   ]
 }

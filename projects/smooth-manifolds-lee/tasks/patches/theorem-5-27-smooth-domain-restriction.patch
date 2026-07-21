@@ -1,0 +1,19 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_27.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_32/Theorem_5_27.lean
+@@ -14 +14 @@
+-variable {I : ModelWithCorners 𝕜 E H} [IsManifold I ⊤ M]
++variable {I : ModelWithCorners 𝕜 E H} [IsManifold I ∞ M]
+@@ -19 +19 @@
+-variable {J : ModelWithCorners 𝕜 E' H'} [IsManifold J ⊤ N]
++variable {J : ModelWithCorners 𝕜 E' H'} [IsManifold J ∞ N]
+@@ -25 +25 @@
+-variable {K : ModelWithCorners 𝕜 E'' HS} [IsManifold K ⊤ S]
++variable {K : ModelWithCorners 𝕜 E'' HS} [IsManifold K ∞ S]
+@@ -56,3 +56,4 @@
+-theorem contMDiff_restrict_subtype (hsub : ContMDiff K' I ⊤ (Subtype.val : s → M))
+-    (F : M → N) (hF : ContMDiff I J ⊤ F) :
+-    ContMDiff K' J ⊤ (fun x : s ↦ F x.1) :=
++theorem contMDiff_restrict_subtype {n : ℕ∞ω}
++    (hsub : ContMDiff K' I n (Subtype.val : s → M))
++    (F : M → N) (hF : ContMDiff I J n F) :
++    ContMDiff K' J n (fun x : s ↦ F x.1) :=

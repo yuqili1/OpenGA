@@ -24,8 +24,9 @@
     "reviewDate": "2026-07-20",
     "importCommit": "a5f308cd2e4e3f549b69b8d6208cf3e59c63dbf4",
     "confirmedFalsePositiveCount": 1,
-    "importOnlyCandidateCount": 14,
-    "exactGetAxiomsStatus": "not_run"
+    "semanticDowngradeCount": 17,
+    "importOnlyCandidateCount": 13,
+    "exactGetAxiomsStatus": "passed"
   },
   "generatedReviewTasks": 357,
   "leanPairedReviewTasks": 335,

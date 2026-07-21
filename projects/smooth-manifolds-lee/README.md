@@ -79,17 +79,33 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All twenty-three low-risk patch candidates have
-compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Thirteen cover every direct `sorry` in their task, nine intentionally cover
-only selected declarations and retain twenty-two explicit residual `sorry` tokens, and
-one adds the missing half of a textbook statement; Proposition 5.2 also carries a
-verified semantic-coverage repair. Exact source hashes, proofs,
-toolchain metadata, and axioms results are recorded at:
+a statement or coverage problem. All thirty-four low-risk candidates passed
+declaration-level axioms checks with the pinned Lean and mathlib revisions.
+Fourteen cover every direct `sorry` in their task, ten intentionally cover only
+selected declarations and retain twenty-eight explicit residual `sorry` tokens,
+and ten repair missing or mismatched statements and signatures without changing
+a direct-`sorry` count. Exact module builds were used where the pinned cache was
+available; every narrowed-import or dependency-interface harness is identified
+as such in the validation report and is not presented as a clean full-project
+build. Exact source hashes, proofs, toolchain metadata, and axioms results are
+recorded at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/formal-repair-validation.json
 ```
+
+The regularity audit distinguishes mathlib's analytic order `ω` from the
+textbook's ordinary smooth order `∞`. Seventeen formerly completed tasks are
+therefore pending again: their mathematics is generally sound, but their Lean
+owners or downstream signatures are too strong, omit required topology or
+finite-dimensional data, or remain coupled to an analytic owner. The tracked
+signature candidates preserve this distinction instead of silently treating
+`⊤` as a synonym for `∞`.
+
+Problem 1.9 now has a verified second-countability candidate for complex
+projective space. Problems 5.4 and 5.5 have verified owner-independent C∞
+topological obstructions; their compatibility wrappers retain the pinned
+analytic embedded-submanifold statements.
 
 The Lemma 2.26 patch completes the supported smooth-extension theorem by
 combining a normally shrunk neighborhood with a global smooth selection from
@@ -212,15 +228,26 @@ The larger verified repairs are also preserved as replayable patches at:
 ```text
 projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch
 projects/smooth-manifolds-lee/tasks/patches/example-1-28-full-rank-matrices.patch
+projects/smooth-manifolds-lee/tasks/patches/corollary-5-30-smooth-restriction.patch
+projects/smooth-manifolds-lee/tasks/patches/definition-1-3-smooth-coordinate-balls.patch
+projects/smooth-manifolds-lee/tasks/patches/definition-5-36-regular-domain-signature.patch
+projects/smooth-manifolds-lee/tasks/patches/example-2-14-smooth-charts.patch
+projects/smooth-manifolds-lee/tasks/patches/exercise-3-19-smooth-tangent-bundle.patch
 projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
 projects/smooth-manifolds-lee/tasks/patches/lemma-3-11-boundary-tangent-model.patch
+projects/smooth-manifolds-lee/tasks/patches/problem-1-9-second-countability.patch
+projects/smooth-manifolds-lee/tasks/patches/problem-5-4-smooth-figure-eight-obstruction.patch
+projects/smooth-manifolds-lee/tasks/patches/problem-5-5-smooth-dense-curve-obstruction.patch
+projects/smooth-manifolds-lee/tasks/patches/proposition-2-15-diffeomorphism-basics.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-2-geometric-derivations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-4-6-local-diffeomorphism-operations.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-5-2-induced-image.patch
+projects/smooth-manifolds-lee/tasks/patches/proposition-5-41-boundary-vector-exclusions.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-local-normal-forms.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-26-local-section-apply.patch
+projects/smooth-manifolds-lee/tasks/patches/theorem-5-27-smooth-domain-restriction.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-53-smooth-restrictions.patch
 ```

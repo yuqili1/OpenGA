@@ -13,7 +13,8 @@
   "methods": [
     "Scan each formal-done task module and attached auxiliary .olean symbol table for sorryAx.",
     "Use the cached .ilean declaration-reference graph to distinguish a real transitive dependency from unrelated import-closure contamination.",
-    "Inspect the referenced Lean source declarations directly on the import branch."
+    "Inspect the referenced Lean source declarations directly on the import branch.",
+    "Run declaration-level #print axioms probes with Lean 4.30.0 for every declaration owned by each import-only candidate module."
   ],
   "confirmedFalsePositives": [
     {
@@ -40,6 +41,93 @@
       ]
     }
   ],
+  "semanticDowngrades": [
+    {
+      "taskId": "sml.ch1.sec3.definition-1-3-extra-1",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The exported coordinate-ball owners are fixed at the analytic order rather than the smooth regularity used by the textbook item."
+    },
+    {
+      "taskId": "sml.ch1.sec6.definition-1-6-extra-2",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "SmoothManifoldWithBoundary is backed by the analytic order, not the C-infinity structure described by its name and textbook contract."
+    },
+    {
+      "taskId": "sml.ch1.sec7.problem-1-9",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The projective-space construction does not export the second-countability component required by Lee's manifold convention."
+    },
+    {
+      "taskId": "sml.ch2.sec9.example-2-14",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The smooth-chart API is restricted to an analytic maximal atlas instead of covering ordinary smooth charts."
+    },
+    {
+      "taskId": "sml.ch3.sec16.exercise-3-19",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The tangent-bundle instance checks and coordinate theorem are stated at analytic top rather than the C-infinity order required by the exercise."
+    },
+    {
+      "taskId": "sml.ch5.sec28.definition-5-28-extra-1",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The embedded-submanifold owner is fixed at analytic regularity and drops ambient manifold assumptions from the class boundary."
+    },
+    {
+      "taskId": "sml.ch5.sec29.definition-5-29-extra-1",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "Slice charts are tied to the analytic maximal atlas rather than Lee's smooth atlas."
+    },
+    {
+      "taskId": "sml.ch5.sec29.exercise-5-10",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The spherical-coordinate construction proves analytic-atlas membership, so it does not faithfully instantiate the C-infinity slice-chart statement."
+    },
+    {
+      "taskId": "sml.ch5.sec31.definition-5-31-extra-1",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The immersed-submanifold owner uses analytic regularity and omits the Hausdorff and second-countable requirements in Lee's manifold convention."
+    },
+    {
+      "taskId": "sml.ch5.sec31.exercise-5-20",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The topology comparison is proved only for the mismatched analytic immersed-submanifold owner."
+    },
+    {
+      "taskId": "sml.ch5.sec32.theorem-5-27",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The restriction API is over-specialized to its current owner regularity; an explicit regularity-parametric theorem is needed."
+    },
+    {
+      "taskId": "sml.ch5.sec32.corollary-5-30",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The codomain restriction theorem inherits the embedded-submanifold regularity mismatch and lacks a regularity-parametric owner."
+    },
+    {
+      "taskId": "sml.ch5.sec32.definition-5-32-extra-2",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The weakly embedded owner is tied to the mismatched regularity/topology signatures rather than Lee's smooth initial-submanifold contract."
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-2",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The exported regular-domain class omits finite-dimensional and ambient smooth-manifold parameters required by the stated definition."
+    },
+    {
+      "taskId": "sml.ch5.sec36.definition-5-36-extra-4",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "Boundary slice charts are owned by the analytic maximal atlas, creating a regularity mismatch with the C-infinity theorem that consumes them."
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-4",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "The theorem quantifies range structures through AdmitsEmbeddedCurveStructure, but that predicate is tied to the pinned analytic embedded-submanifold owner rather than the intended C-infinity owner."
+    },
+    {
+      "taskId": "sml.ch5.sec37.problem-5-5",
+      "outcome": "formal_review changed from done to pending",
+      "reason": "Although axiom-clean and explicitly quantified over range structures, the conclusion remains tied to the pinned analytic embedded-submanifold owner; an owner-independent topological formulation is needed for the C-infinity migration."
+    }
+  ],
   "importOnlyCandidatesNotDowngraded": [
     "sml.ch1.sec1.exercise-1-1",
     "sml.ch1.sec1.lemma-1-10",
@@ -53,8 +141,7 @@
     "sml.ch4.sec26.exercise-4-37",
     "sml.ch4.sec27.problem-4-4",
     "sml.ch4.sec27.problem-4-9",
-    "sml.ch5.sec36.remark-5-36-extra-5",
-    "sml.ch5.sec37.problem-5-5"
+    "sml.ch5.sec36.remark-5-36-extra-5"
   ],
   "candidateEvidence": {
     "taskOleanContainsSorryAx": false,
@@ -62,12 +149,25 @@
     "decision": "Do not downgrade from import closure alone."
   },
   "exactGetAxiomsFollowUp": {
-    "status": "not_run",
-    "reason": "A Lean 4.30.0 executable was unavailable in the review environment.",
-    "requiredFor": "Final declaration-level certification of the 14 import-only candidates."
+    "status": "passed",
+    "leanVersion": "4.30.0",
+    "candidateModulesExamined": 14,
+    "ownedDeclarationsExamined": 218,
+    "declarationsContainingSorryAx": 0,
+    "declarationFreeTaskIds": [
+      "sml.ch1.sec1.proposition-1-12",
+      "sml.ch4.sec27.problem-4-4",
+      "sml.ch4.sec27.problem-4-9",
+      "sml.ch5.sec36.remark-5-36-extra-5"
+    ],
+    "semanticDowngradesAfterAxiomCertification": [
+      "sml.ch5.sec37.problem-5-5"
+    ],
+    "remainingImportOnlyCandidatesCertified": 13,
+    "decision": "All owned declarations in the original import-only set are free of sorryAx; Problem 5-5 is nevertheless downgraded for an independent semantic-coverage failure."
   },
   "reviewTotalsAfterCorrection": {
-    "formalDone": 156,
-    "formalPending": 201
+    "formalDone": 139,
+    "formalPending": 218
   }
 }
