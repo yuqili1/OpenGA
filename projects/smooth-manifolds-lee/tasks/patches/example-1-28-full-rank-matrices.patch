@@ -1,0 +1,43 @@
+--- a/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean
++++ b/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean
+@@ -18 +18,35 @@
+-      Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) = min m n} := sorry
++      Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) = min m n} := by
++  let e :
++      Matrix (Fin m) (Fin n) ℝ ≃ₗ[ℝ]
++        ((Fin n → ℝ) →L[ℝ] (Fin m → ℝ)) :=
++    Matrix.toLin'.trans LinearMap.toContinuousLinearMap
++  have he : Continuous e :=
++    e.toLinearMap.continuous_of_finiteDimensional
++  have hopen :
++      IsOpen {f : (Fin n → ℝ) →L[ℝ] (Fin m → ℝ) |
++        ((min m n : ℕ) : Cardinal) ≤ (f : (Fin n → ℝ) →ₗ[ℝ] (Fin m → ℝ)).rank} :=
++    isOpen_setOf_nat_le_rank (min m n)
++  rw [show
++    {A : Matrix (Fin m) (Fin n) ℝ |
++        Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) = min m n} =
++      e ⁻¹' {f : (Fin n → ℝ) →L[ℝ] (Fin m → ℝ) |
++        ((min m n : ℕ) : Cardinal) ≤ (f : (Fin n → ℝ) →ₗ[ℝ] (Fin m → ℝ)).rank} by
++    ext A
++    have hr_le_n :
++        Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) ≤ n := by
++      simpa using (Matrix.toLin' A).finrank_range_le
++    have hr_le_m :
++        Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) ≤ m := by
++      simpa using (LinearMap.range (Matrix.toLin' A)).finrank_le
++    have hr_le :
++        Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) ≤ min m n :=
++      le_min hr_le_m hr_le_n
++    simp only [Set.mem_setOf_eq, Set.mem_preimage, e, LinearEquiv.trans_apply]
++    change
++      Module.finrank ℝ (LinearMap.range (Matrix.toLin' A)) = min m n ↔
++        ((min m n : ℕ) : Cardinal) ≤
++          Module.rank ℝ (LinearMap.range (Matrix.toLin' A))
++    rw [← (LinearMap.range (Matrix.toLin' A)).finrank_eq_rank]
++    norm_cast
++    exact ⟨fun h ↦ h.ge, fun h ↦ Nat.le_antisymm hr_le h⟩]
++  exact hopen.preimage he
+@@ -48 +82,2 @@
+-    Module.finrank ℝ (Matrix (Fin m) (Fin n) ℝ) = m * n := sorry
++    Module.finrank ℝ (Matrix (Fin m) (Fin n) ℝ) = m * n := by
++  simp [Module.finrank_matrix]

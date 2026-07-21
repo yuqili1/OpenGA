@@ -15,13 +15,13 @@
     "mathlibCacheArchives": 8459
   },
   "summary": {
-    "validatedCandidates": 21,
-    "sourceFiles": 22,
-    "directSorryTokensBefore": 72,
-    "directSorryTokensReplaced": 50,
+    "validatedCandidates": 23,
+    "sourceFiles": 24,
+    "directSorryTokensBefore": 75,
+    "directSorryTokensReplaced": 53,
     "directSorryTokensAfter": 22,
-    "changedDeclarations": 52,
-    "declarationsWithoutSorryAx": 52
+    "changedDeclarations": 55,
+    "declarationsWithoutSorryAx": 55
   },
   "methods": [
     "Verify every source-file SHA-256 against the pinned import commit before patching.",
@@ -686,6 +686,65 @@
         {
           "name": "manifoldInterior_union_manifoldBoundary_eq_univ",
           "proof": "by\n  rw [← I.compl_boundary]\n  simp",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-28",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean",
+      "module": "SmoothManifoldsLee.Chap01.Sec01_04.Example_1_28",
+      "candidateCoverage": "complete",
+      "sourceSha256": "8c788eca9d118430fe92e592d8b4e2fe0e4fc897a45b108aef92ea54664c63e9",
+      "patchedSourceSha256": "95c0ed16a7db1ab9f273300a399e7456ecc5218833e5e435d7fb67a70271f4e1",
+      "directSorryTokens": {"before": 2, "replacedByCandidate": 2, "after": 0},
+      "moduleCompilation": {"status": "passed", "exitCode": 0},
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/example-1-28-full-rank-matrices.patch",
+      "patchSha256": "3ded00a4b10ba5a83c406ff664649f1c21e177e74d6b9c9bc5f16b0c85c47389",
+      "declarations": [
+        {
+          "name": "isOpen_fullRank_real_rectangular_matrices",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-1-28-full-rank-matrices.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        },
+        {
+          "name": "finrank_real_rectangular_matrix_eq_mul",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-1-28-full-rank-matrices.patch",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "containsSorryAx": false
+        }
+      ]
+    },
+    {
+      "taskId": "sml.ch5.sec36.theorem-5-53",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean",
+      "module": "SmoothManifoldsLee.Chap05.Sec05_36.Theorem_5_53",
+      "candidateCoverage": "complete",
+      "sourceSha256": "db3202f3b6c9bff1d991169adfe455f720202a5aa73c01b0d4b42440a04cc84a",
+      "patchedSourceSha256": "a5ec1aa0dd0463c1c7a330c3b88428d8d8edfa4be53c7964664924362620ff05",
+      "directSorryTokens": {"before": 1, "replacedByCandidate": 1, "after": 0},
+      "moduleCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "harness": "pinned source with one dependency's monolithic Mathlib import narrowed to its actual mathlib module"
+      },
+      "downstreamCompilation": {
+        "status": "passed",
+        "exitCode": 0,
+        "modules": [
+          "SmoothManifoldsLee.Chap05.Sec05_36.Remark_5_36_extra_5",
+          "SmoothManifoldsLee.Chap05.Sec05_36.Exercise_5_54"
+        ],
+        "harness": "same narrowed-import dependency harness"
+      },
+      "patchFile": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-53-smooth-restrictions.patch",
+      "patchSha256": "3a104b374c00c0230b39deb5ac7fc86f8bfd43843e8251fd498b61be33022ca1",
+      "declarations": [
+        {
+          "name": "contMDiff_restrict_subtype_of_isEmbeddedSubmanifoldWithBoundary",
+          "proofEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-53-smooth-restrictions.patch",
           "axioms": ["propext", "Classical.choice", "Quot.sound"],
           "containsSorryAx": false
         }

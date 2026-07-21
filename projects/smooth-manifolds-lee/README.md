@@ -79,9 +79,9 @@ projects/smooth-manifolds-lee/tasks/formal-pending-review.json
 ```
 
 Human findings are non-exclusive: a task with a direct `sorry` may also have
-a statement or coverage problem. All twenty-one low-risk patch candidates have
+a statement or coverage problem. All twenty-three low-risk patch candidates have
 compiled with the pinned Lean toolchain and passed declaration-level axioms
-checks. Eleven cover every direct `sorry` in their task, nine intentionally cover
+checks. Thirteen cover every direct `sorry` in their task, nine intentionally cover
 only selected declarations and retain twenty-two explicit residual `sorry` tokens, and
 one adds the missing half of a textbook statement; Proposition 5.2 also carries a
 verified semantic-coverage repair. Exact source hashes, proofs,
@@ -211,6 +211,7 @@ The larger verified repairs are also preserved as replayable patches at:
 
 ```text
 projects/smooth-manifolds-lee/tasks/patches/example-4-2-basic-projections-and-formulas.patch
+projects/smooth-manifolds-lee/tasks/patches/example-1-28-full-rank-matrices.patch
 projects/smooth-manifolds-lee/tasks/patches/lemma-2-26-smooth-extension.patch
 projects/smooth-manifolds-lee/tasks/patches/lemma-3-11-boundary-tangent-model.patch
 projects/smooth-manifolds-lee/tasks/patches/proposition-3-18-tangent-bundle-projection.patch
@@ -221,6 +222,7 @@ projects/smooth-manifolds-lee/tasks/patches/theorem-4-12-local-normal-forms.patc
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-15-boundary-immersion.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-4-26-local-section-apply.patch
 projects/smooth-manifolds-lee/tasks/patches/theorem-5-51-euclidean-half-slice.patch
+projects/smooth-manifolds-lee/tasks/patches/theorem-5-53-smooth-restrictions.patch
 ```
 
 These artifacts use zero-context hunks. The validator replays them with

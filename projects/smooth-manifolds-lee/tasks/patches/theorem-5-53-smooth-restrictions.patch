@@ -1,0 +1,39 @@
+--- a/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean
++++ b/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean
+@@ -38 +38,35 @@
+-    sorry
++    intro x
++    let hImmAt : IsImmersionAt J I ⊤ (Subtype.val : S → M) x :=
++      hS.isImmersion.isImmersionAt x
++    let x' : E' := (hImmAt.domChart.extend J) x
++    let L : E' →L[𝕜] E :=
++      hImmAt.equiv.toContinuousLinearMap.comp
++        (ContinuousLinearMap.inl 𝕜 E' hImmAt.complement)
++    have hcont : ContinuousAt (Subtype.val : S → M) x :=
++      hS.isEmbedding.continuous.continuousAt
++    have hx : x ∈ hImmAt.domChart.source := hImmAt.mem_domChart_source
++    have hy : (Subtype.val : S → M) x ∈ hImmAt.codChart.source :=
++      hImmAt.mem_codChart_source
++    rw [ContMDiffAt, contMDiffWithinAt_iff_of_mem_maximalAtlas (s := Set.univ)
++      (e := hImmAt.domChart) (e' := hImmAt.codChart) hImmAt.domChart_mem_maximalAtlas
++      hImmAt.codChart_mem_maximalAtlas hx hy, continuousWithinAt_univ, Set.preimage_univ,
++      Set.univ_inter]
++    refine ⟨hcont, ?_⟩
++    have hmodel : ContDiffWithinAt 𝕜 (⊤ : WithTop ℕ∞) L (Set.range J) x' :=
++      L.contDiff.contDiffWithinAt
++    have htarget_mem :
++        (hImmAt.domChart.extend J).target ∈ nhdsWithin x' (Set.range J) := by
++      simpa [x'] using hImmAt.domChart.extend_target_mem_nhdsWithin (I := J) hx
++    have hEq :
++        ((hImmAt.codChart.extend I) ∘ (Subtype.val : S → M) ∘
++            (hImmAt.domChart.extend J).symm)
++          =ᶠ[nhdsWithin x' (Set.range J)] L := by
++      refine Filter.eventuallyEq_of_mem htarget_mem ?_
++      intro z hz
++      simpa [Function.comp, L] using hImmAt.writtenInCharts hz
++    have hx'_target : x' ∈ (hImmAt.domChart.extend J).target :=
++      (hImmAt.domChart.extend J).map_source <| by
++        simpa [OpenPartialHomeomorph.extend_source] using hx
++    have hx'_range : x' ∈ Set.range J :=
++      hImmAt.domChart.extend_target_subset_range hx'_target
++    exact hmodel.congr_of_eventuallyEq hEq <| hEq.eq_of_nhdsWithin hx'_range

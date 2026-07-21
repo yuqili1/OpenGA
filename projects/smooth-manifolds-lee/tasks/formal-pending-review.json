@@ -17,8 +17,8 @@
     "semanticCoverageFindings": 51,
     "dependencyOrBuildFindings": 49,
     "reviewedRepairOwners": 35,
-    "lowRiskPatchCandidates": 21,
-    "compiledPatchCandidates": 21
+    "lowRiskPatchCandidates": 23,
+    "compiledPatchCandidates": 23
   },
   "findingSemantics": {
     "nonExclusive": true,
@@ -754,6 +754,31 @@
       "declarations": ["IsBoundaryDefiningFunctionAt.eq_zero"],
       "scope": "one of four direct sorry tokens in the task",
       "proposal": "Use `by obtain ⟨s, _, hp, hzero, _⟩ := hf.2.2; exact (hzero p hp).mp hf.1`.",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch1.sec4.example-1-28",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_04/Example_1_28.lean",
+      "declarations": [
+        "isOpen_fullRank_real_rectangular_matrices",
+        "finrank_real_rectangular_matrix_eq_mul"
+      ],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Identify rectangular matrices with continuous linear maps, pull back the open maximal-rank locus, and discharge the matrix-space dimension formula with the standard finrank theorem.",
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/example-1-28-full-rank-matrices.patch",
+      "status": "verified_compiled_no_sorryAx",
+      "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
+    },
+    {
+      "taskId": "sml.ch5.sec36.theorem-5-53",
+      "sourceFile": "staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_36/Theorem_5_53.lean",
+      "declarations": [
+        "contMDiff_restrict_subtype_of_isEmbeddedSubmanifoldWithBoundary"
+      ],
+      "scope": "all direct sorry tokens in the task",
+      "proposal": "Use the embedded-submanifold immersion chart normal form to identify the inclusion locally with the canonical continuous-linear inclusion and transfer smoothness back through the charts.",
+      "patchEvidence": "projects/smooth-manifolds-lee/tasks/patches/theorem-5-53-smooth-restrictions.patch",
       "status": "verified_compiled_no_sorryAx",
       "validationEvidence": "projects/smooth-manifolds-lee/tasks/formal-repair-validation.json"
     }
