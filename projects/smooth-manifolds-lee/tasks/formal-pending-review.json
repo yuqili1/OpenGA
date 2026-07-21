@@ -14,9 +14,9 @@
   ],
   "summary": {
     "formalPendingTasksReviewed": 201,
-    "semanticCoverageFindings": 48,
-    "dependencyOrBuildFindings": 44,
-    "reviewedRepairOwners": 32,
+    "semanticCoverageFindings": 51,
+    "dependencyOrBuildFindings": 49,
+    "reviewedRepairOwners": 35,
     "lowRiskPatchCandidates": 21,
     "compiledPatchCandidates": 21
   },
@@ -34,6 +34,7 @@
           "sml.ch1.sec1.example-1-8",
           "sml.ch1.sec1.example-1-9",
           "sml.ch1.sec2.remark-1-2-extra-6",
+          "sml.ch1.sec3.proposition-1-19",
           "sml.ch1.sec4.example-1-21",
           "sml.ch1.sec4.example-1-31",
           "sml.ch1.sec4.example-1-34",
@@ -76,6 +77,7 @@
           "sml.ch4.sec25.theorem-4-26",
           "sml.ch4.sec25.proposition-4-28",
           "sml.ch4.sec25.theorem-4-29",
+          "sml.ch4.sec25.theorem-4-31",
           "sml.ch4.sec26.example-4-35",
           "sml.ch4.sec26.proposition-4-36",
           "sml.ch4.sec26.proposition-4-40",
@@ -95,6 +97,7 @@
           "sml.ch5.sec31.example-5-25",
           "sml.ch5.sec31.definition-5-31-extra-2",
           "sml.ch5.sec32.remark-5-32-extra-1",
+          "sml.ch5.sec33.theorem-5-31",
           "sml.ch5.sec35.definition-5-35-extra-3",
           "sml.ch5.sec35.proposition-5-38",
           "sml.ch5.sec36.definition-5-36-extra-1"
@@ -107,8 +110,10 @@
       {
         "chapter": 1,
         "taskIds": [
+          "sml.ch1.sec1.definition-1-extra-1",
           "sml.ch1.sec1.theorem-1-2",
           "sml.ch1.sec1.proposition-1-16",
+          "sml.ch1.sec3.proposition-1-19",
           "sml.ch1.sec3.exercise-1-20",
           "sml.ch1.sec5.exercise-1-39",
           "sml.ch1.sec5.exercise-1-41"
@@ -118,6 +123,7 @@
         "chapter": 2,
         "taskIds": [
           "sml.ch2.sec9.exercise-2-16",
+          "sml.ch2.sec9.theorem-2-18",
           "sml.ch2.sec9.exercise-2-19",
           "sml.ch2.sec12.problem-2-9"
         ]
@@ -141,6 +147,7 @@
           "sml.ch4.sec24.theorem-4-25",
           "sml.ch4.sec25.proposition-4-28",
           "sml.ch4.sec25.exercise-4-32",
+          "sml.ch4.sec25.theorem-4-31",
           "sml.ch4.sec26.exercise-4-34",
           "sml.ch4.sec26.exercise-4-38",
           "sml.ch4.sec26.exercise-4-42",
@@ -156,6 +163,7 @@
         "taskIds": [
           "sml.ch5.sec29.theorem-5-8",
           "sml.ch5.sec30.corollary-5-13",
+          "sml.ch5.sec33.theorem-5-31",
           "sml.ch5.sec35.proposition-5-35",
           "sml.ch5.sec35.exercise-5-36",
           "sml.ch5.sec35.proposition-5-38",
@@ -229,14 +237,21 @@
         "sml.ch1.sec3.exercise-1-20",
         "sml.ch2.sec10.theorem-2-23"
       ],
-      "evidence": "review_notes_and_source_recall"
+      "evidence": "reviewed_reference_source_usage_and_formal_audit"
     },
     {
       "ownerTaskId": "sml.ch1.sec1.definition-1-extra-1",
       "downstreamTaskIds": [
         "sml.ch1.sec1.theorem-1-2"
       ],
-      "evidence": "review_notes_and_source_declaration_usage"
+      "evidence": "reviewed_source_declaration_usage_and_formal_audit"
+    },
+    {
+      "ownerTaskId": "sml.ch2.sec9.theorem-2-18",
+      "downstreamTaskIds": [
+        "sml.ch2.sec9.exercise-2-19"
+      ],
+      "evidence": "reviewed_source_import_and_formal_axiom_audit"
     },
     {
       "ownerTaskId": "sml.ch1.sec6.definition-1-6-extra-1",
@@ -300,6 +315,13 @@
         "sml.ch4.sec27.problem-4-8"
       ],
       "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch4.sec25.theorem-4-31",
+      "downstreamTaskIds": [
+        "sml.ch4.sec25.exercise-4-32"
+      ],
+      "evidence": "reviewed_source_import_declaration_usage_and_formal_audit"
     },
     {
       "ownerTaskId": "sml.ch3.sec13.proposition-3-2",
@@ -416,6 +438,14 @@
         "sml.ch5.sec35.exercise-5-40"
       ],
       "evidence": "reviewed_reference_and_source_usage"
+    },
+    {
+      "ownerTaskId": "sml.ch5.sec33.theorem-5-31",
+      "downstreamTaskIds": [
+        "sml.ch5.sec29.remark-5-29-extra-2",
+        "sml.ch5.sec29.remark-5-29-extra-3"
+      ],
+      "evidence": "reviewed_source_import_declaration_usage_and_formal_audit"
     },
     {
       "ownerTaskId": "sml.ch5.sec28.proposition-5-2",

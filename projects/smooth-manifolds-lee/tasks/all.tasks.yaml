@@ -105,7 +105,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Hausdorff、第二可数、局部欧氏三条件是现代拓扑流形的标准定义；Lean：TopologicalManifold 类基本忠实，但同文件的维数唯一性定理仍含 sorry，暂不能通过。
+  - 数学：`TopologicalManifold n M` 用 Hausdorff、第二可数及到 `ℝⁿ` 的局部欧氏图忠实实现 Lee/现代定义；`[Nonempty M]` 是维数唯一性的必要前提。Lean：唯一 direct `sorry` 位于 `dimension_eq`，fresh axioms 为 `[propext, sorryAx, Classical.choice, Quot.sound]`。已在隔离 harness 中无 `sorryAx` 地归约到“两个非空欧氏开集局部同胚则维数相等”，剩余正是 Brouwer 不变域/维数不变性；当前 mathlib 无一般 API，不是局部 tactic 修补。十七个源文件虽直接 import 该基础模块，实际调用含缺口维数定理的仅同文件 `dimension_eq_of_homeomorph` 及 Theorem 1.2，formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section01.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01/Definition_1_extra_1.lean
@@ -1017,7 +1017,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：第二可数光滑流形可由缩小坐标图得到可数正则坐标球基；Lean：基的结构定义正确，但存在性主定理仍为 sorry。
+  - '数学：Lee 的“每个光滑流形有可数正则坐标球基”正确，`IsRegularCoordinateBall` 中的闭包含、同心开/闭球及大坐标图条件与 Lee 一致；Lean：定义与主定理把 smooth 阶数写成 `(⊤ : WithTop ℕ∞)`，但 mathlib v4.30 中这是解析阶 `ω`，真正 smooth 为 `∞ = ((⊤ : ℕ∞) : WithTop ℕ∞)`，且 fresh Lean 证明 `∞ < ⊤`。因此当前只覆盖实解析流形，不忠实于教材。唯一 direct `sorry` 的 exact axioms 含 `sorryAx`；真正 `∞` 版本已有隔离 clean PoC，但所用坐标图正规化 helper 现位于后续 Problem 1.6，应先前移到早期 Common 模块，并回归实际使用定义的 Problem 5.8。唯一源码 importer/caller 是 Exercise 1.20；Theorem 2.23 只存在任务参考图，formal review 保持 pending。'
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section03.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap01/Sec01_03/Proposition_1_19.lean
@@ -3336,7 +3336,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：微分同胚保持边界并限制为内部之间的微分同胚，是标准不变量；Lean：虽调用 `Diffeomorph.image_boundary` 并构造 `restrictInterior`，其作用公式 `restrictInterior_apply` 仍为 `sorry`。
+  - 数学：微分同胚保持边界并限制为内部之间的微分同胚，Lee 命题与 Lean 向任意 `C^n (n ≠ 0)`/corners 的推广均正确；Lean：唯一 direct `sorry` 位于 `Diffeomorph.restrictInterior_apply`。隔离短证明通过一个 `Opens` 类型等式的 `cast_apply` 可 fresh 编译并将 direct `sorry` 变为 0，但 exact axioms 仍为 `[propext, sorryAx, Classical.choice, Quot.sound]`；污染精确来自 Proposition 2.15 中 `restrictOpen_image_isOpen`、`restrictOpenMap_bijective`、`restrictOpenMap_isLocalDiffeomorph` 三个 direct owner。唯一直接 importer 是 Exercise 2.19，但它只 recall `image_boundary`/`restrictInterior`，无 `restrictInterior_apply` 调用；应先 clean 上游再回放短证明，formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section09.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap02/Sec02_09/Theorem_2_18.lean
@@ -7644,7 +7644,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：Theorem 4.31 的陈述在本节既定的有限维、光滑性及边界约定下正确；术语与现代主流流形记号兼容，未见遗漏的关键假设；Lean：代码已给出相关定义/主声明，但主文件仍有 1 处 `sorry`，证明项未闭合，故保持 pending。
+  - 数学：Lee 在有限维实无边界流形上的“光滑商唯一性”正确；Lean：当前声明放宽到任意 `NontriviallyNormedField`、任意范数模型/corners，却仍把 `IsSmoothSubmersion` 定义为光滑且 `mfderiv` 逐点满射；在一般非完备无限维范数空间中，可有连续线性双射而逆不连续，取 `pi1 = id`、`pi2` 为此双射即满足当前满射微分与同纤维假设，但诱导映射不是微分同胚，故当前陈述过强。唯一 direct `sorry` 的 exact axioms 含 `sorryAx`；收窄到 Lee 假设后，隔离短证明可编译，但会继承 Theorem 4.30/局部截面链的 `sorryAx`。实际直接 importer 及声明引用仅 Exercise 4.32，formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section25.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap04/Sec04_25/Theorem_4_31.lean
@@ -10056,7 +10056,7 @@ tasks:
     informal_review: done
     formal_review: pending
   review_notes:
-  - 数学：embedded 子流形的子空间拓扑及局部切片光滑结构，是使同一子集成为 embedded 或 immersed 子流形的唯一结构，正确；Lean：同载体浸入结构间微分同胚的核心唯一性定理仍为 `sorry`。
+  - 数学：Lee 在有限维、Hausdorff、第二可数的实流形约定下，embedded 子流形结构在同载体 immersed 结构中唯一，原命题正确；Lean：`ImmersedSubmanifold` 不保存有限维、`T2Space` 或 `SecondCountableTopology`，且标量域任意，因而当前声明为假的过强泛化：同一非离散 embedded 载体可另赋离散零维流形结构，inclusion 仍是单射 immersion，但结论所需的底层恒等微分同胚逆映射不连续。唯一 direct `sorry` 的 exact axioms 为 `[propext, sorryAx, Classical.choice, Quot.sound]`；收窄后仍需 Global Rank Theorem，项目对应 bridge 也含 `sorryAx`。实际源下游为 Remark 5.29-extra-2 的 import 和 Remark 5.29-extra-3 的 `recall`，元数据漏记后者，formal review 保持 pending。
   files:
     textbook_json: sections-1to8-Introduction-to-Smooth-Manifolds-Second-Edition-2013-by-John-M.-Lee/section33.json
     lean_source: staging/SmoothManifoldsLee/SmoothManifoldsLee/Chap05/Sec05_33/Theorem_5_31.lean

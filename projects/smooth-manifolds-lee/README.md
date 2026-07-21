@@ -149,6 +149,26 @@ smooth-embedding/immersion composition and local restriction bridges as
 `proof_wanted`; Exercise 4.16's remaining hole is specifically the construction
 of a local straightening on `Set.range K`, not a small tactic gap.
 
+Definition 1-extra-1 faithfully encodes Lee's topological-manifold convention,
+but its dimension-uniqueness hole reduces to Brouwer invariance of dimension.
+The reduction to a local homeomorphism between nonempty Euclidean open sets is
+axiom-clean; the pinned mathlib has no general theorem closing the remaining
+dimension step.
+
+Proposition 1.19 currently uses `⊤ : WithTop ℕ∞`, which is the analytic
+order `ω`, where the textbook requires the smooth order `∞`. An axiom-clean
+proof of the corrected statement is feasible, but its chart-normalization
+helpers should be moved out of the much later Problem 1.6 module before the
+definition and its users are changed together.
+
+Theorems 4.31 and 5.31 both need their Lean statements narrowed before proof.
+The former drops Lee's finite-dimensional real assumptions, so a smooth linear
+bijection between noncomplete normed models may have a nonsmooth inverse. The
+latter does not require finite dimension, Hausdorffness, or second countability
+of the alternative immersed structure, allowing a discrete zero-dimensional
+structure on the same carrier. Both generalizations therefore admit
+counterexamples; their textbook statements remain correct.
+
 Here, “complete” refers only to direct-`sorry` coverage. The Proposition 5.2
 patch now proves both existing holes and adds the textbook's uniqueness claim in
 the representative-independent form that the identity between any two candidate
